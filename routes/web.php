@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/updates', function () {
     $output = shell_exec('cd ../ && git pull && php artisan migrate');
-    echo "<pre>$output</pre>";;
+    echo "<pre>$output</pre>";
 });
