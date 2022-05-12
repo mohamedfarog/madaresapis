@@ -18,7 +18,6 @@ class Levels extends Migration
             $table->string('level_name');
         });
     }
-
     /**
      * Reverse the migrations.
      *
