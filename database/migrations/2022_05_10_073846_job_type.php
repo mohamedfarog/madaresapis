@@ -16,7 +16,8 @@ class JobType extends Migration
         Schema::dropIfExists('job_type');
         Schema::create('job_type', function (Blueprint $table) {
             $table->id();
-            $table->string('job_type_name');
+            $table->string('type_ar_name');
+            $table->string('type_en_name');
             $table->timestamps();
         });
     }

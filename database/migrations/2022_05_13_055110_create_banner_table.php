@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AcademyInfo extends Migration
+class CreateBannerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class AcademyInfo extends Migration
      */
     public function up()
     {
-         Schema::create('academy_info', function (Blueprint $table) {
+        Schema::create('banner', function (Blueprint $table) {
             $table->id();
-            $table->string('ar_name');
-            $table->string('en_name');
-            $table->integer('sets')->unsigned()->nullable();
-            $table->timestamp('stablish_date')->nullable();
-            $table->string('website_url');
+            $table->string('image');
+            $table->string('arabic_content');
+            $table->string('english_content');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +29,6 @@ class AcademyInfo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academy_info');
+        Schema::dropIfExists('banner');
     }
 }

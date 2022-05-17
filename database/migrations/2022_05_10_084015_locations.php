@@ -16,9 +16,12 @@ class Locations extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->integer('country_id')->unsigned()->nullable();
-            $table->string('city_name');
-            $table->string('street');
-            $table->integer('building_no')->unsigned()->nullable();
+            $table->string('ar_city_name');
+            $table->string('en_city_name');
+            $table->string('ar_street');
+            $table->string('en_street');
+            $table->integer('ar_building_no')->unsigned()->nullable();
+            $table->integer('en_building_no')->unsigned()->nullable();
             $table->string('location_code');
         });
     }
