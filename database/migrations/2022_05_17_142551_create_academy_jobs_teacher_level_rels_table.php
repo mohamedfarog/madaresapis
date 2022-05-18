@@ -13,6 +13,7 @@ class CreateAcademyJobsTeacherLevelRelsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('academy_jobs_teacher_level_rels');  
         Schema::create('academy_jobs_teacher_level_rels', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

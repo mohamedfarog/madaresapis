@@ -13,6 +13,7 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('locations');  
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->integer('country_id')->unsigned()->nullable();

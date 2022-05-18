@@ -13,6 +13,7 @@ class CreateDegreesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('degrees');    
         Schema::create('degrees', function (Blueprint $table) {
             $table->id();
             $table->string('degree_name');

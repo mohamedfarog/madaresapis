@@ -13,6 +13,7 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('articles'); 
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned()->nullable();

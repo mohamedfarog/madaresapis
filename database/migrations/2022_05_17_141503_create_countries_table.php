@@ -13,6 +13,7 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('countries');
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('country_name');

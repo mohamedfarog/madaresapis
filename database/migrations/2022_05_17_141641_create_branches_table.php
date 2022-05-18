@@ -12,7 +12,8 @@ class CreateBranchesTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {     
+        Schema::dropIfExists('branches');
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('branch_text');

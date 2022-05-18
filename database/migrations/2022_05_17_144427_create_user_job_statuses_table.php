@@ -13,6 +13,7 @@ class CreateUserJobStatusesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('user_job_statuses'); 
         Schema::create('user_job_statuses', function (Blueprint $table) {
             $table->id();
             $table->integer('job_id')->unsigned()->nullable();

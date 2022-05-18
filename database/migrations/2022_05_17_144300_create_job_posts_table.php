@@ -13,6 +13,7 @@ class CreateJobPostsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('job_posts'); 
         Schema::create('job_posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();

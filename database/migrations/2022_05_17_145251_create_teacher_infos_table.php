@@ -13,6 +13,7 @@ class CreateTeacherInfosTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('teacher_infos'); 
         Schema::create('teacher_infos', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

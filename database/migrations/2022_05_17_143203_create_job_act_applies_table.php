@@ -13,6 +13,7 @@ class CreateJobActAppliesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('job_act_applies');  
         Schema::create('job_act_applies', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

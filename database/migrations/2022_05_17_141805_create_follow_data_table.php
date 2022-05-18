@@ -13,6 +13,7 @@ class CreateFollowDataTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('follow_data');
         Schema::create('follow_data', function (Blueprint $table) {
             $table->id();
             $table->integer('following')->unsigned()->nullable();

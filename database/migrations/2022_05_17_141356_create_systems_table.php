@@ -15,7 +15,6 @@ class CreateSystemsTable extends Migration
     {
         Schema::dropIfExists('systems');
         Schema::create('systems', function (Blueprint $table) {
-            $table->id();
             $table->string('sys_name');
             $table->timestamps();
         });

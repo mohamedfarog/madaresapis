@@ -13,6 +13,7 @@ class CreateAcademyJobTeaherCurrRelsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('academy_job_teaher_curr_rels'); 
         Schema::create('academy_job_teaher_curr_rels', function (Blueprint $table) {
             $table->id();
             $table->integer('academy_id')->unsigned()->nullable();

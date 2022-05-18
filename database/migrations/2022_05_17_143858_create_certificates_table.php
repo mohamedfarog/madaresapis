@@ -13,6 +13,7 @@ class CreateCertificatesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('certificates');  
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

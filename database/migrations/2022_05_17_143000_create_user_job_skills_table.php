@@ -13,6 +13,7 @@ class CreateUserJobSkillsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('user_job_skills');  
         Schema::create('user_job_skills', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

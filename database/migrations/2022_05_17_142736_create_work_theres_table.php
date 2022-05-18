@@ -13,6 +13,7 @@ class CreateWorkTheresTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('work_theres');  
         Schema::create('work_theres', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id')->unsigned()->nullable();

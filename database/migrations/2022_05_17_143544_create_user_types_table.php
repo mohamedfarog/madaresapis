@@ -13,6 +13,7 @@ class CreateUserTypesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('user_types');  
         Schema::create('user_types', function (Blueprint $table) {
             $table->id();
             $table->string('user_type_name');
