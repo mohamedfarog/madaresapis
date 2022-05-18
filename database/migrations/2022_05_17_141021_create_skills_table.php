@@ -13,6 +13,7 @@ class CreateSkillsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('skills');
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->string('skill_name');
