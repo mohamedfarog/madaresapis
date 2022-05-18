@@ -15,8 +15,7 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('user_id')->constrained('users');
-            // $table->dropForeign('teachers_user_id_foreign');
+            $table->foreignId('user_id');
             $table->string('first_name', 50);
             $table->string('last_name', 50);
             $table->string('mobile');
