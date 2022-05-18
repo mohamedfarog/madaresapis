@@ -4,16 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Traits\ApiHelpers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-
-    function test(){
-        
-        return "Madares first Api test";
-    }
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests ,ApiHelpers ;
 }
