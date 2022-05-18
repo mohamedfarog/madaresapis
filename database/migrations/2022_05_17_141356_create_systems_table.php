@@ -13,6 +13,7 @@ class CreateSystemsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('systems');
         Schema::create('systems', function (Blueprint $table) {
             $table->id();
             $table->string('sys_name');
