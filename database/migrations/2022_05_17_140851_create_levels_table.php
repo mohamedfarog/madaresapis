@@ -13,6 +13,7 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('levels');
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
             $table->string('level_name');

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Response;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -15,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
-
     /**
      * Bootstrap any application services.
      *
@@ -24,5 +24,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Response::macro('success', function ($data) {
+            $responseData = json_decode($data);
+        return response()->json(['success' => true, 'data'=> $responseData]);
+        });
+        Response::macro('error', function ($error, $statuscode) {
+        return response()->json(['success' => false, 'error' => $error], $statuscode);
+        });
     }
 }
