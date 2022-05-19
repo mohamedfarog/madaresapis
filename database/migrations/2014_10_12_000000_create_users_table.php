@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name' , 100);
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->string('twitter_profile')->nullable();
             $table->string('facebook_profile')->nullable();
             $table->string('linkedin_profile')->nullable();

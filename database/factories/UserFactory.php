@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 class UserFactory extends Factory
 {
@@ -17,9 +19,11 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password' => Hash::make('password'),
+            'is_active' => true,
+            'twitter_profile' => 'https://twitter.com/profile/' . $this->faker->uuid(),
+            'facebook_profile' => 'https://facebook.com/profile/' . $this->faker->uuid(),
+            'linkedin_profile' => 'https://linkedin.com/profile/' . $this->faker->uuid(),
         ];
     }
 
