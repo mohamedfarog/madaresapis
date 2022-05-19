@@ -3,8 +3,12 @@
 namespace App\Models\Academies;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Academies\Branch;
+use App\Models\Jobs\Job;
 use App\Models\User;
 
 
@@ -17,13 +21,20 @@ class Academy extends Model
     protected $hidden = ['updated_at'];
 
 
-    public function user(): belongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function branches(): hasMany
+    public function branches(): HasMany
     {
         return $this->hasMany(Branch::class);
     }
+
+
+    public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class);
+    }
+    
 }

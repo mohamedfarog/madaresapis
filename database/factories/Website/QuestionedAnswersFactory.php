@@ -16,7 +16,7 @@ class QuestionedAnswersFactory extends Factory
     public function definition()
     {
         return [
-            'title'  =>$this->faker->sentence($nbWords = 5, $variableNbWords = true),
+            'title'  =>  ['en' =>$this->faker->sentence($nbWords = 5, $variableNbWords = true), 'ar'=>$this->faker->sentence($nbWords = 5, $variableNbWords = true)],
             'body'  =>[ 'en' =>$this->faker->paragraph($nbSentences = 3, $variableNbSentences = true) , 'ar'=>$this->faker->paragraph($nbSentences = 3, $variableNbSentences = true)],
         ];
     }

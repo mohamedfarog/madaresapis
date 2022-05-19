@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Website\QuestionedAnswersController as FAQ;
+use App\Http\Controllers\Website\QuestionedAnswersController as FAQController;
+use App\Models\Gender;
 
 Route::get('/', function () {
    return response()->json('Madars-Backend'); 
@@ -24,7 +25,11 @@ Route::group(['prefix' => 'auth'], function (){
 
 Route::group(['prefix' => 'website'], function () {
 
-   Route::get('/faq', FAQ::class);
+   // Route::get('/test' , function () {
+
+   //    return Gender::all();
+   // } );
+   Route::get('/faq', FAQController::class);
   
 });
 

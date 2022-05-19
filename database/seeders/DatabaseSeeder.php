@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(UsersTableSeeder::class);
-        // $this->call(QuestionedAnswersSeeder::class);
+        $this->call(GenderSeeder::class);
+        $this->call(JobTypeSeeder::class);
         $testUser = FAQ::factory(8)->create();
         // $testUser = User::factory(10)->create();
        

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\Models\Teacher\Teacher;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Teachers\Teacher;
 use App\Models\Academies\Academy;
 use App\Models\Role;
 
@@ -84,13 +85,13 @@ class User extends Authenticatable implements JWTSubject
      }
 
 
-     public function teachers(): hasMany
+     public function teachers(): HasMany
     {
         return $this->hasMany(Teacher::class, 'user_id', 'id');
     }
 
 
-     public function academies(): hasMany
+     public function academies(): HasMany
     {
         return $this->hasMany(Academy::class, 'user_id', 'id');
     }

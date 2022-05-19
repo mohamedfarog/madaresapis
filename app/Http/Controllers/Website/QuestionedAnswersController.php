@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\QuestionedAnswers;
+use App\Models\User;
 class QuestionedAnswersController extends Controller
 {
     /**
@@ -16,6 +17,8 @@ class QuestionedAnswersController extends Controller
      */
     public function __invoke(): JsonResponse
     {
-        return $this->onSuccess('asd');
+        $faq = QuestionedAnswers::all();
+
+        return $this->onSuccess($faq);
     }
 }
