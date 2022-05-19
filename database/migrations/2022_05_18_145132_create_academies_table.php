@@ -20,6 +20,8 @@ class CreateAcademiesTable extends Migration
             $table->string('website');
             $table->string('contact_number')->nullable();
             $table->string('contact_email' , 50)->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('banner')->nullable();
             $table->longText('bio')->nullable();
             $table->timestamps();
         });

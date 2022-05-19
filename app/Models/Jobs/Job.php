@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Academies\Academy;
 use App\Models\Jobs\JobType;
 use App\Models\Jobs\JobLevel;
+use App\Models\Jobs\JobAppSetting;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,6 +45,12 @@ class Job extends Model
     public function level(): HasOne
     {
         return $this->hasOne(JobLevel::class);
+    }
+
+
+    public function setting(): HasOne
+    {
+        return $this->hasOne(JobAppSetting::class);
     }
 
 }

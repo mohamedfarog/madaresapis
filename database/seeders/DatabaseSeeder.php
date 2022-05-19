@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(GenderSeeder::class);
         $this->call(JobTypeSeeder::class);
+        $this->call(CommunicateMethodSeeder::class);
         $testUser = FAQ::factory(8)->create();
         // $testUser = User::factory(10)->create();
        
