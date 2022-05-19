@@ -25,7 +25,6 @@ class CreateAcademyInfosTable extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
