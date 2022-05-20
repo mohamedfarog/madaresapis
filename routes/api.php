@@ -2,8 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Controller;
 use \App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Website\QuestionedAnswersController as FAQController;
+use App\Models\Gender;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +21,26 @@ use \App\Http\Controllers\CurriculumController;
 */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });
-Route::get("test", [Controller::class, 'test']);
-Route::get("getCurriculums", [CurriculumController::class, 'returnCurriculms']);
+
+Route::get('/', function () {
+   return response()->json('Madars-Backend'); 
+})->name('login');
+
+Route::group(['prefix' => 'auth'], function (){
+   Route::post('login', [AuthController::class,'login']);
+   Route::post('logout', [AuthController::class,'logout']);
+   Route::post('refresh',  [AuthController::class,'refresh']);
+   Route::post('me',  [AuthController::class,'me']);
+   Route::post('register',  [RegisterController::class,'register']);
+
+});
+
+
+
+Route::group(['prefix' => 'website'], function () {
+   Route::get('faq', FAQController::class, 'getSubjectsTitle');
+   Route::get('faqsss', FAQController::class, 'getSubjectsTitle');
+
+});

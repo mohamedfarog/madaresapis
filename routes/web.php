@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/updates', function () {
-    $output = shell_exec('cd ../ && git pull && php artisan migrate');
-    echo "<pre>$output</pre>";
+    return Carbon::now();
 });
