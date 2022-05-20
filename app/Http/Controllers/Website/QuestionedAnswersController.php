@@ -15,10 +15,18 @@ class QuestionedAnswersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function __invoke(): JsonResponse
     {
         $faq = QuestionedAnswers::all();
-
         return $this->onSuccess($faq);
+    }
+
+    
+   
+    public function getSubjectsTitle()
+    {
+        echo "Hellllloooo";
+        return "Hellooo";
     }
 }

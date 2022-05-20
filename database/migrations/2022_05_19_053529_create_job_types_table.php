@@ -13,6 +13,7 @@ class CreateJobTypesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('job_types');
         Schema::create('job_types', function (Blueprint $table) {
             $table->id();
             $table->text('title' , 80);

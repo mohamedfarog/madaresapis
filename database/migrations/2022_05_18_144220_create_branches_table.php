@@ -13,6 +13,7 @@ class CreateBranchesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('branches');
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('academy_id');
