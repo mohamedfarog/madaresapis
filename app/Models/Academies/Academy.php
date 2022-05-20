@@ -16,8 +16,8 @@ class Academy extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name' , 'website','contact_number' , 'contact_email' ,'bio' ];
-
+    // protected $fillable = ['user_id', 'name' , 'website','contact_number' , 'contact_email' ,'bio' , 'avatar' , 'banner' ];
+    protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
 
@@ -36,5 +36,5 @@ class Academy extends Model
     {
         return $this->hasMany(Job::class);
     }
-    
+
 }

@@ -6,7 +6,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Teachers\Teacher;
 use App\Models\Role;
+use App\Models\Academies\Academy;
 
 class UsersTableSeeder extends Seeder
 {
@@ -46,6 +48,29 @@ class UsersTableSeeder extends Seeder
         $adminTest->roles()->attach($adminRole);
         $teacherTest->roles()->attach($teacherRole);
         $academyTest->roles()->attach($academyRole);
+
+
+        $teachers = User::factory(10)->create()->each(function ($user) use ($teacherRole) {
+         
+           $user->roles()->attach($teacherRole);
+            
+           $teacher = Teacher::factory(1)->make();
+
+           $user->teachers()->saveMany($teacher);
+          
+           
+        });
+
+        $academies = User::factory(10)->create()->each(function ($user) use ($academyRole) {
+         
+           $user->roles()->attach($academyRole);
+            
+           $Academy = Academy::factory(1)->make();
+
+           $user->academies()->saveMany($Academy);
+          
+           
+        });
       
     }
 }
