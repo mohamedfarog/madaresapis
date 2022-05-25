@@ -8,6 +8,9 @@ use \App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Website\QuestionedAnswersController as FAQController;
+use App\Http\Controllers\Website\HomePageController;
+
+use App\Http\Controllers\Website\SubjectsControlle ;
 use App\Models\Gender;
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +24,7 @@ use App\Models\Gender;
 */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
-});
+   });
 
 Route::get('/', function () {
    return response()->json('Madars-Backend'); 
@@ -34,13 +36,12 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('refresh',  [AuthController::class,'refresh']);
    Route::post('me',  [AuthController::class,'me']);
    Route::post('register',  [RegisterController::class,'register']);
-
 });
 
-
-
 Route::group(['prefix' => 'website'], function () {
-   Route::get('faq', FAQController::class, 'getSubjectsTitle');
-   Route::get('faqsss', FAQController::class, 'getSubjectsTitle');
-
+   Route::post('hpSubject',[ HomePageController::class, 'getSubjectsTitle']);
+   Route::post('articlesInfo',[ HomePageController::class, 'getArticaleInfo']);
+   Route::post('joblevel',[ HomePageController::class, 'returnJobLevel']);
+   Route::post('HomeBanner',[HomePageController::class, 'getHomeBanner']);
+   Route::post('AvailableJobs',[HomePageController::class, 'AvailableJobs']);
 });

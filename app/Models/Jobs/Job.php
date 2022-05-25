@@ -29,8 +29,6 @@ class Job extends Model
     {
         return $this->belongsTo(Academy::class);
     }
-
-
     public function gender(): HasOne
     {
         return $this->hasOne(Gender::class);
@@ -40,14 +38,10 @@ class Job extends Model
     {
         return $this->hasOne(JobType::class);
     }
-
-
     public function level(): HasOne
     {
         return $this->hasOne(JobLevel::class);
     }
-
-
     public function setting(): HasOne
     {
         return $this->hasOne(JobAppSetting::class);

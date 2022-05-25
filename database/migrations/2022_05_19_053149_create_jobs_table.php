@@ -29,7 +29,7 @@ class CreateJobsTable extends Migration
             $table->text('job_responsibilities');
             $table->text('job_benefits');
             $table->text('job_experience');
-            // $table->boolean('status');
+            //$table->boolean('status');
             $table->timestamps();
         });
     }

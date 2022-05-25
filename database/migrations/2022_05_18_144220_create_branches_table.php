@@ -23,7 +23,6 @@ class CreateBranchesTable extends Migration
             $table->string('street')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
-
             $table->timestamps();
         });
     }
