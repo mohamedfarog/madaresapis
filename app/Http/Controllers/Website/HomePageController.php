@@ -73,13 +73,14 @@ class HomePageController extends Controller
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
     }
-    public function AvailableJobs(Request $request): JsonResponse
-    {
+//     public function AvailableJobs(Request $request): JsonResponse
+//     {
         
       
-        $data['count']= Job::count();
-        $data['job_vacancy']= Job::all('job_vacancy');
-        $data['academy_name'] = Job::with('academy')->where($request->id, 'academy_id')->first();
-        return $this->onSuccess($data);
-    }
+//         $data['count']= Job::count();
+//         $data['job_vacancy']= Job::all('job_vacancy');
+//         $data['academy_name'] = Job::with('academy')->where('id', 'academy_id')->first()
+//         return $this->onSuccess($data);
+//     }
+// }
 }
