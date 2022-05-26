@@ -83,7 +83,6 @@ class HomePageController extends Controller
     { 
         //  $jobs= Job::select('id','title','job_vacancy')->with(['academy:id,banner,name,avatar'])->get();
         $jobs= Job::with(['academy:id,banner,name,avatar'])->paginate();
-
         return $this->onSuccess($jobs);
     }
 }
