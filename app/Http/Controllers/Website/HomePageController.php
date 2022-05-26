@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
 use Illuminate\Http\Request;
 use App\Models\Website\Articles;
+use App\Models\Website\QuestionedAnswers;
 use App\Models\Website\subjects;
 use Illuminate\Support\Js;
 
@@ -73,10 +74,13 @@ class HomePageController extends Controller
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
     }
+    public function getFaqInfo(){
+        $faq = QuestionedAnswers::all();
+        return $this->onSuccess($faq);
+    }
+    
 //     public function AvailableJobs(Request $request): JsonResponse
-//     {
-        
-      
+//     { 
 //         $data['count']= Job::count();
 //         $data['job_vacancy']= Job::all('job_vacancy');
 //         $data['academy_name'] = Job::with('academy')->where('id', 'academy_id')->first()
