@@ -38,12 +38,12 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('register',  [RegisterController::class,'register']);
 });
 
-  Route::group(['prefix' => 'website'], function () {
+   Route::group(['prefix' => 'website'], function () {
    Route::post('FAQ',[HomePageController::class, 'getFaqInfo']);
-
    Route::post('hpSubject',[ HomePageController::class, 'getSubjectsTitle']);
    Route::post('articlesInfo',[ HomePageController::class, 'getArticaleInfo']);
    Route::post('joblevel',[ HomePageController::class, 'returnJobLevel']);
    Route::post('HomeBanner',[HomePageController::class, 'getHomeBanner']);
    Route::post('AvailableJobs',[HomePageController::class, 'AvailableJobs']);
+   
 });

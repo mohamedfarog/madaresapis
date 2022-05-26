@@ -79,12 +79,11 @@ class HomePageController extends Controller
         return $this->onSuccess($faq);
     }
     
-//     public function AvailableJobs(Request $request): JsonResponse
-//     { 
-//         $data['count']= Job::count();
-//         $data['job_vacancy']= Job::all('job_vacancy');
-//         $data['academy_name'] = Job::with('academy')->where('id', 'academy_id')->first()
-//         return $this->onSuccess($data);
-//     }
-// }
+    public function AvailableJobs(Request $request)
+    { 
+        //  $jobs= Job::select('id','title','job_vacancy')->with(['academy:id,banner,name,avatar'])->get();
+        $jobs= Job::with(['academy:id,banner,name,avatar'])->paginate();
+
+        return $this->onSuccess($jobs);
+    }
 }

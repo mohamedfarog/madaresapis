@@ -27,7 +27,9 @@ class Job extends Model
 
     public function academy(): BelongsTo
     {
-        return $this->belongsTo(Academy::class);
+        
+      //  return $this->belongsTo(Academy::class)->select(['name']);
+       return $this->belongsTo(Academy::class);
     }
     public function gender(): HasOne
     {
