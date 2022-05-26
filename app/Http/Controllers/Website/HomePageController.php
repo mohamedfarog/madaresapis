@@ -82,7 +82,7 @@ class HomePageController extends Controller
     public function AvailableJobs(Request $request)
     { 
         //  $jobs= Job::select('id','title','job_vacancy')->with(['academy:id,banner,name,avatar'])->get();
-        $jobs= Job::with(['academy:id,banner,name,avatar'])->paginate();
+        $jobs= Job::with(['academy:id,banner,name,avatar'])->get();
         return $this->onSuccess($jobs);
     }
 }
