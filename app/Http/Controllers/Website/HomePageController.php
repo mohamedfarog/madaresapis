@@ -49,7 +49,7 @@ class HomePageController extends Controller
 
     public function getSubjectsTitle(Request $request): JsonResponse{
         if ($request->lang === '1'){
-            $title = Subjects::all('id','en_title', 'icon')->append('count')->toArray();
+            $title = subjects::all('id','en_title', 'icon')->append('count')->toArray();
             return $this->onSuccess($title);
         }
         if($request->lang === '2'){
