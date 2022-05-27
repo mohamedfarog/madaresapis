@@ -45,5 +45,6 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('joblevel',[ HomePageController::class, 'returnJobLevel']);
    Route::post('HomeBanner',[HomePageController::class, 'getHomeBanner']);
    Route::post('AvailableJobs',[HomePageController::class, 'AvailableJobs']);
+   Route::post('HpBannar',[HomePageController::class, 'homePageBanner']);
    
 });

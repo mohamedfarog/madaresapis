@@ -13,6 +13,7 @@ class CreateSavedsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('saveds');
         Schema::create('saved', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_id');
@@ -20,6 +21,7 @@ class CreateSavedsTable extends Migration
             $table->timestamp("saving_date");
             $table->timestamps();
         });
+        
     }
 
     /**

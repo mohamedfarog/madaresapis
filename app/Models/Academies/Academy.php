@@ -37,4 +37,14 @@ class Academy extends Model
         return $this->hasMany(Job::class);
     }
 
+    public function getVacanciesAttribute()
+    {
+        $jobs= Job::where('academy_id',$this->id)->sum('job_vacancy');
+        return $jobs;
+    }
+    public function getTotaljobsAttribute()
+    {
+        $jobs= Job::where('academy_id',$this->id)->count('job_vacancy');
+        return $jobs;
+    }
 }

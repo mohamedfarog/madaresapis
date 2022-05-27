@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
+use App\Models\Academies\Academy;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
@@ -81,8 +82,22 @@ class HomePageController extends Controller
     
     public function AvailableJobs(Request $request)
     { 
-        //  $jobs= Job::select('id','title','job_vacancy')->with(['academy:id,banner,name,avatar'])->get();
-        $jobs= Job::with(['academy:id,banner,name,avatar'])->get();
+        $jobs = Academy::get(['id', 'name','avatar','banner'])
+        ->append(['totaljobs','vacancies'])->toArray();
         return $this->onSuccess($jobs);
+    
+    }
+    public function homePageBanner(Request $request) {
+        if($request->lang === '1'){
+            $banner = HomeBanner::all('id', 'avatar', 'en_text');
+            return $this->onSuccess($banner);
+        }
+        if($request->lang === '2'
+        ){
+            $banner = HomeBanner::all('id', 'avatar', 'ar_text');
+            return $this->onSuccess($banner);
+        }else{
+            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+        }
     }
 }
