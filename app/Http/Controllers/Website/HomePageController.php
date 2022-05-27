@@ -75,9 +75,21 @@ class HomePageController extends Controller
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
     }
-    public function getFaqInfo(){
+    public function getFaqInfo(Request $request){
         $faq = QuestionedAnswers::all();
         return $this->onSuccess($faq);
+        if($request->lang === '1'){
+            $banner = QuestionedAnswers::all('id', 'title', 'body');
+            return $this->onSuccess($banner);
+        }
+        if($request->lang === '2'
+        ){
+            // $banner = QuestionedAnswers::all('id', 'avatar', 'ar_text');
+            return $this->onSuccess("Arabic in progress");
+        }else{
+            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+        }
+        
     }
     
     public function AvailableJobs(Request $request)
