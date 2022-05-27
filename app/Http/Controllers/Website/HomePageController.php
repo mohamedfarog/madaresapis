@@ -76,8 +76,7 @@ class HomePageController extends Controller
         }
     }
     public function getFaqInfo(Request $request){
-        $faq = QuestionedAnswers::all();
-        return $this->onSuccess($faq);
+   
         if($request->lang === '1'){
             $banner = QuestionedAnswers::all('id', 'title', 'body');
             return $this->onSuccess($banner);
