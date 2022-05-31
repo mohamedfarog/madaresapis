@@ -16,13 +16,19 @@ class CreateAcademiesTable extends Migration
         Schema::create('academies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('name' ,50);
+            $table->string('ar_name');
+            $table->string('en_name');
             $table->string('website');
             $table->string('contact_number')->nullable();
             $table->string('contact_email' , 50)->nullable();
             $table->string('avatar')->nullable();
             $table->string('banner')->nullable();
-            $table->longText('bio')->nullable();
+            $table->longText('ar_bio')->nullable();
+            $table->longText('en_bio')->nullable();
+            $table->string('ar_city');
+            $table->string('en_city');
+            $table->string('en_country');
+            $table->string('ar_country');
             $table->timestamps();
         });
     }

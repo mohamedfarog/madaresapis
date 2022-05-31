@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models\Teachers;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Teachers\TeacherResume;
@@ -32,20 +32,23 @@ class Teacher extends Model
     {
         return $this->hasOne(TeacherResume::class);
     }
-
     public function gender(): HasOne
     {
         return $this->hasOne(Gender::class);
     }
-
-
     public function experiences(): HasMany
     {
         return $this->hasMany(TeacherExperience::class);
     }
-
     public function level(): HasOne
     {
         return $this->hasOne(JobLevel::class);
+    }
+    public function getExperienceAttribute(){
+
+        $start_day = TeacherExperience::where('teacher_id',$this->id)->first()->start_day;
+        $end_day = TeacherExperience::where('teacher_id',$this->id)->first()->end_day;
+        $exp = TeacherExperience::whereBetween('end_day', [$start_day, $end_day])->count();
+        return $exp;
     }
 }

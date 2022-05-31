@@ -2,15 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Controller;
 use \App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Website\QuestionedAnswersController as FAQController;
 use App\Http\Controllers\Website\HomePageController;
-
+use App\Http\Controllers\Website\AboutController;
+use App\Http\Controllers\Website\TeachersController;
 use App\Http\Controllers\Website\SubjectsControlle ;
+use App\Http\Controllers\Website\SchoolsController ;
+use App\Http\Controllers\Website\AcademyController ;
 use App\Models\Gender;
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +48,8 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('HomeBanner',[HomePageController::class, 'getHomeBanner']);
    Route::post('AvailableJobs',[HomePageController::class, 'AvailableJobs']);
    Route::post('HpBannar',[HomePageController::class, 'homePageBanner']);
-   
+   Route::post('about',[AboutController::class, 'aboutData']);
+   Route::post('teacher',[TeachersController::class, 'teacherData']);
+   Route::post('school',[SchoolsController::class, 'schoolData']);
+   Route::post('acadmy',[AcademyController::class, 'academyData']);
 });

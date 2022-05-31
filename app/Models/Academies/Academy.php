@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models\Academies;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,18 +19,14 @@ class Academy extends Model
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
     public function branches(): HasMany
     {
         return $this->hasMany(Branch::class);
     }
-
-
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class);
