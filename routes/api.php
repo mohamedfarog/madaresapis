@@ -11,8 +11,9 @@ use App\Http\Controllers\Website\HomePageController;
 use App\Http\Controllers\Website\AboutController;
 use App\Http\Controllers\Website\TeachersController;
 use App\Http\Controllers\Website\SubjectsControlle ;
-use App\Http\Controllers\Website\SchoolsController ;
-use App\Http\Controllers\Website\AcademyController ;
+use App\Http\Controllers\Website\SchoolsController;
+use App\Http\Controllers\Website\AcademyController;
+use App\Http\Controllers\Website\JobPostsController;
 use App\Models\Gender;
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +53,5 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('teacher',[TeachersController::class, 'teacherData']);
    Route::post('school',[SchoolsController::class, 'schoolData']);
    Route::post('acadmy',[AcademyController::class, 'academyData']);
+   Route::post('jobPosts',[JobPostsController::class, 'getJobPostsInfo']);
 });
