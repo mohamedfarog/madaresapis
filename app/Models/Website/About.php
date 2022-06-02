@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Jobs\Job;
 use App\Models\Teachers\Teacher;
-use App\Models\Schools;
+use App\Models\Academies\Academy;
 
 
 class About extends Model
@@ -30,8 +30,8 @@ class About extends Model
     }
     public function totalSchools()
     {
-        $schools = Schools::get()->count();
-        return $schools;
+        $academy = Academy::get()->count();
+        return $academy;
     }
     public function  totalAccepted(){
         return 0;
