@@ -16,9 +16,19 @@ class JobPostsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function getJobPostsInfo(){
-        $jobPost = JobPost::all();
-        return $this->onSuccess($jobPost);
+     public function getJobPostsInfo(Request $request){
+         if ($request->id === "1"){
+            $jobPost = JobPost::all('id', 'academy_id', 'job_type_id', 'location_id', 'created_date', 'en_job_desc', 'is_active');
+            return $this->onSuccess($jobPost);
+         }
+         if ($request->id === "1"){
+            $jobPost = JobPost::all('id', 'academy_id', 'job_type_id', 'location_id', 'created_date', 'ar_job_desc', 'is_active');
+            return $this->onSuccess($jobPost);
+         }
+         else{
+            return $this->onSuccess('Invild Input');
+         }
+     
 
      }
 }
