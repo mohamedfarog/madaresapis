@@ -21,7 +21,7 @@ class JobPostsController extends Controller
             $jobPost = JobPost::all('id', 'academy_id', 'job_type_id', 'location_id', 'created_date', 'en_job_desc', 'is_active');
             return $this->onSuccess($jobPost);
          }
-         if ($request->lang === "1"){
+         if ($request->lang === "2"){
             $jobPost = JobPost::all('id', 'academy_id', 'job_type_id', 'location_id', 'created_date', 'ar_job_desc', 'is_active');
             return $this->onSuccess($jobPost);
          }
