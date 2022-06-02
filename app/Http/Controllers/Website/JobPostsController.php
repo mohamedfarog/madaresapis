@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\Jobs\JobPost;
+
 
 class JobPostsController extends Controller
 {
@@ -15,7 +17,8 @@ class JobPostsController extends Controller
      */
 
      public function getJobPostsInfo(){
-         return "JobPost";
+        $jobPost = JobPost::all();
+        return $this->onSuccess($jobPost);
 
      }
 }

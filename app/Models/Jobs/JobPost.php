@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Jobs;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
