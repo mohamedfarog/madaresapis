@@ -13,27 +13,33 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('jobs');
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('academy_id');
             $table->foreignId('job_type_id');
             $table->foreignId('job_level_id');
             $table->foreignId('gender_id');
-            $table->string('title' ,50);
-            $table->string('advertise_area' ,100); # in future we need to it from  separate  Table for now i make it static
-            $table->json('hiring_budget')->nullable();
+            $table->string('en_title');
+            $table->string('ar_title');
+            $table->string('en_advertise_area'); # in future we need to it from  separate  Table for now i make it static
+            $table->string('ar_advertise_area');
+            $table->json('en_hiring_budget')->nullable();
+            $table->json('ar_hiring_budget')->nullable();
             $table->unsignedBigInteger('job_vacancy')->default(1);
-            $table->text('job_description');
+            $table->text('en_job_description');
+            $table->text('ar_job_description');
             $table->date('expected_start_date');
             $table->date('job_deadline');
-            $table->text('job_responsibilities');
-            $table->text('job_benefits');
-            $table->text('job_experience');
+            $table->text('en_job_responsibilities');
+            $table->text('en_job_benefits');
+            $table->text('en_job_experience');
+            $table->text('ar_job_experience');
             //$table->boolean('status');
             $table->timestamps();
         });
-    }
 
+    }
     /**
      * Reverse the migrations.
      *

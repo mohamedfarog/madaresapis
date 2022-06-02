@@ -20,11 +20,6 @@ class Job extends Model
     protected $hidden = ['created_at' , 'updated_at'];
 
 
-
-
-
-
-
     public function academy(): BelongsTo
     {  
       return $this->belongsTo(Academy::class);
@@ -47,5 +42,12 @@ class Job extends Model
       
         return $this->hasOne(JobAppSetting::class);
     }
+
+    public function getAcademiesInfoAttribute()
+    {
+            $academy = Academy::select('en_name','avatar', 'en_city','en_country', 'ar_name')->where('id', $this->id)->get();
+            return $academy;
+
+        }
 
 }

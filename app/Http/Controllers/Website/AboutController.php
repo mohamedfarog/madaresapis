@@ -24,11 +24,11 @@ class AboutController extends Controller
         $data['total_schools']= $about->totalSchools();
         $data['total_accepted ']= $about->totalAccepted();
         if($request->lang === '1'){
-            $data['comments'] = About::get(['id','en_title','en_name', 'en_body', 'en_name']);
+            $data['comments'] = About::all(['id','en_title','en_name', 'en_body', 'en_name'])->append('');
             return $this->onSuccess($data);
         }
         if($request->lang === '2'){
-            $data['data'] = About::get(['id','ar_title','ar_name', 'ar_body','ar_name']);
+            $data['data'] = About::all(['id','ar_title','ar_name', 'ar_body','ar_name']);
             return $this->onSuccess($data);
         }
         else{
