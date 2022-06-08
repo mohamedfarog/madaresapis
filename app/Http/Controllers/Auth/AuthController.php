@@ -7,11 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
-
 class AuthController extends Controller
 {
-
-    
     public function test()
     {
         return Auth::user();
@@ -30,9 +27,8 @@ class AuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);
                 $token = $user->createToken('Madares')->plainTextToken;
-                $response = ['token' => $token];
-                return $this->onSuccess([$user, $response]);
-             
+                $accessToken = ['token' => $token];
+                return $this->onSuccess([$user, $accessToken]);
             } else {
                 $response = ["message" => "Password mismatch"];
                 return response($response, 422);
