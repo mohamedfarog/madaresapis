@@ -12,10 +12,11 @@ trait ApiHelpers
         ], $status);
     }
 
-    protected function onError($message, $status = 500)
+    protected function onError($message, $status = 200)
     {
         return response()->json([
             'success' => false,
+            'data' => null,
             'message' => $message,
         ], $status);
     }
