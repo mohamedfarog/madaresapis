@@ -75,8 +75,7 @@ class HomePageController extends Controller
         }
     }
     public function getFaqInfo(Request $request){
-        $faq = QuestionedAnswers::all();
-        return $this->onSuccess($faq);
+     
         
         if($request->lang === '1'){
             $faq = QuestionedAnswers::all('id', 'en_title', 'en_body');
