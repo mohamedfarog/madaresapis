@@ -12,6 +12,7 @@ use App\Http\Controllers\Website\TeachersController;
 use App\Http\Controllers\Website\SubjectsControlle ;
 use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Website\JobController;
+use App\Http\Controllers\Website\AcademyController;
 use App\Models\Gender;
 
 /*
