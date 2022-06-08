@@ -14,5 +14,5 @@ use Carbon\Carbon;
 */
 
 Route::get('/', function () {
-    return Carbon::now();
+    return 'web';
 });

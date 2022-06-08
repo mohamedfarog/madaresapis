@@ -11,9 +11,9 @@ use App\Http\Controllers\Website\AboutController;
 use App\Http\Controllers\Website\TeachersController;
 use App\Http\Controllers\Website\SubjectsControlle ;
 use App\Http\Controllers\Website\SchoolsController;
-use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\Website\JobController;
 use App\Models\Gender;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,20 +27,20 @@ use App\Models\Gender;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
    });
-
-Route::get('/', function () {
-   return response()->json('Madars-Backend'); 
-})->name('login');
-
+// Route::get('/', function () {
+//    return response()->json('Madars-Backend'); 
+// })->name('login');
 Route::group(['prefix' => 'auth'], function (){
-   Route::post('login', [AuthController::class,'login']);
-   Route::post('logout', [AuthController::class,'logout']);
+  // Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class,'refresh']);
    Route::post('me',  [AuthController::class,'me']);
    Route::post('register',  [RegisterController::class,'register']);
 });
-
    Route::group(['prefix' => 'website'], function () {
+      Route::group(['middleware'=>'auth:sanctum'],function(){
+      Route::post('/about',[AboutController::class, 'aboutData']);
+      Route::post('/login', [AuthController::class,'login']);
+});
    Route::post('FAQ',[HomePageController::class, 'getFaqInfo']);
    Route::post('hpSubject',[ HomePageController::class, 'getSubjectsTitle']);
    Route::post('articlesInfo',[ HomePageController::class, 'getArticaleInfo']);
@@ -48,9 +48,23 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('HomeBanner',[HomePageController::class, 'getHomeBanner']);
    Route::post('AvailableJobs',[HomePageController::class, 'AvailableJobs']);
    Route::post('HpBannar',[HomePageController::class, 'homePageBanner']);
-   Route::post('about',[AboutController::class, 'aboutData']);
    Route::post('teacher',[TeachersController::class, 'teacherData']);
    Route::post('school',[SchoolsController::class, 'schoolData']);
    Route::post('acadmy',[AcademyController::class, 'academyData']);
    Route::post('jobs',[JobController::class, 'getJobsInfo']);
+   Route::post('register',[RegisterController::class, 'register']);
+   Route::put('userType/{id}', [RegisterController::class, 'UpdateUserType']);
+   Route::post('login',[AuthController::class, 'login']);
+   if (now()->diffInMinutes(session('lastActivityTime')) >= (120) ) {  // also you can this value in your config file and use here
+      if (auth()->check() && auth()->id() > 1) {
+          $user = auth()->user();
+          auth()->logout();
+
+          $user->update(['is_logged_in' => false]);
+          $this->reCacheAllUsersData();
+          session()->forget('lastActivityTime');
+          return redirect(route('users.login'));
+      }
+
+  }
 });

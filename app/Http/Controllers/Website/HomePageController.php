@@ -93,14 +93,14 @@ class HomePageController extends Controller
     
     public function AvailableJobs(Request $request)
     { 
-        $jobs = Academy::get(['id', 'name','avatar','banner'])
+        $jobs = Academy::get(['id', 'en_name','avatar','banner'])
         ->append(['totaljobs','vacancies'])->toArray();
         return $this->onSuccess($jobs);
     
     }
     public function homePageBanner(Request $request) {
         if($request->lang === '1'){
-            $banner = HomeBanner::all('id', 'avatar', 'en_text');
+            $banner = HomeBanner::all('id','ar_name', 'avatar', 'en_text');
             return $this->onSuccess($banner);
         }
         if($request->lang === '2'
