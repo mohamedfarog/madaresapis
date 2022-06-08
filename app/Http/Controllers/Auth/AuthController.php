@@ -32,8 +32,8 @@ class AuthController extends Controller
                 return $this->onSuccess([$user, $accessToken]);
             } else {
                 $response = ["message" => "Password mismatch"];
-                return $this->onError($response);
-                // return response($response);
+              //  return $this->onError($response);
+                return response($response);
             }
         } else {
             $response = ["message" =>'User does not exist'];
