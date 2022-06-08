@@ -25,14 +25,14 @@ class AuthController extends Controller
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::with(['usertype'])->where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);
                 $token = $user->createToken('Madares')->plainTextToken;
                 $response = ['token' => $token];
-                return $this->onSuccess([$user, $response,]);
-
+                return $this->onSuccess([$user, $response]);
+             
             } else {
                 $response = ["message" => "Password mismatch"];
                 return response($response, 422);

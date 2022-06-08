@@ -20,8 +20,9 @@ class RegisterController extends Controller
          $userType = UserType::where('user_id', $request->id)->first();
           if (isset($request->type)) {
            $userType->type = $request->type;
-           $userType->save();
+            
          }
+         $userType->save();
        
          $U = User::with(['usertype'])->where('id', $request->id)->first(); 
          return $this->onSuccess($U);
