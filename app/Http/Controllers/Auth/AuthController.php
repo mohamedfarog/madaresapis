@@ -18,6 +18,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]);
+        
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
@@ -31,11 +32,12 @@ class AuthController extends Controller
                 return $this->onSuccess([$user, $accessToken]);
             } else {
                 $response = ["message" => "Password mismatch"];
-                return response($response, 422);
+                return $this->onError($response);
+                // return response($response);
             }
         } else {
             $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            return $this->onError($response);
         }
     }
     /**
