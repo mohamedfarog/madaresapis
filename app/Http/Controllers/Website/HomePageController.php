@@ -75,15 +75,16 @@ class HomePageController extends Controller
         }
     }
     public function getFaqInfo(Request $request){
-   
+        $faq = QuestionedAnswers::all();
+        return $this->onSuccess($faq);
+        
         if($request->lang === '1'){
-            $banner = QuestionedAnswers::all('id', 'en_title', 'en_body');
-            return $this->onSuccess($banner);
+            $faq = QuestionedAnswers::all('id', 'en_title', 'en_body');
+            return $this->onSuccess($faq);
         }
-        if($request->lang === '2'
-        ){
-            $banner = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
-            return $this->onSuccess($banner);
+        if($request->lang === '2'){
+            $faq = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
+            return $this->onSuccess($faq);
         }else{
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
