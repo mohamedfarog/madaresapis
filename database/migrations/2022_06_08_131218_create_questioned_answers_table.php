@@ -16,10 +16,10 @@ class CreateQuestionedAnswersTable extends Migration
         Schema::dropIfExists('questioned_answers');
         Schema::create('questioned_answers', function (Blueprint $table) {
             $table->id();
-            $table->text('en_title');
-            $table->text('ar_title');
-            $table->text('en_body');
-            $table->text('ar_body');
+            $table->string('en_title');
+            $table->string('ar_title');
+            $table->string('en_body');
+            $table->string('ar_body');
             $table->timestamps();
         });
     }
