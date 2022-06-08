@@ -23,12 +23,12 @@ class AuthController extends Controller
                 $accessToken = ['token' => $token];
                 return $this->onSuccess([$user, $accessToken]);
             } else {
-                $response = ["Password mismatch"];
+                $response = "Password mismatch";
                  return $this->onError($response);
                
             }
         } else {
-            $response = ["User does not exist"];
+            $response = "User does not exist";
             return $this->onError($response);
         }
     }
