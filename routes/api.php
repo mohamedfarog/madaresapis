@@ -54,7 +54,7 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('acadmy',[AcademyController::class, 'academyData']);
    Route::post('jobs',[JobController::class, 'getJobsInfo']);
    Route::post('register',[RegisterController::class, 'register']);
-   Route::put('userType/{id}', [RegisterController::class, 'UpdateUserType']);
+   Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::post('login',[AuthController::class, 'login']);
    Route::post('about',[AboutController::class, 'aboutData']);
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120) ) {  // also you can this value in your config file and use here

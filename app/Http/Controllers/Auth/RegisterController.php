@@ -16,15 +16,17 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
+       
          $userType = UserType::where('user_id', $request->id)->first();
           if (isset($request->type)) {
            $userType->type = $request->type;
+           $userType->save();
          }
-         $userType->save();
+       
          $U = User::with(['usertype'])->where('id', $request->id)->first(); 
          return $this->onSuccess($U);
         }
-    public function register (Request $request){
+        public function register (Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255| unique:users',
