@@ -38,7 +38,7 @@ Route::group(['prefix' => 'auth'], function (){
 });
    Route::group(['prefix' => 'website'], function () {
       Route::group(['middleware'=>'auth:sanctum'],function(){
-      Route::post('/about',[AboutController::class, 'aboutData']);
+     
       Route::post('/login', [AuthController::class,'login']);
 });
    Route::post('FAQ',[HomePageController::class, 'getFaqInfo']);
@@ -55,6 +55,7 @@ Route::group(['prefix' => 'auth'], function (){
    Route::post('register',[RegisterController::class, 'register']);
    Route::put('userType/{id}', [RegisterController::class, 'UpdateUserType']);
    Route::post('login',[AuthController::class, 'login']);
+   Route::post('about',[AboutController::class, 'aboutData']);
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120) ) {  // also you can this value in your config file and use here
       if (auth()->check() && auth()->id() > 1) {
           $user = auth()->user();
