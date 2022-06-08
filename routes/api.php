@@ -39,7 +39,6 @@ Route::group(['prefix' => 'auth'], function (){
 });
    Route::group(['prefix' => 'website'], function () {
       Route::group(['middleware'=>'auth:sanctum'],function(){
-     
       Route::post('/login', [AuthController::class,'login']);
 });
    Route::post('FAQ',[HomePageController::class, 'getFaqInfo']);
@@ -61,7 +60,6 @@ Route::group(['prefix' => 'auth'], function (){
       if (auth()->check() && auth()->id() > 1) {
           $user = auth()->user();
           auth()->logout();
-
           $user->update(['is_logged_in' => false]);
           $this->reCacheAllUsersData();
           session()->forget('lastActivityTime');

@@ -48,7 +48,6 @@ class HomePageController extends Controller
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
     }
-
     public function getSubjectsTitle(Request $request): JsonResponse{
         if ($request->lang === '1'){
             $title = subjects::all('id','en_title', 'icon')->append('count')->toArray();
@@ -78,19 +77,17 @@ class HomePageController extends Controller
     public function getFaqInfo(Request $request){
    
         if($request->lang === '1'){
-            $banner = QuestionedAnswers::all('id', 'title', 'body');
+            $banner = QuestionedAnswers::all('id', 'en_title', 'en_body');
             return $this->onSuccess($banner);
         }
         if($request->lang === '2'
         ){
-            // $banner = QuestionedAnswers::all('id', 'avatar', 'ar_text');
-            return $this->onSuccess("Arabic in progress");
+            $banner = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
+            return $this->onSuccess($banner);
         }else{
             return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
         }
-        
     }
-    
     public function AvailableJobs(Request $request)
     { 
         $jobs = Academy::get(['id', 'en_name','avatar','banner'])

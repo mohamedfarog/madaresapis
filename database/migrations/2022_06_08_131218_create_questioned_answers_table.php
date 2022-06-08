@@ -13,10 +13,13 @@ class CreateQuestionedAnswersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('questioned_answers');
         Schema::create('questioned_answers', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('body');
+            $table->text('en_title');
+            $table->text('ar_title');
+            $table->text('en_body');
+            $table->text('ar_body');
             $table->timestamps();
         });
     }
