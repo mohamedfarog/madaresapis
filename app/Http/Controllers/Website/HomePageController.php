@@ -34,6 +34,10 @@ class HomePageController extends Controller
             $banner = HomeBanner::all('id','avatar', 'ar_text');
             return $this->onSuccess($banner);
         }
+        else{
+            return $this->onError("Invalid Lang Input");
+
+        }
     }
     public function getArticaleInfo(Request $request) : JsonResponse {
         if($request->lang === '1'){
@@ -45,7 +49,7 @@ class HomePageController extends Controller
             $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
             return $this->onSuccess($articleInfo);
         }else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+            return $this->onError("Invalid Lang Input");
         }
     }
     public function getSubjectsTitle(Request $request): JsonResponse{
@@ -58,7 +62,7 @@ class HomePageController extends Controller
             return $this->onSuccess($title);
         }
         else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+            return $this->onError("Invalid Lang Input");
         }
     }
     public function returnJobLevel(Request $request): JsonResponse{
@@ -71,7 +75,7 @@ class HomePageController extends Controller
             return $this->onSuccess($jobLevel);
         }
         else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+            return $this->onError("Invalid Lang Input");
         }
     }
     public function getFaqInfo(Request $request){
@@ -85,9 +89,11 @@ class HomePageController extends Controller
             $faq = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
             return $this->onSuccess($faq);
         }else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+            return $this->onError("Invalid Lang Input");
         }
     }
+
+
     public function AvailableJobs(Request $request)
     { 
         if($request->lang === '1'){
@@ -102,7 +108,7 @@ class HomePageController extends Controller
 
         }
         else{
-            return 'invalid lang input';
+            return $this->onError("Invalid Lang Input");
         }
     }
     public function homePageBanner(Request $request) {
@@ -115,7 +121,7 @@ class HomePageController extends Controller
             $banner = HomeBanner::all('id', 'avatar', 'ar_text');
             return $this->onSuccess($banner);
         }else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+            return $this->onError("Invalid Lang Input");
         }
     }
 }
