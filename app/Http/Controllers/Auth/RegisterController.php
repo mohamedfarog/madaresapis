@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
-       
+       //check user id first in the userType table
          $userType = UserType::where('user_id', $request->id)->first();
           if (isset($request->type)) {
            $userType->type = $request->type;
-            
-         }
+        }
          $userType->save();
        
          $U = User::with(['usertype'])->where('id', $request->id)->first(); 
@@ -46,21 +45,7 @@ class RegisterController extends Controller
         $U = User::with(['usertype'])->where('id', $user->id)->first(); 
         return $this->onSuccess($U);
     }   
-    protected function create(array $data)
-    {
-        $user =  User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'remember_token' => Str::random(100),
-            //$token = Auth::createToken('Laravel Password Grant Client')->accessToken,
-            //$response = ['token' => $token],
-        ]);
-        //return  $response = ['token' => $token];
-         $adminRole = Role::where('name','admin')->first();
-         $user->roles()->attach($adminRole);
-         return $user;
-        }
+
         public function ueserRegistered()
         {
             if(Auth::check()){
