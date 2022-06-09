@@ -17,8 +17,6 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-
-    
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -35,7 +33,6 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
         'web' => [
             'driver' => 'session',
@@ -47,7 +44,6 @@ return [
             'hash' =>false,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers

@@ -18,7 +18,6 @@ class JobLevel extends Model
     {
         return $this->belongsToMany(Job::class);
     }
-
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(Teacher::class);
