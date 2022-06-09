@@ -11,21 +11,25 @@ use App\Models\UserType;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
-       //check user id first in the userType table
-         $userType = UserType::where('user_id', $request->id)->first();
-          if (isset($request->type)) {
-           $userType->type = $request->type;
+        $checkUserTypeId = UserType::where('user_id', $request->id)->first();
+        if($checkUserTypeId){
+         if (isset($request->type)) {
+             $checkUserTypeId->type = $request->type;
+          }
+          $checkUserTypeId->save();
+          $U = User::with(['usertype'])->where('id', $request->id)->first();
+          return $this->onSuccess($U);
         }
-         $userType->save();
-       
-         $U = User::with(['usertype'])->where('id', $request->id)->first(); 
-         return $this->onSuccess($U);
+        else{
+            return $this->onError('User id does not exist!');
         }
+    }
         public function register (Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
