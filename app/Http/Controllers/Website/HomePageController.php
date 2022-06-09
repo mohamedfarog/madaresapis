@@ -90,10 +90,20 @@ class HomePageController extends Controller
     }
     public function AvailableJobs(Request $request)
     { 
-        $jobs = Academy::get(['id', 'en_name','avatar','banner'])
-        ->append(['totaljobs','vacancies'])->toArray();
-        return $this->onSuccess($jobs);
-    
+        if($request->lang === '1'){
+            $jobs = Academy::get(['id', 'en_name','avatar','banner', 'en_bio'])
+            ->append(['totaljobs','vacancies'])->toArray();
+            return $this->onSuccess($jobs);
+        }
+        if($request->lang === '2'){
+            $jobs = Academy::get(['id', 'ar_name','avatar','banner', 'ar_bio'])
+            ->append(['totaljobs','vacancies'])->toArray();
+            return $this->onSuccess($jobs);
+
+        }
+        else{
+            return 'invalid lang input';
+        }
     }
     public function homePageBanner(Request $request) {
         if($request->lang === '1'){
