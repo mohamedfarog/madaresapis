@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
+use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -112,5 +115,78 @@ class AuthController extends Controller
             'token' => $token,
             'user' => Auth::user(),
         ]);
+    }
+
+    function facebookAuth($accessToken)
+    {
+        try {
+            // return "test";
+            $user = Socialite::driver('facebook')->userFromToken($accessToken);
+            if ($user) {
+
+                $fUser = User::where('facebook_id', $user->id)->first();
+                if ($fUser) {
+                    $token = JWTAuth::fromUser($fUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $fUser,
+                    ];
+                } else {
+                    $fUser = new User();
+                    if ($user->email)
+                        $email = $user->email;
+                    else {
+                        $email = $user->name . '@facebook.com';
+                    }
+                    $fUser->email = $email;
+                    $fUser->name = $user->name;
+                    $fUser->facebook_id = $user->id;
+                    $fUser->save();
+                    $token = JWTAuth::fromUser($fUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $fUser,
+                    ];
+                }
+            } else {
+                return $this->onError("access token not valid");
+            }
+        } catch (Exception $e) {
+            return $e;
+            // return $this->onError("access token not valid exc");
+        }
+    }
+
+    public function socialLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'loginType' => 'required',
+            'accessToken' => 'required'
+        ]);
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 400);
+        }
+        switch ($request->loginType) {
+            case 'facebook':
+                $data = $this->facebookAuth($request->accessToken);
+                break;
+        }
+
+        return $this->onSuccess($data);
+    }
+
+    public function testFace(Request $request)
+    {
+        try {
+            $user = Socialite::driver('facebook')->userFromToken("EAATbOqwznZBEBAF9XZCmxE7YGMbdehBwbN0O829foDczGdGjlwlSgKC5UpnZBipxtEnIZBZCJiBXQ5hRPxh2rAhDGVZCi136mq2MGalLaGLqUogkZCGt6hYoUocrCoT2hSmDZB1T79Q0qRCjKjpT9BXRBLZAQucZAEEczgrx3QHpUjzRPJsZBZC369VHRiVhwTfaYh31dKxDVY9MY4lQOtaaKkvw");
+            if ($user) {
+                return json_encode($user);
+            }
+        } catch (Exception $e) {
+            return $this->onError("access token not valid");
+        }
     }
 }

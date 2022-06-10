@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Job;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Jobs\Job;
-
+use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {

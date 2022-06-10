@@ -23,6 +23,11 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    'facebook' => [
+        'client_id' => '1366944950493153',
+        'client_secret' => 'a0390f05218397a8ce360cdd13fcb1f3',
+        'redirect' => '',
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

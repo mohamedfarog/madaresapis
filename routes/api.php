@@ -29,6 +29,7 @@ use App\Models\Gender;
 |
 */
 
+Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
 Route::group(['prefix' => 'job_type'], function () {
@@ -38,7 +39,10 @@ Route::group(['prefix' => 'job_type'], function () {
    route::delete('delete/{id}', [JobTypeController::class, 'delete']);
 });
 Route::group(['prefix' => 'job_level'], function () {
-   Route::post('testUpload',  [JobLevelController::class, 'testUpload']);
+   Route::post('create',  [JobLevelController::class, 'create']);
+   Route::post("update",  [JobLevelController::class, 'update']);
+   Route::get("get",  [JobLevelController::class, 'get']);
+   Route::delete('destroy/{id}', [JobLevelController::class, 'destroy']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -61,6 +65,7 @@ Route::group(
 );
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
+Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {

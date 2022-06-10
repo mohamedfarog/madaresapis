@@ -29,8 +29,6 @@ use File;
 
 class RegisterController extends Controller
 {
-    
-   
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
@@ -299,7 +297,6 @@ class RegisterController extends Controller
             'status' => true,
             'user' => $user,
             'message' => 'Successfully Registered!'
-
         ]);
     }
     public function ueserRegistered()
