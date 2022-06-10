@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Website;
+
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
 use App\Models\Jobs\JobLevel;
@@ -12,9 +14,17 @@ use App\Models\Website\Articles;
 use App\Models\Website\QuestionedAnswers;
 use App\Models\Website\subjects;
 use Illuminate\Support\Js;
+use JWTAuth;
 
 class HomePageController extends Controller
 {
+
+    protected $user;
+
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     /**
      * Handle the incoming request.
      *
@@ -25,103 +35,110 @@ class HomePageController extends Controller
     {
         //
     }
-    public function getHomeBanner(Request $request): JsonResponse {
-        if($request->lang === '1'){
-            $banner = HomeBanner::all('id','avatar', 'en_text');
+    public function getHomeBanner(Request $request): JsonResponse
+    {
+        if ($request->lang === '1') {
+            $banner = HomeBanner::all('id', 'avatar', 'en_text');
             return $this->onSuccess($banner);
         }
-        if($request->lang === '2'){
-            $banner = HomeBanner::all('id','avatar', 'ar_text');
+        if ($request->lang === '2') {
+            $banner = HomeBanner::all('id', 'avatar', 'ar_text');
             return $this->onSuccess($banner);
-        }
-        else{
+        } else {
             return $this->onError("Invalid Lang Input");
-
         }
     }
-    public function getArticaleInfo(Request $request) : JsonResponse {
-        if($request->lang === '1'){
+    public function getArticaleInfo(Request $request): JsonResponse
+    {
+        if ($request->lang === '1') {
             $articleInfo = Articles::all('id', 'en_title', 'en_owner_name', 'published_date', 'en_body');
             return $this->onSuccess($articleInfo);
         }
-        if($request->lang === '2'
-        ){
+        if (
+            $request->lang === '2'
+        ) {
             $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
             return $this->onSuccess($articleInfo);
-        }else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
     }
-    public function getSubjectsTitle(Request $request): JsonResponse{
-        if ($request->lang === '1'){
-            $title = subjects::all('id','en_title', 'icon')->append('count')->toArray();
+    public function getSubjectsTitle(Request $request): JsonResponse
+    {
+        if ($request->lang === '1') {
+            $title = subjects::all('id', 'en_title', 'icon')->append('count')->toArray();
             return $this->onSuccess($title);
         }
-        if($request->lang === '2'){
+        if ($request->lang === '2') {
             $title = subjects::all('id', 'ar_title', 'icon')->append('count')->toArray();
             return $this->onSuccess($title);
-        }
-        else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
     }
-    public function returnJobLevel(Request $request): JsonResponse{
-        if ($request->lang === '1'){
-            $jobLevel = JobLevel::all('id','en_title', 'avater');
+    public function returnJobLevel(Request $request): JsonResponse
+    {
+        if ($request->lang === '1') {
+            $jobLevel = JobLevel::all('id', 'en_title', 'avater');
             return $this->onSuccess($jobLevel);
         }
-        if($request->lang === '2'){
+        if ($request->lang === '2') {
             $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
             return $this->onSuccess($jobLevel);
-        }
-        else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
     }
-    public function getFaqInfo(Request $request){
-     
-        
-        if($request->lang === '1'){
+    public function getFaqInfo(Request $request)
+    {
+
+
+        if ($request->lang === '1') {
             $faq = QuestionedAnswers::all('id', 'en_title', 'en_body');
             return $this->onSuccess($faq);
         }
-        if($request->lang === '2'){
+        if ($request->lang === '2') {
             $faq = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
             return $this->onSuccess($faq);
-        }else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
     }
 
 
     public function AvailableJobs(Request $request)
-    { 
-        if($request->lang === '1'){
-            $jobs = Academy::get(['id', 'en_name','avatar','banner', 'en_bio'])
-            ->append(['totaljobs','vacancies'])->toArray();
+    {
+        if ($request->lang === '1') {
+            $jobs = Academy::get(['id', 'en_name', 'avatar', 'banner', 'en_bio'])
+                ->append(['totaljobs', 'vacancies'])->toArray();
             return $this->onSuccess($jobs);
         }
-        if($request->lang === '2'){
-            $jobs = Academy::get(['id', 'ar_name','avatar','banner', 'ar_bio'])
-            ->append(['totaljobs','vacancies'])->toArray();
+        if ($request->lang === '2') {
+            $jobs = Academy::get(['id', 'ar_name', 'avatar', 'banner', 'ar_bio'])
+                ->append(['totaljobs', 'vacancies'])->toArray();
             return $this->onSuccess($jobs);
-
-        }
-        else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
     }
-    public function homePageBanner(Request $request) {
-        if($request->lang === '1'){
-            $banner = HomeBanner::all('id','ar_name', 'avatar', 'en_text');
+    public function homePageBanner(Request $request)
+    {
+        if ($request->lang === '1') {
+            $banner = HomeBanner::all('id', 'ar_name', 'avatar', 'en_text');
             return $this->onSuccess($banner);
         }
-        if($request->lang === '2'
-        ){
+        if (
+            $request->lang === '2'
+        ) {
             $banner = HomeBanner::all('id', 'avatar', 'ar_text');
             return $this->onSuccess($banner);
-        }else{
+        } else {
             return $this->onError("Invalid Lang Input");
         }
+    }
+
+    public function testJwt()
+    {
+        return $this->user;
     }
 }
