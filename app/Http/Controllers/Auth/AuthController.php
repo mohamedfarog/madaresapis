@@ -18,9 +18,7 @@ class AuthController extends Controller
     {
         return Auth::user();
     }
-    public function login(Request $request)
-    {
-
+    public function login(Request $request) {
         $user = User::with(['usertype'])->where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
@@ -29,9 +27,9 @@ class AuthController extends Controller
                 $accessToken = ['token' => $token];
                 return $this->onSuccess([$user, $accessToken]);
             } else {
-                $response = "Password mismatch";
-                return $this->onError($response);
-            }
+                 $response = "Password mismatch";
+                 return $this->onError($response);
+                }
         } else {
             $response = "User does not exist";
             return $this->onError($response);

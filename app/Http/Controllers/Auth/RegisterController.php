@@ -19,17 +19,32 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function UpdateUserType(Request $request)
-    {
+    public function UpdateUserType(Request $request){
+        $checkUserTypeId = UserType::where('user_id', $request->user_id)->firstOrFail();
+        if($checkUserTypeId ){
+            return $this->onError('User Type already exist');
+        }
+        else{
+            $UserType = UserType::create($request->toArray());
+            
+            return $this->onSuccess($UserType);
+            // $U = User::with(['usertype'])->where('id', $request->user_id)->first();     
+
+        }
+
+
+       
+      
         $checkUserTypeId = UserType::where('user_id', $request->id)->first();
-        if ($checkUserTypeId) {
-            if (isset($request->type)) {
-                $checkUserTypeId->type = $request->type;
-            }
-            $checkUserTypeId->save();
+        if($request->type){
+         if (isset($request->type)) {
+             $checkUserTypeId->type = $request->type;
+          }
+          $checkUserTypeId->save();
             $U = User::with(['usertype'])->where('id', $request->id)->first();
-            return $this->onSuccess($U);
-        } else {
+            return $this->onSuccess($U);     
+        }
+        else{
             return $this->onError('User id does not exist!');
         }
     }
@@ -45,13 +60,13 @@ class RegisterController extends Controller
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
-        $userType =  UserType::create([
-            'type' => 3,
-            'user_id' =>  $user['id'],
-        ]);
-        $U = User::with(['usertype'])->where('id', $user->id)->first();
-        return $this->onSuccess($U);
-    }
+        // $userType =  UserType::create([
+        //     'type' => 3,
+        //     'user_id' =>  $user['id'],
+        // ]);
+        // $U = User::with(['usertype'])->where('id', $user->id)->first(); 
+        return $this->onSuccess($user);
+    }   
 
     public function ueserRegistered()
     {
