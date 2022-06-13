@@ -84,8 +84,7 @@ class AuthController extends Controller
 
     public function loginV2(Request $request)
     {
-
-        $credentials = $request->only('email', 'password');
+           $credentials = $request->only('email', 'password');
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
@@ -106,7 +105,8 @@ class AuthController extends Controller
             return $this->onError('Could not create token.');
         }
 
-        return response()->json([
+        return $this->onError('Could not create token.');
+        return onSue()->json([
             'success' => true,
             'token' => $token,
             'user' => Auth::user(),
