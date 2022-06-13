@@ -17,37 +17,46 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
-        $checkUserTypeId = UserType::where('user_id', $request->user_id)->firstOrFail();
-        if($checkUserTypeId ){
-            return $this->onError('User Type already exist');
+     
+
+        try{
+            $checkUserTypeId = UserType::where('user_id', $request->user_id, 'id', $request->id)->firstOrFail();
+            if($checkUserTypeId ){
+                return $this->onError('User Type already exist');
+            }
+            else{
+                $UserType = UserType::create($request->toArray());
+                return $this->onSuccess($UserType);
+
         }
-        else{
-            $UserType = UserType::create($request->toArray());
-            
-            return $this->onSuccess($UserType);
+
             // $U = User::with(['usertype'])->where('id', $request->user_id)->first();     
+
+        }
+        catch(ModelNotFoundException $e){
+            return "User Does not Exist";
 
         }
 
 
        
       
-        $checkUserTypeId = UserType::where('user_id', $request->id)->first();
-        if($request->type){
-         if (isset($request->type)) {
-             $checkUserTypeId->type = $request->type;
-          }
-          $checkUserTypeId->save();
-            $U = User::with(['usertype'])->where('id', $request->id)->first();
-            return $this->onSuccess($U);     
-        }
-        else{
-            return $this->onError('User id does not exist!');
-        }
+        // $checkUserTypeId = UserType::where('user_id', $request->id)->first();
+        // if($request->type){
+        //  if (isset($request->type)) {
+        //      $checkUserTypeId->type = $request->type;
+        //   }
+        //   $checkUserTypeId->save();
+        //     $U = User::with(['usertype'])->where('id', $request->id)->first();
+        //     return $this->onSuccess($U);     
+        // }
+        // else{
+        //     return $this->onError('User id does not exist!');
+        // }
     }
         public function register (Request $request){
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            // 'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6',
         ]);
