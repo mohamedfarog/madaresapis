@@ -19,12 +19,12 @@ use JWTAuth;
 class HomePageController extends Controller
 {
 
-    protected $user;
+    // protected $user;
 
-    public function __construct()
-    {
-        $this->user = JWTAuth::parseToken()->authenticate();
-    }
+    // public function __construct()
+    // {
+    //     $this->user = JWTAuth::parseToken()->authenticate();
+    // }
     /**
      * Handle the incoming request.
      *
