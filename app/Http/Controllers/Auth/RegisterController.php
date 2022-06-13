@@ -47,7 +47,6 @@ class RegisterController extends Controller
             'user' => $user,
         ]);
     }   
-
         public function ueserRegistered()
         {
             if(Auth::check()){

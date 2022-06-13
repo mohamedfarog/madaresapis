@@ -16,7 +16,6 @@ trait ApiHelpers
     {
         return response()->json([
             'success' => false,
-            'data' => null,
             'message' => $message,
         ], $status);
     }
