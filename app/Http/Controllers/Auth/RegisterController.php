@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -14,6 +16,7 @@ use Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
@@ -50,15 +53,15 @@ class RegisterController extends Controller
         //     return $this->onError('User id does not exist!');
         // }
     }
-        public function register (Request $request){
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             // 'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 422);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
@@ -70,20 +73,19 @@ class RegisterController extends Controller
         return $this->onSuccess($user);
     }   
 
-        public function ueserRegistered()
-        {
-            if(Auth::check()){
-                return  $this->onSuccess("Welcome");
-            }
-            return 'Opps! You do not have access';
+    public function ueserRegistered()
+    {
+        if (Auth::check()) {
+            return  $this->onSuccess("Welcome");
         }
-        protected function respondWithToken($token)
-        {
-            return response()->json([
+        return 'Opps! You do not have access';
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
- 

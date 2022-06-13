@@ -96,6 +96,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 200);
         }
+// <<<<<<< HEAD
+// =======
+
+// >>>>>>> 5b51844160f00f0c74499889616ff47107040814
         //Request is validated
         //Crean token
         try {
