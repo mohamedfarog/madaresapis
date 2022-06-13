@@ -13,7 +13,6 @@ class AcademyController extends Controller
      * @return \Illuminate\Http\Response
      * @return \Illuminate\Http\Response
      */
-    
     public function academyData(Request $request){
         if($request->lang === '1'){
             $academy = Academy::all('id', 'en_name', 'en_city', 'en_country', 'avatar')->append(['Totaljobs'])->toArray();
