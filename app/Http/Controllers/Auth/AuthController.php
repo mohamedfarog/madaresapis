@@ -100,17 +100,12 @@ class AuthController extends Controller
         //Crean token
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->onError([
-                    'success' => false,
-                    'message' => 'Login credentials are invalid.',
+                return $this->onError(['Login credentials are invalid.',
                 ]);
             }
         } catch (JWTException $e) {
             // return $credentials;
-            return response()->json([
-                'success' => false,
-                'message' => 'Could not create token.',
-            ]);
+            return $this->onSuccess()->json('Could not create token');
         }
 
         return response()->json([
