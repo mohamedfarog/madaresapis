@@ -110,7 +110,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Could not create token.',
-            ], 500);
+            ]);
         }
 
         return response()->json([
