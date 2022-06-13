@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
-     
-
-        try{
+       
             $checkUserTypeId = UserType::where('user_id', $request->user_id, 'id', $request->id)->firstOrFail();
             if($checkUserTypeId ){
                 return $this->onError('User Type already exist');
@@ -27,16 +25,14 @@ class RegisterController extends Controller
             else{
                 $UserType = UserType::create($request->toArray());
                 return $this->onSuccess($UserType);
+                // $U = User::with(['usertype'])->where('id', $request->user_id)->first();     
+    
+            }
 
-        }
-
-            // $U = User::with(['usertype'])->where('id', $request->user_id)->first();     
-
-        }
-        catch(ModelNotFoundException $e){
-            return "User Does not Exist";
-
-        }
+            
+        
+  
+   
 
 
        
@@ -56,7 +52,7 @@ class RegisterController extends Controller
     }
         public function register (Request $request){
         $validator = Validator::make($request->all(), [
-            // 'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6',
         ]);
