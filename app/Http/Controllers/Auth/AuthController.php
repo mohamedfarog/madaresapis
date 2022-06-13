@@ -86,7 +86,6 @@ class AuthController extends Controller
     {
 
         $credentials = $request->only('email', 'password');
-
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
@@ -97,7 +96,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 200);
         }
-
         //Request is validated
         //Crean token
         try {
