@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use \App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Job\JobLevelController;
+use App\Http\Controllers\Job\JobTypeController;
 use App\Http\Controllers\Website\QuestionedAnswersController as FAQController;
 use App\Http\Controllers\Website\HomePageController;
 use App\Http\Controllers\Website\AboutController;
@@ -27,6 +29,16 @@ use App\Models\Gender;
 |
 */
 
+Route::group(['prefix' => 'job_type'], function () {
+   Route::post('create',  [JobTypeController::class, 'create']);
+   Route::get('get',  [JobTypeController::class, 'get']);
+   Route::post('update',  [JobTypeController::class, 'update']);
+   route::delete('delete/{id}', [JobTypeController::class, 'delete']);
+});
+Route::group(['prefix' => 'job_level'], function () {
+   Route::post('testUpload',  [JobLevelController::class, 'testUpload']);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
@@ -38,6 +50,8 @@ Route::group(['prefix' => 'auth'], function () {
    Route::post('refresh',  [AuthController::class, 'refresh']);
    Route::post('me',  [AuthController::class, 'me']);
 });
+
+
 
 Route::group(
    ['middleware' => ['jwt.verify']],
