@@ -48,7 +48,7 @@ class RegisterController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'The email has already been taken',
-            ], 500);
+            ]);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());

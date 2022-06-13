@@ -84,7 +84,8 @@ class AuthController extends Controller
 
     public function loginV2(Request $request)
     {
-           $credentials = $request->only('email', 'password');
+
+        $credentials = $request->only('email', 'password');
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
@@ -99,14 +100,20 @@ class AuthController extends Controller
         //Crean token
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->onError('Login credentials are invalid.');
+                return $this->onError([
+                    'success' => false,
+                    'message' => 'Login credentials are invalid.',
+                ]);
             }
         } catch (JWTException $e) {
-            return $this->onError('Could not create token.');
+            // return $credentials;
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not create token.',
+            ], 500);
         }
 
-        return $this->onError('Could not create token.');
-        return onSue()->json([
+        return response()->json([
             'success' => true,
             'token' => $token,
             'user' => Auth::user(),
