@@ -10,7 +10,6 @@ use App\Models\Academies\Branch;
 use App\Models\Jobs\Job;
 use App\Models\User;
 
-
 class Academy extends Model
 {
     use HasFactory;

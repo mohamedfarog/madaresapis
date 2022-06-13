@@ -46,10 +46,10 @@ Route::group(
       Route::get('testJwt', [HomePageController::class, 'testJwt']);
    }
 );
-Route::post('loginV2', [AuthController::class, 'loginV2']);
+Route::post('login', [AuthController::class, 'loginV2']);
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
-      Route::post('/login', [AuthController::class, 'login']);
+     // Route::post('/login', [AuthController::class, 'login']);
    });
    Route::post('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::post('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
