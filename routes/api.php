@@ -47,9 +47,10 @@ Route::group(
 );
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
+Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
-     // Route::post('/login', [AuthController::class, 'login']);
+   // Route::post('/login', [AuthController::class, 'login']);
    });
    Route::post('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::post('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
@@ -63,7 +64,6 @@ Route::group(['prefix' => 'website'], function () {
    Route::post('acadmy', [AcademyController::class, 'academyData']);
    Route::post('jobs', [JobController::class, 'getJobsInfo']);
    Route::post('register', [RegisterController::class, 'register']);
-   Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::post('login', [AuthController::class, 'login']);
    Route::post('about', [AboutController::class, 'aboutData']);
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {  // also you can this value in your config file and use here

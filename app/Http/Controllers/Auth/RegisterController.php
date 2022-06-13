@@ -17,16 +17,26 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
-       
-        $checkUserTypeId = UserType::findOrFail('user_id', $request->user_id);
-        
-        if($checkUserTypeId){
-            return "found";
+        try{
+            $userType = User::findOrFail($request->id);
+            if(asset($request->type)){
+                $userType->user_type = $request->type;
+            }
+            $userType->save();
+            if($request->type === '1'){
+                return $this->onSuccess("Teacher form goes here");
+            }
+            if($request->type === '2'){
+                return $this->onSuccess("academy form to academy page");
+            }
+            else{
+                return $this->onError('User Type is undefined');
+            }
         }
-        else{
-            return "NO";
-        }
-  
+       catch(ModelNotFoundException $e){
+        return $this->onError('User ID NOT FOUND');
+    }
+
     }
         public function register (Request $request){
         $validator = Validator::make($request->all(), [
