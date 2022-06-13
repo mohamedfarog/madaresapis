@@ -32,7 +32,6 @@ return [
     |
     */
     'lifetime' => env('SESSION_LIFETIME', 120),
-
     'expire_on_close' => false,
 
     /*
@@ -45,9 +44,7 @@ return [
     | automatically by Laravel and you can use the Session like normal.
     |
     */
-
     'encrypt' => false,
-
     /*
     |--------------------------------------------------------------------------
     | Session File Location

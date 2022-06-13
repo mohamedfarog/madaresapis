@@ -287,28 +287,30 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 422);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
-        //$this->sendVerificationEmail($user->email, $user->id);
-        return response()->json([
-            'status' => true,
-            'user' => $user,
-            'message' => 'Successfully Registered!'
-        ]);
-    }
-    public function ueserRegistered()
-    {
-        if (Auth::check()) {
-            return  $this->onSuccess("Welcome");
+        // $userType =  UserType::create([
+        //     'type' => 3,
+        //     'user_id' =>  $user['id'],
+        // ]);
+        // $U = User::with(['usertype'])->where('id', $user->id)->first(); 
+        return $this->onSuccess($user);
+    }   
+
+        public function ueserRegistered()
+        {
+            if(Auth::check()){
+                return  $this->onSuccess("Welcome");
+            }
+            return 'Opps! You do not have access';
         }
-        return 'Opps! You do not have access';
-    }
-    protected function respondWithToken($token)
-    {
-        return response()->json([
+        protected function respondWithToken($token)
+        {
+            return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth::factory()->getTTL() * 60
@@ -327,3 +329,4 @@ class RegisterController extends Controller
         return "<h2>Email has been verified successfully";
     }
 }
+ 
