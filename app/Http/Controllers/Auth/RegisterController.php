@@ -24,7 +24,7 @@ class RegisterController extends Controller
             }
             $userType->save();
             if($request->type === '255'){
-                return $this->onSuccess("Academy form goes here");
+                return $this->onSuccess("cademy form goes here");
             }
             if($request->type === '256'){
                 return $this->onSuccess("Teaher form to academy page");
