@@ -35,11 +35,17 @@ class RegisterController extends Controller
         ]);
         if ($validator->fails())
         {
-            return $this->onError("The email has already been taken");
+            return response()->json([
+                'success' => false,
+                'message' => 'The email has already been taken',
+            ], 500);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
-        return $this->onSuccess($user);
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+        ]);
     }   
 
         public function ueserRegistered()

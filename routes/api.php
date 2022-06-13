@@ -37,7 +37,6 @@ Route::group(['prefix' => 'auth'], function () {
    // Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class, 'refresh']);
    Route::post('me',  [AuthController::class, 'me']);
-   Route::post('register',  [RegisterController::class, 'register']);
 });
 
 Route::group(
@@ -46,6 +45,7 @@ Route::group(
       Route::get('testJwt', [HomePageController::class, 'testJwt']);
    }
 );
+Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
