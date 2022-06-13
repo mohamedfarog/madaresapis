@@ -23,11 +23,11 @@ class RegisterController extends Controller
                 $userType->user_type = $request->type;
             }
             $userType->save();
-            if($request->type === '1'){
-                return $this->onSuccess("Teacher form goes here");
+            if($request->type === '255'){
+                return $this->onSuccess("Academy form goes here");
             }
-            if($request->type === '2'){
-                return $this->onSuccess("academy form to academy page");
+            if($request->type === '256'){
+                return $this->onSuccess("Teaher form to academy page");
             }
             else{
                 return $this->onError('User Type is undefined');
