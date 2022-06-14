@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Role;
-//use App\Models\UserType;
+use App\Models\Academies\Academy;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -24,7 +24,10 @@ class RegisterController extends Controller
             }
             $userType->save();
             if($request->type === '255'){
+                $academy = new Academy();
+                // if(asset($request->))
                 return $this->onSuccess("academy form goes here");
+
             }
             if($request->type === '256'){
                 return $this->onSuccess("Teaher form to academy page");
