@@ -107,7 +107,6 @@ class AuthController extends Controller
             // return $credentials;
             return $this->onSuccess()->json('Could not create token');
         }
-
         return response()->json([
             'success' => true,
             'token' => $token,
