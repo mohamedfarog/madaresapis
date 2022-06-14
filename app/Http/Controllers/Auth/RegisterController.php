@@ -46,7 +46,7 @@ class RegisterController extends Controller
         {
             return response()->json([
                 'status' => false,
-                'message' => 'The email has already been taken',
+                'message' => 'The email has already been taken'
             ]);
         }
         $request['password'] = Hash::make($request['password']);
@@ -54,7 +54,8 @@ class RegisterController extends Controller
         return response()->json([
             'status' => true,
             'user' => $user,
-            
+            'message' => 'Successfully Registered!'
+
         ]);
     }   
         public function ueserRegistered()
