@@ -12,7 +12,6 @@ trait ApiHelpers
             'message' => $message,
         ], $status);
     }
-
     protected function onError($message, $status = 400)
     {
         return response()->json([

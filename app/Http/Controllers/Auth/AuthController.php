@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -91,10 +89,9 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:6|max:50'
         ]);
-
         //Send failed response if request is not valid
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 422);
         }
         //Request is validated
         //Crean token
@@ -108,7 +105,7 @@ class AuthController extends Controller
             return $this->onSuccess()->json('Could not create token');
         }
         return response()->json([
-            'success' => true,
+            'status' => true,
             'token' => $token,
             'user' => Auth::user(),
         ]);
