@@ -11,7 +11,7 @@ class JobLevelController extends Controller
     public function testUpload(Request $request)
     {
         if ($file = $request->file('file')) {
-            $path = $file->store('public/files');
+            $path = $file->store('public/job_level_icons');
             $name = $file->getClientOriginalName();
 
 
