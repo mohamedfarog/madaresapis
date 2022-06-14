@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Teachers\Teacher;
 use App\Models\Academies\Academy;
 use App\Models\Role;
-use App\Models\UserType;
+//use App\Models\UserType;
 use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements JWTSubject
 {
@@ -42,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        
     ];
     /**
      * The attributes that should be cast.
@@ -84,7 +85,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Academy::class, 'user_id', 'id');
     }
-    public function usertype(){
-        return $this->hasOne(UserType::class,'user_id','id');
-    }
+    // public function usertype(){
+    //     return $this->hasOne(UserType::class,'user_id','id');
+    // }
 }

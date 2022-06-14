@@ -108,7 +108,7 @@ class AuthController extends Controller
             return $this->onSuccess()->json('Could not create token');
         }
         return response()->json([
-            'success' => true,
+            'status' => true,
             'token' => $token,
             'user' => Auth::user(),
         ]);

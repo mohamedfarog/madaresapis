@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Role;
-use App\Models\UserType;
+//use App\Models\UserType;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -36,8 +36,7 @@ class RegisterController extends Controller
        catch(ModelNotFoundException $e){
         return $this->onError('User ID NOT FOUND');
     }
-
-    }
+}
         public function register (Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255| unique:users',
@@ -46,15 +45,16 @@ class RegisterController extends Controller
         if ($validator->fails())
         {
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => 'The email has already been taken',
             ]);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
         return response()->json([
-            'success' => true,
+            'status' => true,
             'user' => $user,
+            
         ]);
     }   
         public function ueserRegistered()

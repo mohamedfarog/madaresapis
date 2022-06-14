@@ -46,12 +46,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return response()->json('Madars-Backend'); 
 // })->name('login');
 Route::group(['prefix' => 'auth'], function () {
-   // Route::post('logout', [AuthController::class,'logout']);
+   //Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class, 'refresh']);
    Route::post('me',  [AuthController::class, 'me']);
 });
-
-
 
 Route::group(
    ['middleware' => ['jwt.verify']],
