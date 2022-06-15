@@ -21,19 +21,13 @@ class CreateAcademiesTable extends Migration
             $table->string('en_name');
             $table->string('website');
             $table->string('contact_number')->nullable();
-            $table->string('contact_email' , 50)->nullable();
             $table->string('avatar')->nullable();
             $table->string('banner')->nullable();
             $table->longText('ar_bio')->nullable();
             $table->longText('en_bio')->nullable();
-            $table->string('ar_city');
-            $table->string('en_city');
-            $table->string('en_country');
-            $table->string('ar_country');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

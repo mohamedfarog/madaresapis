@@ -1,6 +1,5 @@
 <?php
-namespace App\Http\Controllers;
-namespace App\Http\Controllers\Website;
+namespace App\Http\Controllers\Job;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,6 +15,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function getJobsInfo(Request $request){
+ 
          if ($request->lang === "1"){
             $job = Job::all('id', 'en_title','academy_id', 'job_type_id', 'en_advertise_area','en_hiring_budget', 'job_level_id','gender_id', 'job_vacancy','en_job_description', 'expected_start_date', 'job_deadline','en_job_responsibilities', 'en_job_benefits', 'en_job_experience','ar_job_experience')->append('AcademiesInfo');
             return $this->onSuccess($job);

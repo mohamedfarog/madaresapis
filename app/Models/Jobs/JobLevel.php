@@ -11,7 +11,8 @@ use App\Models\Jobs\Job;
 class JobLevel extends Model
 {
     use HasFactory;
-    protected $fillable = ['en_title', 'ar_title'] ;
+    protected $fillable = ['id','en_title', 'ar_title', 'avater'];
+    protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
 
     public function jobs(): BelongsToMany
