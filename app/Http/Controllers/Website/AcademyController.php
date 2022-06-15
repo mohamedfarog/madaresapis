@@ -15,11 +15,11 @@ class AcademyController extends Controller
      */
     public function academyData(Request $request){
         if($request->lang === '1'){
-            $academy = Academy::all('id', 'en_name', 'en_city', 'en_country', 'avatar')->append(['Totaljobs'])->toArray();
+            $academy = Academy::all('id', 'en_name', 'avatar')->append(['Totaljobs'])->toArray();
             return $this->onSuccess($academy);
         }
         if($request->lang === '2'){
-            $academy = Academy::all('id', 'ar_name', 'ar_city', 'ar_country', 'avatar')->append(['Totaljobs'])->toArray();
+            $academy = Academy::all('id', 'ar_name', 'avatar')->append(['Totaljobs'])->toArray();
             return $this->onSuccess($academy);
         }
         else{
