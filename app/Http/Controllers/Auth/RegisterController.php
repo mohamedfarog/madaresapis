@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\Role;
+use App\Models\Locations;
 use App\Models\Academies\Academy;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +25,33 @@ class RegisterController extends Controller
             $userType->save();
             if($request->type === '255'){
                 $academy = new Academy();
-                // if(asset($request->))
+                if(asset($request->user->id)){
+                    $academy->user_id = $request->user_id;
+                }
+                if(asset($request->ar_name)){
+                    $academy->ar_name = $request->ar_name;
+                }
+                if(asset($request->en_name)){
+                    $academy->en_name = $request->en_name;
+                }
+                  if(asset($request->contactNumber)){
+                    $academy->contact_number = $request->contactNumber;
+                }
+                if(asset($request->en_bio)){
+                    $academy->en_bio = $request->en_bio;
+                }
+                if(asset($request->ar_bio)){
+                    $academy->ar_bio = $request->ar_bio;
+                }
+                if(asset($request->coverFile)){
+                    $academy->banner = $request->coverFile;
+                }
+                if(asset($request->logoFile)){
+                    $academy->avatar = $request->logoFile;
+                }
+                $location = new Locations();
+                
                 return $this->onSuccess("academy form goes here");
-
             }
             if($request->type === '256'){
                 return $this->onSuccess("Teaher form to academy page");
