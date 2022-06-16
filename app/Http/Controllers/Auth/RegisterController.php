@@ -28,25 +28,12 @@ class RegisterController extends Controller
             if($request->type === '255'){
                 $upload = new File();
                 $validator = Validator::make($request->all(), [
-                    'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd',]);
+                    'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd']);
                 if($validator->fails()){
                     return response()->json(['error' => $validator->errors()], 401);
                 }
-            
-                $fileName = time().'_'.$request->file_url->getClientOriginalName();
-                $filePath = $request->file('file_url')->storeAs('uploads', $fileName, 'public');
-
-                return $filePath;
-                $academy_file = new AcademyFile();
-                
-                    $fileName = time().'.'.$request->file_url->extension();
-                    $request->file_url->move(public_path('uploads'), $fileName);
-                
-                if(asset($request->id)){
-                    $academy_file->academy_id = $request->id;
-                }
-                $academy_file->save();
-                return "file uploaded";
+                //$fileName = time().'_'.$request->AcademyFiles[]->getClientOriginalName();
+                //$filePath = $request->file('file_url')->storeAs('uploads', $fileName, 'public');
                 $academy = new Academy();
                 if(asset($request->user_id)){
                     $academy->user_id = $request->user_id;
@@ -77,7 +64,6 @@ class RegisterController extends Controller
                 }
                 $academy->save();
                 $location = new Locations();
-           
                 if(asset($request->id)){
                     $location->academy_id = $request->id;
                 }
@@ -110,25 +96,36 @@ class RegisterController extends Controller
                     $location->building_no = $request->building_no;
                 }
                 $location->save();
-                $jobLevel = new JobLevel();
-                if (asset($request->en_job_level_title)){
-                    $jobLevel->en_title = $request->en_job_level_title;
+  
+                foreach ($request->academy_levels['job_level_id'] as $level){
+                    $aca_level = new AcademyLevels();
+                    $aca_level->academy_id = $request->id;
+                    $aca_level->level_id = $level;
+                    $aca_level->save();  
+app/Http/Kernel.php                } 
+                 if(isset($request->AcademyFiles)) {
+                 
+                   // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
+                    foreach ($request->AcademyFiles as $image) {
+                        $fileNmae = time().'_'.$image->getClientOriginalName();
+                        $fileNmae = $image->store('AcademyFiles');
+                        $academyFile = new AcademyFile();
+                        $academyFile['file_url'] = $fileNmae;
+                        $academyFile->academy_id = $request->id;
+                        $academyFile->save();
+    
+                    }
                 }
-                if (asset($request->ar_job_level_title)){
-                    $jobLevel->ar_title = $request->ar_job_level_title;
-                }
-                if (asset($request->job_level_avatar)){
-                    $jobLevel->avater = $request->job_level_avatar;
-                }
-                $jobLevel->save();
-                $academy_level = new AcademyLevels();
-                $academy_level->academy_id = $request->id;
-                $academy_level->level_id = $request->job_level_id;
-                $academy_level->save();
-               
-          
-             
-                return $this->onSuccess("academy form goes here");
+                // $academy_file = new AcademyFile();
+                // if(asset($request->file_url)){
+                //     $academy_file->file_url = $filePath;
+                    
+                // }
+                // if(asset($request->id)){
+                //     $academy_file->academy_id = $request->id;
+                // }
+                // $academy_file->save();
+                return $this->onSuccess("academy Data insterted");
             }
             if($request->type === '256'){
                 return $this->onSuccess("Teaher form to academy page");
