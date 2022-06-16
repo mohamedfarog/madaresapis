@@ -12,12 +12,12 @@ use App\Models\User;
 use App\Models\Academies\AcademyFile;
 use App\Models\Academies\AcademyLevels;
 use App\Models\Locations;
+use phpDocumentor\Reflection\Location;
 
 class Academy extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['user_id', 'en_name' ,'ar_name', 'website','contact_number','ar_bio', 'en_bio', 'avatar' , 'banner' ];
+    protected $fillable = ['user_id', 'en_name' ,'ar_name','contact_number','ar_bio', 'en_bio', 'avatar' ];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
@@ -33,15 +33,6 @@ class Academy extends Model
     {
         return $this->hasMany(Job::class);
     }
-    public function academyFiles(){
-        return $this->hasMany(academyFiles::class);
-    }
-    public function academyLocations(){
-        return $this->hasOne(Locations::class);
-    }
-    public function academyLevels(){
-        return $this->hasMany(academyLevels::class);
-    }
     public function getVacanciesAttribute()
     {
         $jobs= Job::where('academy_id',$this->id)->sum('job_vacancy');
@@ -52,5 +43,17 @@ class Academy extends Model
         $jobs= Job::where('academy_id',$this->id)->count('job_vacancy');
         return $jobs;
     }
-  
+    public function academyLocations(): HasMany
+    {
+        return $this->hasMany(Locations::class, 'academy_id', 'user_id');
+    }
+
+    public function academyLevels(): HasMany
+    {
+        return $this->hasMany(AcademyLevels::class, 'academy_id', 'user_id');
+    }
+    public function academyFiles(): HasMany
+    {
+        return $this->hasMany(AcademyFile::class, 'academy_id', 'user_id');
+    }
 }

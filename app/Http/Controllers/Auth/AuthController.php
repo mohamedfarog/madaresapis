@@ -96,8 +96,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 422);
         }
-        //Request is validated
-        //Creat token
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->onError(
@@ -105,8 +103,7 @@ class AuthController extends Controller
                 );
             }
         } catch (JWTException $e) {
-            // return $credentials;
-            return $this->onError('Login credentials are invalid.');
+            return $this->onSuccess()->json('Could not create token');
         }
         return response()->json([
             'status' => true,

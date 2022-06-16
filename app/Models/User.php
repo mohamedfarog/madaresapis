@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Teachers\Teacher;
 use App\Models\Academies\Academy;
 use App\Models\Role;
+use App\Models\Locations;
 //use App\Models\UserType;
 use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements JWTSubject
@@ -76,15 +77,14 @@ class User extends Authenticatable implements JWTSubject
          }
          return false;
         }
-     public function teachers(): HasMany
-    {
-        return $this->hasMany(Teacher::class, 'user_id', 'id');
-    }
+        public function teachers(): HasMany
+        {
+            return $this->hasMany(Teacher::class, 'user_id', 'id');
+        }
+  
      public function academies(): HasMany
     {
         return $this->hasMany(Academy::class, 'user_id', 'id');
     }
-    // public function usertype(){
-    //     return $this->hasOne(UserType::class,'user_id','id');
-    // }
+
 }
