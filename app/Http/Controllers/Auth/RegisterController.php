@@ -102,7 +102,7 @@ class RegisterController extends Controller
                     $aca_level->academy_id = $request->id;
                     $aca_level->level_id = $level;
                     $aca_level->save();  
-app/Http/Kernel.php                } 
+                } 
                  if(isset($request->AcademyFiles)) {
                  
                    // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
