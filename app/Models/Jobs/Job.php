@@ -45,9 +45,8 @@ class Job extends Model
 
     public function getAcademiesInfoAttribute()
     {
-            $academy = Academy::select('en_name','avatar', 'ar_name')->where('id', $this->id)->get();
-            return $academy;
-
+        $academy = Academy::select('en_name','avatar', 'ar_name')->where('id', $this->id)->get();
+        return $academy;
         }
 
 }

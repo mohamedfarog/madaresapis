@@ -20,20 +20,17 @@ class RegisterController extends Controller
 {
     public function UpdateUserType(Request $request){
         try{
-            $userType = User::findOrFail($request->id);
+            $userType = User::findOrFail($request->user_id);
             if(asset($request->type)){
                 $userType->user_type = $request->type;
             }
             $userType->save();
             if($request->type === '255'){
-                $upload = new File();
                 $validator = Validator::make($request->all(), [
                     'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd']);
                 if($validator->fails()){
-                    return response()->json(['error' => $validator->errors()], 401);
+                    return response()->json(['error' => $validator->errors()], 422);
                 }
-                //$fileName = time().'_'.$request->AcademyFiles[]->getClientOriginalName();
-                //$filePath = $request->file('file_url')->storeAs('uploads', $fileName, 'public');
                 $academy = new Academy();
                 if(asset($request->user_id)){
                     $academy->user_id = $request->user_id;
@@ -53,23 +50,17 @@ class RegisterController extends Controller
                 if(asset($request->ar_bio)){
                     $academy->ar_bio = $request->ar_bio;
                 }
-                if(asset($request->banner)){
-                    $academy->banner = $request->banner;
-                }
                 if(asset($request->avatar)){
-                    $academy->avatar = $request->avatar;
-                }
-                if(asset($request->website)){
-                    $academy->website = $request->website;
+                    $fileNmae = time().'_'.$request->avatar->getClientOriginalName();
+                    $fileNmae = $request->avatar->store('public/uploads/logos');
+                    $academy->avatar = $fileNmae;
                 }
                 $academy->save();
                 $location = new Locations();
-                if(asset($request->id)){
-                    $location->academy_id = $request->id;
+                if(asset($request->user_id)){
+                    $location->academy_id = $request->user_id;
                 }
-                if(asset($request->country_id)){
-                    $location->country_id = $request->country_id;
-                }
+             
                 if(asset($request->ar_city)){
                     $location->ar_city_name = $request->ar_city;
                 }
@@ -88,44 +79,28 @@ class RegisterController extends Controller
                 if(asset($request->ar_street)){
                     $location->ar_street = $request->ar_street;
                 }
-       
-                if(asset($request->location_code)){
-                    $location->location_code = $request->location_code;
-                }
                 if(asset($request->building_no)){
                     $location->building_no = $request->building_no;
                 }
                 $location->save();
-  
                 foreach ($request->academy_levels['job_level_id'] as $level){
                     $aca_level = new AcademyLevels();
-                    $aca_level->academy_id = $request->id;
+                    $aca_level->academy_id = $request->user_id;
                     $aca_level->level_id = $level;
                     $aca_level->save();  
                 } 
                  if(isset($request->AcademyFiles)) {
-                 
-                   // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
                     foreach ($request->AcademyFiles as $image) {
                         $fileNmae = time().'_'.$image->getClientOriginalName();
-                        $fileNmae = $image->store('AcademyFiles');
+                        $fileNmae = $image->store('public/uploads/AcademyFiles');
                         $academyFile = new AcademyFile();
                         $academyFile['file_url'] = $fileNmae;
-                        $academyFile->academy_id = $request->id;
+                        $academyFile->academy_id = $request->user_id;
                         $academyFile->save();
-    
                     }
-                }
-                // $academy_file = new AcademyFile();
-                // if(asset($request->file_url)){
-                //     $academy_file->file_url = $filePath;
-                    
-                // }
-                // if(asset($request->id)){
-                //     $academy_file->academy_id = $request->id;
-                // }
-                // $academy_file->save();
-                return $this->onSuccess("academy Data insterted");
+                } 
+               $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->user_id)->get();
+                return $this->onSuccess($academyData);
             }
             if($request->type === '256'){
                 return $this->onSuccess("Teaher form to academy page");
@@ -138,7 +113,7 @@ class RegisterController extends Controller
         return $this->onError('User ID NOT FOUND');
     }
 }
-        public function register (Request $request){
+    public function register (Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
