@@ -19,7 +19,7 @@ class AppMail extends Mailable
     public function __construct($code)
     {
         //
-        $this->code = $code;
+        $this->code = env("BASE_URL", "somedefaultvalue") . "/api/verifyEmail/" . $code;
     }
 
     /**

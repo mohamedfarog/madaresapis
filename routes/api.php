@@ -29,6 +29,8 @@ use App\Models\Gender;
 |
 */
 
+Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
+Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
 
 Route::group(['prefix' => 'job_type'], function () {
    Route::post('create',  [JobTypeController::class, 'create']);

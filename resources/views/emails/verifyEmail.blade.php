@@ -8,7 +8,9 @@
 <body>
 
     <h1>Verify email</h1>
-    <p>Code : {{ $code }}</p>
+    <a href="{{$code}}">verify email</a>
+    <p>Click following link to verify your email : {{ $code }}</p>
+
 
 </body>
 
