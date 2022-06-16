@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Academies\Branch;
 use App\Models\Jobs\Job;
 use App\Models\User;
+use App\Models\Academies\AcademyFile;
+use App\Models\Academies\AcademyLevels;
+use App\Models\Locations;
 
 class Academy extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['user_id', 'name' , 'website','contact_number' , 'contact_email' ,'bio' , 'avatar' , 'banner' ];
+    protected $fillable = ['user_id', 'en_name' ,'ar_name', 'website','contact_number','ar_bio', 'en_bio', 'avatar' , 'banner' ];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
@@ -30,7 +33,15 @@ class Academy extends Model
     {
         return $this->hasMany(Job::class);
     }
-
+    public function academyFiles(){
+        return $this->hasMany(academyFiles::class);
+    }
+    public function academyLocations(){
+        return $this->hasOne(Locations::class);
+    }
+    public function academyLevels(){
+        return $this->hasMany(academyLevels::class);
+    }
     public function getVacanciesAttribute()
     {
         $jobs= Job::where('academy_id',$this->id)->sum('job_vacancy');
@@ -41,4 +52,5 @@ class Academy extends Model
         $jobs= Job::where('academy_id',$this->id)->count('job_vacancy');
         return $jobs;
     }
+  
 }
