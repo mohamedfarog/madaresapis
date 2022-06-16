@@ -12,6 +12,8 @@ use App\Models\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use Laravel\Socialite\Facades\Socialite;
+
 class AuthController extends Controller
 {
     public function test()
