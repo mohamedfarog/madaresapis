@@ -111,4 +111,10 @@ class AuthController extends Controller
             'user' => Auth::user(),
         ]);
     }
+
+    public function testFace(Request $request)
+    {
+        $user = Socialite::driver('facebook')->userFromToken("107265378689294");
+        return $user;
+    }
 }

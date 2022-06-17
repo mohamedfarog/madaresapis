@@ -120,23 +120,26 @@ class RegisterController extends Controller
                 }
                 $location->save();
 
+                //change  it to handle in single query
                 foreach ($request->academy_levels['job_level_id'] as $level) {
                     $aca_level = new AcademyLevels();
                     $aca_level->academy_id = $request->user_id;
                     $aca_level->level_id = $level;
-                    $aca_level->save();  
-                } 
-                 if(isset($request->AcademyFiles)) {
+                    $aca_level->save();
+                }
+                if (isset($request->AcademyFiles)) {
+                    //change  it to handle in single query
                     foreach ($request->AcademyFiles as $image) {
-                        $fileNmae = time().'_'.$image->getClientOriginalName();
+                        $fileNmae = time() . '_' . $image->getClientOriginalName();
                         $fileNmae = $image->store('public/uploads/AcademyFiles');
                         $academyFile = new AcademyFile();
                         $academyFile['file_url'] = $fileNmae;
                         $academyFile->academy_id = $request->user_id;
                         $academyFile->save();
                     }
-                } 
-               $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->user_id)->get();
+                }
+                //use the data that is already avaialable from the creation
+                $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $request->user_id)->get();
                 return $this->onSuccess($academyData);
             }
             if ($request->type === '256') {
@@ -163,7 +166,6 @@ class RegisterController extends Controller
             'status' => true,
             'user' => $user,
             'message' => 'Successfully Registered!'
-
         ]);
     }
     public function ueserRegistered()

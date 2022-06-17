@@ -29,6 +29,7 @@ use App\Models\Gender;
 |
 */
 
+Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
 
