@@ -25,6 +25,11 @@ class CreateAcademiesTable extends Migration
             $table->string('banner')->nullable();
             $table->longText('ar_bio')->nullable();
             $table->longText('en_bio')->nullable();
+            $table->string('size');
+            $table->integer('years_of_teaching');
+
+
+
             $table->timestamps();
         });
     }
@@ -38,3 +43,4 @@ class CreateAcademiesTable extends Migration
         Schema::dropIfExists('academies');
     }
 }
+

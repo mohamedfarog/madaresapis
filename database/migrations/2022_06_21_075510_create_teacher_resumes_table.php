@@ -13,12 +13,13 @@ class CreateTeacherResumesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('teacher_resumes');
         Schema::create('teacher_resumes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('teacher_id')->nullable();
             $table->string('curriculum_vitae')->nullable();
             $table->string('cover_litter')->nullable();
-            $table->json('extra_skills')->nullable();
+            $table->string('extra_skills')->nullable();
             $table->timestamps();
         });
     }

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Locations extends Model
+class Availability extends Model
 {
     use HasFactory;
-    protected $fillable = ['en_country','ar_city_name', 'en_city_name', 'ar_street', 'en_street','academy_id'];
+    protected $fillable = ['teacher_id', 'time_available'];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at', 'created_at'];
 }

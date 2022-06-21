@@ -13,7 +13,6 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('locations');
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->integer('country_id');
@@ -25,9 +24,13 @@ class CreateLocationsTable extends Migration
             $table->string('en_street');
             $table->string('building_no');
             $table->string('location_code');
+            $table->foreignId('teacher_id');
+            $table->foreignId('academy_id');
             $table->timestamps();
+
         });
     }
+
     /**
      * Reverse the migrations.
      *

@@ -10,14 +10,11 @@ class TeacherExperience extends Model
 {
     use HasFactory;
 
-    //protected $fillable = ['teacher_id', 'curriculum_vitae' , 'cover_litter','extra_skills' ];
+    protected $fillable = ['teacher_id', 'curriculum_vitae' , 'cover_litter','extra_skills' ];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
     protected $casts = [
         'certificates' => 'array'
     ];
-    public function teacher(): BelongsTo
-    {
-        return $this->belongsTo(Teacher::class);
-    }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTimestampToTableLocations extends Migration
+class CreateSkillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class AddTimestampToTableLocations extends Migration
      */
     public function up()
     {
-        Schema::table('academy_files', function (Blueprint $table) {
+        Schema::dropIfExists('skills');
+        Schema::create('skills', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('teacher_id');
+            $table->string('skill_ar_name');
+            $table->string('skill_en_name');
             $table->timestamps();
-       
         });
     }
 
@@ -26,8 +30,6 @@ class AddTimestampToTableLocations extends Migration
      */
     public function down()
     {
-        Schema::table('academy_files', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('skills');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddYearsOfTeachingAndSizeToacademiesTableAcademies extends Migration
+class CreateAvailabilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddYearsOfTeachingAndSizeToacademiesTableAcademies extends Migration
      */
     public function up()
     {
-        Schema::table('academies', function (Blueprint $table) {
-            $table->integer('years_of_teaching')->nullable();
-            $table->integer('size')->nullable();
+        Schema::create('availabilities', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('teacher_id');
+            $table->string('time_available');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +28,6 @@ class AddYearsOfTeachingAndSizeToacademiesTableAcademies extends Migration
      */
     public function down()
     {
-        Schema::table('academies', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('availabilities');
     }
 }
