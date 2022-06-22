@@ -118,7 +118,7 @@ class RegisterController extends Controller
              
                     $location->save();
                     
-                    foreach ($request->academy_levels as $level) {
+                    foreach ($request->job_level_id as $level) {
                       
                         $aca_level = new AcademyLevels();
                         $aca_level->academy_id = $userId;
