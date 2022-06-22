@@ -68,6 +68,8 @@ class RegisterController extends Controller
                     if ($validator->fails()) {
                         return response()->json(['error' => $validator->errors()], 401);
                     }
+                    return "Hello";
+
                     $academy = new Academy();
                
                         $academy->user_id = $userId;
@@ -121,10 +123,8 @@ class RegisterController extends Controller
                         $location->ar_street = $request->ar_street;
                     }
              
-                    return "Hello";
     
-                    
-                   
+             
                     $location->save();
     
                     foreach ($request->academy_levels['job_level_id'] as $level) {
