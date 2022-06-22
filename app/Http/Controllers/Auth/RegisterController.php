@@ -62,7 +62,7 @@ class RegisterController extends Controller
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($userType->user_type  === '255') {
-                    return "Academy";
+               
                     $userId = $request->id;
                      $academy = new Academy();
               
