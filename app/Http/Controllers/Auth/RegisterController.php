@@ -117,7 +117,7 @@ class RegisterController extends Controller
     
              
                     $location->save();
-                    // if(asset($request->academy_levels['job_level_id'])){
+                    
 
                     foreach ($request->academy_levels as $level) {
                         $aca_level = new AcademyLevels();
