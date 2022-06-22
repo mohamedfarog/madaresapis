@@ -153,7 +153,7 @@ class RegisterController extends Controller
             
                     $teacher = new Teacher();
               
-                        $teacher->teacher_id = $userId;
+                    $teacher->teacher_id = $userId;
                     
                     if(asset($request->gender_id)){
                         $teacher->gender_id = $request->gender_id;
@@ -209,8 +209,8 @@ class RegisterController extends Controller
                 }
                 
                     $location = new Locations();
-                  
-                    $userId = $location->teacher_id;
+                    $teacherId = $request->id;
+                    $teacherId = $location->teacher_id;
                     
                  
                     if (asset($request->ar_city)) {
@@ -246,7 +246,7 @@ class RegisterController extends Controller
                     if(isset($request->skill_en_name)){
                         $skill->skill_en_name = $request->skill_en_name;
                     }
-                    $skill->teacher_id = $userId;
+                   $userId = $skill->teacher_id;
                     $skill->save();
     
                     $teachDoc =  new TeacherResume();
