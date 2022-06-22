@@ -53,7 +53,6 @@ class RegisterController extends Controller
       
         try {
             $userType = User::findOrFail($request->id);
-           
             if ($userType->user_type === '255' || $userType->user_type === '256' ) {
                 return $this->onError("Sorry This User already has a type");
             }
@@ -203,11 +202,9 @@ class RegisterController extends Controller
                     $teacher->save();
                 }
                     $userId = $request->id;
-                    $location = new Locations();
-                   
+                    $location = new Locations();      
                     $location->teacher_id = $userId;
                     
-                 
                     if (asset($request->ar_city)) {
                         $location->ar_city_name = $request->ar_city;
                     }
