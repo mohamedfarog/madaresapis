@@ -117,13 +117,17 @@ class RegisterController extends Controller
     
              
                     $location->save();
-    
-                    foreach ($request->academy_levels['job_level_id'] as $level) {
+                    // if(asset($request->academy_levels['job_level_id'])){
+
+                    foreach ($request->academy_levels as $level) {
                         $aca_level = new AcademyLevels();
                         $aca_level->academy_id = $userId;
                         $aca_level->level_id = $level;
                         $aca_level->save();
                     }
+
+                    //}
+    
                     if (isset($request->AcademyFiles)) {
     
                         // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
