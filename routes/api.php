@@ -66,6 +66,7 @@ Route::group(
 );
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
+Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {

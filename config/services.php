@@ -24,8 +24,8 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
     'facebook' => [
-        'client_id' => '730630298374454',
-        'client_secret' => 'fe928457997c461b97bdaeabeb23db2f',
+        'client_id' => '1366944950493153',
+        'client_secret' => 'a0390f05218397a8ce360cdd13fcb1f3',
         'redirect' => '',
     ],
 
