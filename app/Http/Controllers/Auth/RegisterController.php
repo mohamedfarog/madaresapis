@@ -70,7 +70,7 @@ class RegisterController extends Controller
                     }
                     $academy = new Academy();
                
-                        $academy->user_id = $userId;
+                        $academy->user_id = $request->id;
                     
                     if (asset($request->ar_name)) {
                         $academy->ar_name = $request->ar_name;
@@ -100,7 +100,7 @@ class RegisterController extends Controller
                     $academy->save();
                     $location = new Locations();
                   
-                        $location->teacher_id = $userId;
+                        $location->teacher_id =  $request->id;
                     
                     if (asset($request->ar_city)) {
                         $location->ar_city_name = $request->ar_city;
@@ -129,7 +129,7 @@ class RegisterController extends Controller
     
                     foreach ($request->academy_levels['job_level_id'] as $level) {
                         $aca_level = new AcademyLevels();
-                        $aca_level->academy_id = $userId;
+                        $aca_level->academy_id =  $request->id;
                         $aca_level->level_id = $level;
                         $aca_level->save();
                     }
@@ -141,11 +141,11 @@ class RegisterController extends Controller
                             $fileNmae = $image->store('AcademyFiles');
                             $academyFile = new AcademyFile();
                             $academyFile['file_url'] = $fileNmae;
-                            $academyFile->academy_id = $userId;
+                            $academyFile->academy_id = $request->id;
                             $academyFile->save();
                         }
                     } 
-                   $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
+                   $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->id)->get();
                     return $this->onSuccess($academyData);
                 }
                 if ($request->type === 256) {
@@ -277,7 +277,7 @@ class RegisterController extends Controller
                     if(asset($request->time_available)){
                         $available->time_available = $request->time_available;
                     }
-                    $available->teacher_id = $userId;
+                    $available->teacher_id = $request->id;
                     
                     $available->save();
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
