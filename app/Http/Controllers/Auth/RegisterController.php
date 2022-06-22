@@ -49,11 +49,12 @@ class RegisterController extends Controller
     //
     public function UpdateUserType(Request $request)
     {
+
       
         try {
             $userType = User::findOrFail($request->id);
            
-            if ($userType->user_type === 255 || $userType->user_type === 256 ) {
+            if ($userType->user_type === '255' || $userType->user_type === '256' ) {
                 return $this->onError("Sorry This User already has a type");
             }
             else{
