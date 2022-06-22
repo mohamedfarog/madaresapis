@@ -50,6 +50,7 @@ class RegisterController extends Controller
        
         try {
             $userType = User::findOrFail($request->id);
+             $userType->user_type = $request->type;
             $userType->save();
             if ($request->type === '255') {
                 $userId = $request->id;
