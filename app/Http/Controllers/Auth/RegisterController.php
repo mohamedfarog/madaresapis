@@ -63,7 +63,7 @@ class RegisterController extends Controller
                 if ($request->type === 255) {
                     $userId = $request->id;
                      $academy = new Academy();
-               
+               return "Academy";
                         $academy->user_id = $userId;
                     
                     if (asset($request->ar_name)) {
