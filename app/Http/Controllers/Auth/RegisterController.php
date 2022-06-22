@@ -51,13 +51,13 @@ class RegisterController extends Controller
         try {
             $userType = User::findOrFail($request->id);
        
-            if ($userType->user_type === 255 || $userType->user_type === 256 ) {
+            if ($userType->user_type === 255 || $userType->user_type == 256 ) {
                 return $this->onError("Sorry This User already has a type");
             }
             else{
                 $userType->user_type = $request->type;
                 $userType->save();
-                if ($request->type === '255') {
+                if ($request->type === 255) {
                     $userId = $request->id;
                     $validator = Validator::make($request->all(), [
                         'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd'
@@ -145,7 +145,7 @@ class RegisterController extends Controller
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
                     return $this->onSuccess($academyData);
                 }
-                if ($request->type === '256') {
+                if ($request->type === 256) {
                     $userId = $request->id;
             
                     $teacher = new Teacher();
