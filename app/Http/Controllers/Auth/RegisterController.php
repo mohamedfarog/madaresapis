@@ -51,14 +51,14 @@ class RegisterController extends Controller
       
         try {
             $userType = User::findOrFail($request->id);
-            if ($userType->user_type === '255' || $userType->user_type === '256' ) {
+            if ($userType->user_type === 255 || $userType->user_type === 256 ) {
                 return $this->onError("Sorry This User already has a type");
             }
             else{
         
                 $userType->user_type = $request->type;
                 $userType->save();
-                if ($userType->user_type  === '255') {
+                if ($userType->user_type  === 255) {
                
                     $userId = $request->id;
                      $academy = new Academy();
@@ -147,7 +147,7 @@ class RegisterController extends Controller
                 else{
                     return "Noooo";
                 }
-                if ($request->type === '256') {
+                if ($request->type === 256) {
                     $userId = $request->id;
             
                     $teacher = new Teacher();
