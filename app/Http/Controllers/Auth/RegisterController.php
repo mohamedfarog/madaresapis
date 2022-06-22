@@ -210,7 +210,7 @@ class RegisterController extends Controller
                 
                     $location = new Locations();
                   
-                    $location->teacher_id = $userId;
+                     $userId = $location->teacher_id;
                     
                  
                     if (asset($request->ar_city)) {
