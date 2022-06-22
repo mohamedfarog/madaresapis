@@ -205,10 +205,11 @@ class RegisterController extends Controller
                     }
                 }
                     $teacher->save();
+                    $userId = $request->id;
                     $location = new Locations();
-                    if (asset($request->id)) {
-                        $location->teacher_id = $userId;
-                    }
+                   
+                    $location->teacher_id = $userId;
+                    
                  
                     if (asset($request->ar_city)) {
                         $location->ar_city_name = $request->ar_city;
@@ -236,14 +237,16 @@ class RegisterController extends Controller
               
     
                     $location->save();
+                    $userId = $request->id;
                     $skill = new Skills();
+                    $skill->teacher_id = $userId;
                     if(isset($request->skill_ar_name)){
                         $skill->skill_ar_name = $request->skill_ar_name;
                     }
                     if(isset($request->skill_en_name)){
                         $skill->skill_en_name = $request->skill_en_name;
                     }
-                    $skill->teacher_id = $userId;
+         
                     $skill->save();
     
                     $teachDoc =  new TeacherResume();
@@ -268,12 +271,13 @@ class RegisterController extends Controller
                     $teachDoc->save();
     
                  
-    
+                    $userId = $request->id;
+                    $available->teacher_id = $userId;
                     $available = new Availability();
                     if(asset($request->time_available)){
                         $available->time_available = $request->time_available;
                     }
-                    $available->teacher_id = $userId;
+               
                     
                     $available->save();
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
