@@ -142,6 +142,9 @@ class RegisterController extends Controller
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
                     return $this->onSuccess($academyData);
                 }
+                else{
+                    return "Noooo";
+                }
                 if ($request->type === '256') {
                     $userId = $request->id;
             
