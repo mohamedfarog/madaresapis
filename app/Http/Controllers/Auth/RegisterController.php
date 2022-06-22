@@ -29,6 +29,7 @@ use File;
 
 class RegisterController extends Controller
 {
+    
    
     function sendVerificationEmail($email, $userId)
     {
@@ -45,13 +46,14 @@ class RegisterController extends Controller
         $this->sendVerificationEmail($request->email, 1);
         return 'success';
     }
+    //
     public function UpdateUserType(Request $request)
     {
-       
+      
         try {
             $userType = User::findOrFail($request->id);
-       
-            if ($userType->user_type === '255' || $userType->user_type === '256' ) {
+           
+            if ($userType->user_type === 255 || $userType->user_type === 256 ) {
                 return $this->onError("Sorry This User already has a type");
             }
             else{
