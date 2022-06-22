@@ -58,12 +58,13 @@ class RegisterController extends Controller
                 return $this->onError("Sorry This User already has a type");
             }
             else{
+                return "Academy";
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($request->type === 255) {
                     $userId = $request->id;
                      $academy = new Academy();
-               return "Academy";
+              
                         $academy->user_id = $userId;
                     
                     if (asset($request->ar_name)) {
