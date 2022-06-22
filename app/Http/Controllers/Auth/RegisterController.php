@@ -121,7 +121,7 @@ class RegisterController extends Controller
                         $location->ar_street = $request->ar_street;
                     }
              
-    
+                    return "Hello";
     
                     
                    
@@ -280,6 +280,7 @@ class RegisterController extends Controller
                
                     
                     $available->save();
+                  
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
                 }
