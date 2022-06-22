@@ -61,7 +61,7 @@ class RegisterController extends Controller
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($request->type === 255) {
-                    $userId = $request->id;
+                    // $userId = $request->id;
                     $validator = Validator::make($request->all(), [
                         'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd'
                     ]);
@@ -149,11 +149,11 @@ class RegisterController extends Controller
                     return $this->onSuccess($academyData);
                 }
                 if ($request->type === 256) {
-                    $userId = $request->id;
+                    // $userId = $request->id;
             
                     $teacher = new Teacher();
               
-                    $teacher->teacher_id = $userId;
+                    $teacher->teacher_id = $request->id;
                     
                     if(asset($request->gender_id)){
                         $teacher->gender_id = $request->gender_id;
@@ -280,7 +280,7 @@ class RegisterController extends Controller
                     $available->teacher_id = $request->id;
                     
                     $available->save();
-                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
+                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $request->id)->get();
                     return $this->onSuccess($teacherData);
                 }
             } catch (ModelNotFoundException $e) {
