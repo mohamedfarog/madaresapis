@@ -49,8 +49,7 @@ class RegisterController extends Controller
     //
     public function UpdateUserType(Request $request)
     {
-
-       
+        return "hello";
 
       
         try {
