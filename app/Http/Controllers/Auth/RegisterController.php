@@ -209,9 +209,9 @@ class RegisterController extends Controller
                 }
                 
                     $location = new Locations();
-                    if (asset($request->id)) {
-                        $location->teacher_id = $userId;
-                    }
+                  
+                    $location->teacher_id = $userId;
+                    
                  
                     if (asset($request->ar_city)) {
                         $location->ar_city_name = $request->ar_city;
