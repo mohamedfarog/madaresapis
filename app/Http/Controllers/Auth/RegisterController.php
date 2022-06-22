@@ -202,9 +202,12 @@ class RegisterController extends Controller
                         $fileNmae = time().'_'.$request->avatar->getClientOriginalName();
                         $fileNmae = $request->avatar->store('public/uploads/logos');
                         $teacher->avatar = $fileNmae;
+                       
                     }
-                }
                     $teacher->save();
+                  
+                }
+                
                     $location = new Locations();
                     if (asset($request->id)) {
                         $location->teacher_id = $userId;
