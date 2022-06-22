@@ -144,10 +144,11 @@ class RegisterController extends Controller
                             $academyFile->academy_id = $request->id;
                             $academyFile->save();
                         }
+                        $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->id)->get();
+                        return $this->onSuccess($academyData);
                     } 
                    
-                   $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->id)->get();
-                    return $this->onSuccess($academyData);
+                  
                 }
                 if ($request->type === 256) {
                     // $userId = $request->id;
