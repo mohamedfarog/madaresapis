@@ -203,8 +203,8 @@ class RegisterController extends Controller
                         $fileNmae = $request->avatar->store('public/uploads/logos');
                         $teacher->avatar = $fileNmae;
                     }
-                }
                     $teacher->save();
+                }
                     $userId = $request->id;
                     $location = new Locations();
                    
