@@ -252,7 +252,7 @@ class RegisterController extends Controller
     
                     $teachDoc =  new TeacherResume();
                    
-                        $teachDoc->teacher_id = $userId;
+                        $teachDoc->teacher_id = $request->id;
                     
                     if (isset($request->curriculum_vitae)) {
                         $fileNmae = time().'_'.$request->curriculum_vitae->getClientOriginalName();
