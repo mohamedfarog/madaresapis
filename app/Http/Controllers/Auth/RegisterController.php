@@ -62,15 +62,7 @@ class RegisterController extends Controller
                 $userType->save();
                 if ($request->type === 255) {
                     $userId = $request->id;
-                    $validator = Validator::make($request->all(), [
-                        'attachments.*' => 'mimes:png,jpg,jpeg,svg,csv,txt,xlx,xls,xlsx,pdf,doc,docx,zip,rar,wav,mp3,mp4,mov,mkv,webm,avi,ogg,m4a,flac,wma,aac,sketch,psd'
-                    ]);
-                    if ($validator->fails()) {
-                        return response()->json(['error' => $validator->errors()], 401);
-                    }
-                    return "Hello";
-
-                    $academy = new Academy();
+                     $academy = new Academy();
                
                         $academy->user_id = $userId;
                     
