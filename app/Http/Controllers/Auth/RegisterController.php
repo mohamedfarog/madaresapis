@@ -50,6 +50,8 @@ class RegisterController extends Controller
     public function UpdateUserType(Request $request)
     {
 
+       
+
       
         try {
             $userType = User::findOrFail($request->id);
@@ -145,6 +147,7 @@ class RegisterController extends Controller
                             $academyFile->save();
                         }
                     } 
+                   
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id', $request->id)->get();
                     return $this->onSuccess($academyData);
                 }
