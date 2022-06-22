@@ -153,7 +153,7 @@ class RegisterController extends Controller
             
                     $teacher = new Teacher();
               
-                        $teacher->user_id = $userId;
+                        $teacher->teacher_id = $userId;
                     
                     if(asset($request->gender_id)){
                         $teacher->gender_id = $request->gender_id;
@@ -210,7 +210,7 @@ class RegisterController extends Controller
                 
                     $location = new Locations();
                   
-                     $userId = $location->teacher_id;
+                    $userId = $location->teacher_id;
                     
                  
                     if (asset($request->ar_city)) {
