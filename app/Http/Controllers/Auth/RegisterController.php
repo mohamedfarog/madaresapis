@@ -88,8 +88,11 @@ class RegisterController extends Controller
                     if (asset($request->avatar)) {
                         $academy->avatar = $request->avatar;
                     }
-                    if (asset($request->website)) {
-                        $academy->website = $request->website;
+                    if (asset($request->years_of_teaching)) {
+                        $academy->years_of_teaching = $request->years_of_teaching;
+                    }
+                    if (asset($request->size)) {
+                        $academy->size = $request->size;
                     }
                     $academy->save();
                     $location = new Locations();
@@ -114,6 +117,8 @@ class RegisterController extends Controller
                     if (asset($request->ar_street)) {
                         $location->ar_street = $request->ar_street;
                     }
+             
+    
     
                     
                    
