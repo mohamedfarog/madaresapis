@@ -246,7 +246,8 @@ class RegisterController extends Controller
                     if(isset($request->skill_en_name)){
                         $skill->skill_en_name = $request->skill_en_name;
                     }
-                   $userId = $skill->teacher_id;
+                
+                     $skill->teacher_id = $request->id;
                     $skill->save();
     
                     $teachDoc =  new TeacherResume();
