@@ -122,7 +122,7 @@ class RegisterController extends Controller
                     }
              
     
-    
+    return "heyyy";
                     
                    
                     $location->save();
