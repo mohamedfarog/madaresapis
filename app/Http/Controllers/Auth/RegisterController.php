@@ -44,14 +44,14 @@ class RegisterController extends Controller
         $this->sendVerificationEmail($request->email, 1);
         return 'success';
     }
-    //
+    
     public function UpdateUserType(Request $request)
     {
 
       
         try {
             $userType = User::findOrFail($request->id);
-            if ($userType->user_type === '255' || $userType->user_type === '256' ) {
+            if ($userType->user_type == '255' || $userType->user_type == '256' ) {
                 return $this->onError("Sorry This User already has a type");
             }
             else{
@@ -113,9 +113,6 @@ class RegisterController extends Controller
                     if (asset($request->ar_street)) {
                         $location->ar_street = $request->ar_street;
                     }
-             
-    
-             
                     $location->save();
                     
                  
@@ -126,11 +123,7 @@ class RegisterController extends Controller
                         $aca_level->level_id = $level;
                         $aca_level->save();
                     }
-
-                    //}
-    
                     if (isset($request->AcademyFiles)) {
-    
                         // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
                         foreach ($request->AcademyFiles as $image) {
                             $fileNmae = time() . '_' . $image->getClientOriginalName();
@@ -145,7 +138,7 @@ class RegisterController extends Controller
                     return $this->onSuccess($academyData);
                 }
                 else{
-                    return "Noooo";
+                    return $this->onError('Please Enter a valid user type? ');
                 }
                 if ($request->type === '256') {
                     $userId = $request->id;
@@ -157,9 +150,7 @@ class RegisterController extends Controller
                     if(asset($request->gender_id)){
                         $teacher->gender_id = $request->gender_id;
                     }
-                    // if(asset($request->job_level_id)){
-                    //     $teacher->job_level_id = $request->job_level_id;
-                    // }
+                  
                     if(asset($request->contact_number)){
                         $teacher->contact_number = $request->contact_number;
                     }
@@ -232,7 +223,6 @@ class RegisterController extends Controller
                         return $this->onError('User Type is undefined');
                     }
               
-    
                     $location->save();
                     $userId = $request->id;
                     $skill = new Skills();
@@ -247,8 +237,7 @@ class RegisterController extends Controller
                     $skill->save();
     
                     $teachDoc =  new TeacherResume();
-                   
-                        $teachDoc->teacher_id = $userId;
+                    $teachDoc->teacher_id = $userId;
                     
                     if (isset($request->curriculum_vitae)) {
                         $fileNmae = time().'_'.$request->curriculum_vitae->getClientOriginalName();
@@ -276,8 +265,7 @@ class RegisterController extends Controller
                     }
                
                     
-                    $available->save();
-                  
+                    $available->save();       
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
                 }
@@ -303,7 +291,11 @@ class RegisterController extends Controller
         //     'user_id' =>  $user['id'],
         // ]);
         // $U = User::with(['usertype'])->where('id', $user->id)->first(); 
-        return $this->onSuccess($user);
+        return response()->json([
+            'status' => true,
+            'user' => $user,
+            'message' => 'Successfully Registered!'
+        ]);
     }   
 
         public function ueserRegistered()
