@@ -115,16 +115,19 @@ class RegisterController extends Controller
                     }
                     $location->save();
                     
-                 
-                    foreach ($request->academy_levels as $level) {
-                      
-                        $aca_level = new AcademyLevels();
-                        $aca_level->academy_id = $userId;
-                        $aca_level->level_id = $level;
-                        $aca_level->save();
+                    if (is_array($request->academy_levels) || is_object($request->academy_levels))
+                    {
+                        foreach ($request->academy_levels as $level)
+                        {
+                            $aca_level = new AcademyLevels();
+                            $aca_level->academy_id = $userId;
+                            $aca_level->level_id = $level;
+                            $aca_level->save();
+                        }
                     }
-                    if (isset($request->AcademyFiles)) {
-                        // $academyFile = $request->$image->file('image')->storeAs('uploads', $image, 'public');
+                 
+                    if (is_array($request->academy_levels) || is_object($request->academy_levels)){
+ 
                         foreach ($request->AcademyFiles as $image) {
                             $fileNmae = time() . '_' . $image->getClientOriginalName();
                             $fileNmae = $image->store('AcademyFiles');
@@ -286,11 +289,6 @@ class RegisterController extends Controller
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
-        // $userType =  UserType::create([
-        //     'type' => 3,
-        //     'user_id' =>  $user['id'],
-        // ]);
-        // $U = User::with(['usertype'])->where('id', $user->id)->first(); 
         return response()->json([
             'status' => true,
             'user' => $user,
