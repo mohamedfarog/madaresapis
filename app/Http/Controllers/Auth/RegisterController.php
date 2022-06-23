@@ -19,16 +19,20 @@ use App\Models\Teachers\TeacherResume;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\AppMail;
 use Carbon\Carbon;
+use App\Traits\fileUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use File;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class RegisterController extends Controller
 {
+
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
@@ -44,7 +48,7 @@ class RegisterController extends Controller
         $this->sendVerificationEmail($request->email, 1);
         return 'success';
     }
-    
+    use fileUpload;
     public function UpdateUserType(Request $request)
     {
 
@@ -80,10 +84,16 @@ class RegisterController extends Controller
                     if (asset($request->ar_bio)) {
                         $academy->ar_bio = $request->ar_bio;
                     }
+                    // $request->validate([
+                    //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    // ]);
+                    $imageName = time() . '_' . $request->avatar->getClientOriginalName();
+                   
+                    $fileNmae = $request->avatar->store('logos');
+                    //$request->avatar->move(public_path('logos'), $imageName);
+                    $academy['avatar'] = $imageName;
                 
-                    if (asset($request->avatar)) {
-                        $academy->avatar = $request->avatar;
-                    }
+                 
                     if (asset($request->years_of_teaching)) {
                         $academy->years_of_teaching = $request->years_of_teaching;
                     }
@@ -115,26 +125,45 @@ class RegisterController extends Controller
                     }
                     $location->save();
                     
+                    $academy_levels = [];
                     if (is_array($request->academy_levels) || is_object($request->academy_levels))
                     {
                         foreach ($request->academy_levels as $level)
                         {
-                            $aca_level = new AcademyLevels();
-                            $aca_level->academy_id = $userId;
-                            $aca_level->level_id = $level;
-                            $aca_level->save();
+                            array_push($academy_levels,[
+                                "academy_id"=> $userId,
+                                "level_id"=>$level
+                            ]);
+                            // $aca_level = new AcademyLevels();
+                            // $aca_level->academy_id = $userId;
+                            // $aca_level->level_id = $level;
+                            // $aca_level->save();
                         }
+                     //   AcademyLevels::insert()
                     }
-                    if (is_array($request->academy_levels) || is_object($request->academy_levels)){
+
                         foreach ($request->AcademyFiles as $image) {
-                            $fileNmae = time() . '_' . $image->getClientOriginalName();
-                            $fileNmae = $image->store('AcademyFiles');
-                            $academyFile = new AcademyFile();
-                            $academyFile['file_url'] = $fileNmae;
-                            $academyFile->academy_id = $userId;
-                            $academyFile->save();
+                            $uploadedImage = $image;
+                            $destinationPath = $this->uploadFile($image, 'academy_level_images');
+                            $academyfile = new AcademyFile();
+                            $academyfile->file_url = $destinationPath;
+                            $academyfile->academy_id = $userId;
+                            $academyfile->save();
+
+                   
+
+
+
+                  
+                        //     $fileNmae = $image('avatar')->store('AcademyFiles');
+                        //   //  $fileNmae = $image('file_url')->store('AcademyFiles');
+                        //     $academyFile = new AcademyFile();
+                        //     $academyFile['file_url'] = $fileNmae;
+                        //     $academyFile->academy_id = $userId;
+                        //     $academyFile->save();
+                           
                         }
-                    } 
+                    
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
                 return $this->onSuccess($academyData);
                 }

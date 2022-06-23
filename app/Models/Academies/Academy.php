@@ -43,6 +43,9 @@ class Academy extends Model
         $jobs= Job::where('academy_id',$this->id)->count('job_vacancy');
         return $jobs;
     }
+    public function getAvatarAttribute($value){
+        return "http://127.0.0.1:8802/".$value;
+    }   
     public function academyLocations(): HasMany
     {
         return $this->hasMany(Locations::class, 'academy_id', 'user_id');
@@ -51,7 +54,6 @@ class Academy extends Model
     public function academyLevels(): HasMany
     {
         return $this->hasMany(AcademyLevels::class, 'academy_id', 'user_id');
-        
     }
     public function academyFiles(): HasMany
     {
