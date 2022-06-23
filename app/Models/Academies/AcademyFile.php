@@ -14,7 +14,7 @@ class AcademyFile extends Model
 
     
     public function getFileUrlAttribute($value){
-        return "http://127.0.0.1:8802/".$value;
+        return "http://api.madaresweb.mvp-apps.ae".$value;
     }  
 
 }

@@ -84,14 +84,17 @@ class RegisterController extends Controller
                     if (asset($request->ar_bio)) {
                         $academy->ar_bio = $request->ar_bio;
                     }
-                    // $request->validate([
-                    //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                    // ]);
+                    if ($file = $request->avatar) {
+                        $icon = $this->uploadFile($file, 'job_level_icons');
+                        $academy->avatar = $icon;
+                       
+                    }
+          
                     $imageName = time() . '_' . $request->avatar->getClientOriginalName();
                    
                     $fileNmae = $request->avatar->store('logos');
                     //$request->avatar->move(public_path('logos'), $imageName);
-                    $academy['avatar'] = $imageName;
+            
                 
                  
                     if (asset($request->years_of_teaching)) {
@@ -140,15 +143,16 @@ class RegisterController extends Controller
                             // $aca_level->save();
                         }
                      //   AcademyLevels::insert()
-                    }
 
-                        foreach ($request->AcademyFiles as $image) {
-                            $uploadedImage = $image;
-                            $destinationPath = $this->uploadFile($image, 'academy_level_images');
-                            $academyfile = new AcademyFile();
-                            $academyfile->file_url = $destinationPath;
+                        foreach ($request->AcademyFiles as $image) {                     
+                            // $image = $this->uploadFile($image, 'academy_level_images');
+                            $icon = $this->uploadFile($image, 'job_level_icons');
+                            $academyfile = new AcademyFile();         
+                            $academyfile->file_url = $icon;
                             $academyfile->academy_id = $userId;
                             $academyfile->save();
+                        }
+
 
                    
 

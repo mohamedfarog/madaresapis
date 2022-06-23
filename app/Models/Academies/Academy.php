@@ -44,7 +44,7 @@ class Academy extends Model
         return $jobs;
     }
     public function getAvatarAttribute($value){
-        return "http://127.0.0.1:8802/".$value;
+        return "http://api.madaresweb.mvp-apps.ae".$value;
     }   
     public function academyLocations(): HasMany
     {
