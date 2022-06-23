@@ -120,7 +120,6 @@ class AuthController extends Controller
     function facebookAuth($accessToken)
     {
         try {
-            // return "test";
             $user = Socialite::driver('facebook')->userFromToken($accessToken);
             if ($user) {
 

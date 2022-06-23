@@ -80,9 +80,18 @@ class RegisterController extends Controller
                     if (asset($request->ar_bio)) {
                         $academy->ar_bio = $request->ar_bio;
                     }
+            
+                        
+                   
+                        
                 
-                    if (asset($request->avatar)) {
-                        $academy->avatar = $request->avatar;
+                      
+         
+                        
+                        // $fileNmae = $request->avatar->store('logos');
+                        // $academy['avatar'] = $fileNmae;
+                    
+                        //$academy->avatar = $fileNmae;
                     }
                     if (asset($request->years_of_teaching)) {
                         $academy->years_of_teaching = $request->years_of_teaching;
@@ -113,6 +122,15 @@ class RegisterController extends Controller
                     if (asset($request->ar_street)) {
                         $location->ar_street = $request->ar_street;
                     }
+                        
+                  
+                    $request->validate([
+                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    ]);
+                    $imageName = time().'.'.$request->avatar->extension();
+                    $request->avatar->move(public_path('logos'), $imageName);  
+                     $academy['avatar'] = $imageName;
+                
                     $location->save();
                     
                     if (is_array($request->academy_levels) || is_object($request->academy_levels))
@@ -125,9 +143,7 @@ class RegisterController extends Controller
                             $aca_level->save();
                         }
                     }
-                 
                     if (is_array($request->academy_levels) || is_object($request->academy_levels)){
- 
                         foreach ($request->AcademyFiles as $image) {
                             $fileNmae = time() . '_' . $image->getClientOriginalName();
                             $fileNmae = $image->store('AcademyFiles');
@@ -138,7 +154,7 @@ class RegisterController extends Controller
                         }
                     } 
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
-                    return $this->onSuccess($academyData);
+                   return $this->onSuccess($academyData);
                 }
                 else{
                     return $this->onError('Please Enter a valid user type? ');
@@ -225,7 +241,6 @@ class RegisterController extends Controller
     
                         return $this->onError('User Type is undefined');
                     }
-              
                     $location->save();
                     $userId = $request->id;
                     $skill = new Skills();
@@ -266,8 +281,6 @@ class RegisterController extends Controller
                     if(asset($request->time_available)){
                         $available->time_available = $request->time_available;
                     }
-               
-                    
                     $available->save();       
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
@@ -275,8 +288,6 @@ class RegisterController extends Controller
             } catch (ModelNotFoundException $e) {
                 return $this->onError('User ID NOT FOUND');
             }
-          
-
         }
         public function register(Request $request)
         { $validator = Validator::make($request->all(), [
@@ -294,13 +305,12 @@ class RegisterController extends Controller
             'user' => $user,
             'message' => 'Successfully Registered!'
         ]);
-    }   
-
-        public function ueserRegistered()
-        {
-            if(Auth::check()){
-                return  $this->onSuccess("Welcome");
-            }
+    }
+    public function ueserRegistered()
+    {
+        if(Auth::check()){
+            return  $this->onSuccess("Welcome");
+        }
             return 'Opps! You do not have access';
         }
         protected function respondWithToken($token)

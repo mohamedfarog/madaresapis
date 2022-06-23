@@ -51,6 +51,7 @@ class Academy extends Model
     public function academyLevels(): HasMany
     {
         return $this->hasMany(AcademyLevels::class, 'academy_id', 'user_id');
+        
     }
     public function academyFiles(): HasMany
     {
