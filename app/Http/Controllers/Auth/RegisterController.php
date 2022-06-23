@@ -80,18 +80,9 @@ class RegisterController extends Controller
                     if (asset($request->ar_bio)) {
                         $academy->ar_bio = $request->ar_bio;
                     }
-            
-                        
-                   
-                        
                 
-                      
-         
-                        
-                        // $fileNmae = $request->avatar->store('logos');
-                        // $academy['avatar'] = $fileNmae;
-                    
-                        //$academy->avatar = $fileNmae;
+                    if (asset($request->avatar)) {
+                        $academy->avatar = $request->avatar;
                     }
                     if (asset($request->years_of_teaching)) {
                         $academy->years_of_teaching = $request->years_of_teaching;
@@ -122,15 +113,6 @@ class RegisterController extends Controller
                     if (asset($request->ar_street)) {
                         $location->ar_street = $request->ar_street;
                     }
-                        
-                  
-                    $request->validate([
-                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                    ]);
-                    $imageName = time().'.'.$request->avatar->extension();
-                    $request->avatar->move(public_path('logos'), $imageName);  
-                     $academy['avatar'] = $imageName;
-                
                     $location->save();
                     
                     if (is_array($request->academy_levels) || is_object($request->academy_levels))
@@ -154,10 +136,11 @@ class RegisterController extends Controller
                         }
                     } 
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
-                   return $this->onSuccess($academyData);
+                return $this->onSuccess($academyData);
                 }
-                
-              
+                else{
+                    return $this->onError('Please Enter a valid user type? ');
+                }
                 if ($request->type == '256') {
                     $userId = $request->id;
             
