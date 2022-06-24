@@ -306,7 +306,7 @@ class RegisterController extends Controller
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
-        $user1 = User::where('email', $request->email)->get(['id', 'email', 'is_active', 'email_verified']);
+        $user1 =  User::where('email', $request->email)->get(['id', 'email', 'is_active', 'email_verified'])->first();
         return response()->json([
             'status' => true,
             'user' => $user1,
