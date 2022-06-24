@@ -304,7 +304,7 @@ class RegisterController extends Controller
         if ($validator->fails())
         {
             return $this->onError($validator->errors()->all());
-            // return response()->json(['errors'=>$validator->errors()->all()], 422);
+            //return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
