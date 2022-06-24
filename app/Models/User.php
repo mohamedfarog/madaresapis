@@ -32,7 +32,9 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'email',
         'password',
-        'remember_token'
+        'remember_token',
+        'is_active',
+        'is_verified'
     ];
     /**
      * The attributes that should be hidden for serialization.
