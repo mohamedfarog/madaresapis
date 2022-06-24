@@ -137,36 +137,29 @@ class RegisterController extends Controller
                                 "academy_id"=> $userId,
                                 "level_id"=>$level
                             ]);
-                            // $aca_level = new AcademyLevels();
-                            // $aca_level->academy_id = $userId;
-                            // $aca_level->level_id = $level;
-                            // $aca_level->save();
+                         
                         }
-                     //   AcademyLevels::insert()
+                     AcademyLevels::insert($academy_levels);
+                    }
 
+                    $AcademyFiles = [];
+                    if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)){
                         foreach ($request->AcademyFiles as $image) {                     
-                            // $image = $this->uploadFile($image, 'academy_level_images');
-                            $icon = $this->uploadFile($image, 'job_level_icons');
-                            $academyfile = new AcademyFile();         
-                            $academyfile->file_url = $icon;
-                            $academyfile->academy_id = $userId;
-                            $academyfile->save();
+                            $academyImages = $this->uploadFile($image, 'job_level_icons');
+
+                            array_push($AcademyFiles,[
+                                "file_url" =>  $academyImages,
+                                "academy_id" =>  $userId
+
+                            ]);
+                            // $academyfile = new AcademyFile();         
+                            // $academyfile->file_url = $academyImages;
+                            // $academyfile->academy_id = $userId;
+                            // $academyfile->save();
                         }
-
-
-                   
-
-
-
-                  
-                        //     $fileNmae = $image('avatar')->store('AcademyFiles');
-                        //   //  $fileNmae = $image('file_url')->store('AcademyFiles');
-                        //     $academyFile = new AcademyFile();
-                        //     $academyFile['file_url'] = $fileNmae;
-                        //     $academyFile->academy_id = $userId;
-                        //     $academyFile->save();
-                           
-                        }
+                        AcademyFile::insert($AcademyFiles);
+                    }
+                      
                     
                    $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
                 return $this->onSuccess($academyData);
@@ -309,6 +302,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
+        //snd email
+        
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
