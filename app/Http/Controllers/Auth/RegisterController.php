@@ -152,16 +152,12 @@ class RegisterController extends Controller
                                 "academy_id" =>  $userId
 
                             ]);
-                            // $academyfile = new AcademyFile();         
-                            // $academyfile->file_url = $academyImages;
-                            // $academyfile->academy_id = $userId;
-                            // $academyfile->save();
+                        
                         }
                         AcademyFile::insert($AcademyFiles);
                     }
-                      
-                    
-                   $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
+                            
+                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get()->append('CurrentStatus');
                 return $this->onSuccess($academyData);
                 }
                 else{
