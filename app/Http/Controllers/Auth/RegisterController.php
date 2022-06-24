@@ -294,7 +294,8 @@ class RegisterController extends Controller
             }
         }
         public function register(Request $request)
-        { $validator = Validator::make($request->all(), [
+        { 
+            $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
@@ -302,7 +303,8 @@ class RegisterController extends Controller
         
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return $this->onError($validator->errors()->all());
+            // return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
