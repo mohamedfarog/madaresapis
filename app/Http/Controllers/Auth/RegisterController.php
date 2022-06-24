@@ -157,7 +157,7 @@ class RegisterController extends Controller
                         AcademyFile::insert($AcademyFiles);
                     }
                             
-                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get()->append('CurrentStatus');
+                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get()->append('CurrentStatus')->toArray();
                 return $this->onSuccess($academyData);
                 }
                 else{
@@ -306,9 +306,10 @@ class RegisterController extends Controller
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
+        $user1 = User::where('email', $request->email)->get();
         return response()->json([
             'status' => true,
-            'user' => $user,
+            'user' => $user1,
             'message' => 'Successfully Registered!'
         ]);
     }
