@@ -38,12 +38,6 @@ class Academy extends Model
         $jobs= Job::where('academy_id',$this->id)->sum('job_vacancy');
         return $jobs;
     }
-    public function getCurrentStatusAttribute()
-
-    {
-        $vemil = User::where('id', $this->user_id)->first(['email_verified', 'is_active']);
-        return $vemil;
-    }
 
     public function getTotaljobsAttribute()
     {

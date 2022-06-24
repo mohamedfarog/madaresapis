@@ -50,9 +50,7 @@ class RegisterController extends Controller
     }
     use fileUpload;
     public function UpdateUserType(Request $request)
-    {
-
-      
+    { 
         try {
             $userType = User::findOrFail($request->id);
             if ($userType->user_type == '255' || $userType->user_type == '256' ) {
@@ -66,9 +64,7 @@ class RegisterController extends Controller
                
                     $userId = $request->id;
                      $academy = new Academy();
-              
-                        $academy->user_id = $userId;
-                    
+                        $academy->user_id = $userId;        
                     if (asset($request->ar_name)) {
                         $academy->ar_name = $request->ar_name;
                     }
@@ -85,18 +81,10 @@ class RegisterController extends Controller
                         $academy->ar_bio = $request->ar_bio;
                     }
                     if ($file = $request->avatar) {
-                        $icon = $this->uploadFile($file, 'job_level_icons');
+                        $icon = $this->uploadFile($file, 'avatars');
                         $academy->avatar = $icon;
                        
                     }
-          
-                    $imageName = time() . '_' . $request->avatar->getClientOriginalName();
-                   
-                    $fileNmae = $request->avatar->store('logos');
-                    //$request->avatar->move(public_path('logos'), $imageName);
-            
-                
-                 
                     if (asset($request->years_of_teaching)) {
                         $academy->years_of_teaching = $request->years_of_teaching;
                     }
@@ -157,11 +145,8 @@ class RegisterController extends Controller
                         AcademyFile::insert($AcademyFiles);
                     }
                             
-                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get()->append('CurrentStatus')->toArray();
+                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
                 return $this->onSuccess($academyData);
-                }
-                else{
-                    return $this->onError('Please Enter a valid user type? ');
                 }
                 if ($request->type == '256') {
                     $userId = $request->id;
@@ -211,10 +196,10 @@ class RegisterController extends Controller
                     if(asset($request->availability_id)){
                         $teacher->availability_id = $request->availability_id;
                     }
-                    if(asset($request->avatar)){
-                        $fileNmae = time().'_'.$request->avatar->getClientOriginalName();
-                        $fileNmae = $request->avatar->store('public/uploads/logos');
-                        $teacher->avatar = $fileNmae;
+                    if ($file = $request->avatar) {
+                        $icon = $this->uploadFile($file, 'avatars');
+                        $teacher->avatar = $icon;
+                       
                     }
                     $teacher->save();
                 }
