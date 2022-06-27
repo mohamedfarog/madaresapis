@@ -25,7 +25,10 @@ class Teacher extends Model
     protected $guarded = ['id'];
 
     protected $hidden = ['created_id', 'updated_at'];
-    
+
+    public function getAvatarAttribute($value){
+        return "http://api.madaresweb.mvp-apps.ae".$value;
+    }   
     public function teacherLocations(): HasOne
     {
         return $this->HasOne(Locations::class, 'teacher_id', 'user_id');

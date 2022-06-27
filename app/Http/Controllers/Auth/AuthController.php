@@ -88,6 +88,7 @@ class AuthController extends Controller
     public function loginV2(Request $request)
     {
       
+      
         $credentials = $request->only('email', 'password');
         //valid credential
         $validator = Validator::make($credentials, [
@@ -96,7 +97,8 @@ class AuthController extends Controller
         ]);
         //Send failed response if request is not valid
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 422);
+            return $this->onError($validator->errors()->all());
+          
         }
         // Request is validated
         //Creat token
@@ -120,6 +122,7 @@ class AuthController extends Controller
     function facebookAuth($accessToken)
     {
         try {
+
             $user = Socialite::driver('facebook')->userFromToken($accessToken);
             if ($user) {
 
