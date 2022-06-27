@@ -313,7 +313,7 @@ class RegisterController extends Controller
                         $exp->titel = $texp['exp_job_title'];
                         $exp->start_day = $texp['exp_start_day'];
                         $exp->end_day = $texp['exp_end_day'];
-
+                        // $exp->academy_name = $texp->;
                     }
                     $exp->save();
 
