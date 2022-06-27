@@ -157,7 +157,7 @@ class AuthController extends Controller
             }
         } catch (Exception $e) {
             return $e;
-            // return $this->onError("access token not valid exc");
+            //return $this->onError("access token not valid exc");
         }
     }
 
@@ -177,7 +177,7 @@ class AuthController extends Controller
                 break;
         }
 
-        return $this->onSuccess($data);
+        return $data;
     }
 
     public function testFace(Request $request)
