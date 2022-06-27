@@ -19,6 +19,7 @@ use App\Models\Teachers\TeacherEducation;
 use App\Models\Teachers\TeacherResume;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\AppMail;
+use App\Models\Teachers\TeacherFiles;
 use Carbon\Carbon;
 use App\Traits\fileUpload;
 use Illuminate\Support\Facades\Auth;
@@ -153,7 +154,7 @@ class RegisterController extends Controller
                     $AcademyFiles = [];
                     if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)){
                         foreach ($request->AcademyFiles as $image) {                     
-                            $academyImages = $this->uploadFile($image, 'job_level_icons');
+                            $academyImages = $this->uploadFile($image, 'academyFiles');
 
                             array_push($AcademyFiles,[
                                 "file_url" =>  $academyImages,
@@ -345,7 +346,23 @@ class RegisterController extends Controller
                     if(asset($request->time_available)){
                         $available->time_available = $request->time_available;
                     }
-                    $available->save();       
+                    $available->save();
+                    
+                    $userId = $request->id;
+                    $TeacherFiles = [];
+                    if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)){
+                        foreach ($request->TeacherFiles as $tFile) {                     
+                            $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
+
+                            array_push($TeacherFiles,[
+                                "file_url" =>  $teacherfiles,
+                                "teacher_id" =>  $userId
+
+                            ]);
+                        
+                        }
+                        TeacherFiles::insert($TeacherFiles);
+                    }
                     $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity', 'experiences', 'education'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
                 }
