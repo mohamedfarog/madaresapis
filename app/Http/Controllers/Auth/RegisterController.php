@@ -87,7 +87,6 @@ class RegisterController extends Controller
                     if ($file = $request->avatar) {
                         $icon = $this->uploadFile($file, 'job_level_icons');
                         $academy->avatar = $icon;
-                       
                     }
           
                     $imageName = time() . '_' . $request->avatar->getClientOriginalName();
