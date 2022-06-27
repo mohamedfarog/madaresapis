@@ -144,6 +144,7 @@ class AuthController extends Controller
                     $fUser->email = $email;
                     // $fUser->name = $user->name;
                     $fUser->facebook_id = $user->id;
+                    $fUser->email_verified = 1;
                     $fUser->save();
                     $token = JWTAuth::fromUser($fUser);
                     return [

@@ -303,27 +303,42 @@ class RegisterController extends Controller
                     }
                     $teachDoc->save();
     
-                    $exp = new TeacherExperience();
+
+                    if (is_array($request->experience) || is_object($request->experience)){
+               
                     $userId = $request->id;
-                    $exp->teacher_id = $userId;
-                 
-                    if(isset($request->exp_job_title)){
-                        $exp->titel = $request->exp_job_title;
+                    foreach($request->experience as $texp){
+                        $exp = new TeacherExperience();
+                        $exp->teacher_id = $userId;
+                        $exp->titel = $texp['exp_job_title'];
+                        $exp->start_day = $texp['exp_start_day'];
+                        $exp->end_day = $texp['exp_end_day'];
+
                     }
-                    if(isset($request->academy_name)){
-                        $exp->academy_name = $request->academy_name;
+                    $exp->save();
+
+
+                        //code goes here
                     }
-                    if(isset($request->exp_start_day)){
-                        $exp->start_day = $request->exp_start_day;
-                    }
-                    if(isset($request->exp_end_day)){
-                        $exp->end_day = $request->exp_end_day;
-                    }
+             
+                    // if(isset($request->exp_job_title)){
+                    //     $exp->titel = $request->exp_job_title;
+                    // }
+                    // if(isset($request->academy_name)){
+                    //     $exp->academy_name = $request->academy_name;
+                    // }
+                    // if(isset($request->exp_start_day)){
+                    //     $exp->start_day = $request->exp_start_day;
+                    // }
+                    // if(isset($request->exp_end_day)){
+                    //     $exp->end_day = $request->exp_end_day;
+                    // }
                     // if(isset($request->place_of_assuarance)){
                     //   $exp->place_of_assuarance = $request->place_of_assuarance;
                     //}
-                    $exp->save();
-                    $eduction = new TeacherEducation();
+                
+      
+                $eduction = new TeacherEducation();
                     $userId = $request->id;
                     $eduction->teacher_id = $userId;
                     if (isset($request->educ_en_title)){
@@ -363,7 +378,7 @@ class RegisterController extends Controller
                         }
                         TeacherFiles::insert($TeacherFiles);
                     }
-                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity', 'experiences', 'education'])->where('user_id', $userId)->get();
+                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
                 }
             } catch (ModelNotFoundException $e) {

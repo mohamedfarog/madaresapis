@@ -64,7 +64,7 @@ class Teacher extends Model
     }
     public function teacherFiles(): HasMany
     {
-        return $this->hasMany(TeacherFiles::class, 'academy_id', 'user_id');
+        return $this->hasMany(TeacherFiles::class, 'teacher_id', 'user_id');
     }
     
 
