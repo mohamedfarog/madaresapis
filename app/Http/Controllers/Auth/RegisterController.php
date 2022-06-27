@@ -272,19 +272,20 @@ class RegisterController extends Controller
     
                         return $this->onError('User Type is undefined');
                     }
-                    $location->save();
-                    $userId = $request->id;
-                    $skill = new Skills();
-                    $skill->teacher_id = $userId;
-                    if(isset($request->skill_ar_name)){
-                        $skill->skill_ar_name = $request->skill_ar_name;
-                    }
-                    if(isset($request->skill_en_name)){
-                        $skill->skill_en_name = $request->skill_en_name;
-                    }   
-                    $skill->save();
-                    $teachDoc =  new TeacherResume();
-                    $teachDoc->teacher_id = $userId;
+
+                    if (is_array($request->skills) || is_object($request->skills)){
+           
+                        $userId = $request->id;
+                        foreach($request->skills as $skill){
+                            $skil = new Skills();
+                            $skil->teacher_id = $userId;
+                            $skil->skill_ar_name = $skill['ar_name'];
+                            $skil->skill_en_name = $skill['en_name'];
+                        }
+                    $skil->save();
+                }
+                $teachDoc =  new TeacherResume();
+                $teachDoc->teacher_id = $userId;
                     
                     if (isset($request->curriculum_vitae)) {
                         $fileNmae = time().'_'.$request->curriculum_vitae->getClientOriginalName();
@@ -302,59 +303,34 @@ class RegisterController extends Controller
                         $teachDoc->extra_skills = $request->extra_skills;
                     }
                     $teachDoc->save();
-    
-
                     if (is_array($request->experience) || is_object($request->experience)){
                
                     $userId = $request->id;
                     foreach($request->experience as $texp){
                         $exp = new TeacherExperience();
                         $exp->teacher_id = $userId;
-                        $exp->titel = $texp['exp_job_title'];
-                        $exp->start_day = $texp['exp_start_day'];
-                        $exp->end_day = $texp['exp_end_day'];
-                        // $exp->academy_name = $texp->;
+                        $exp->titel = $texp['title'];
+                        $exp->start_day = $texp['start_day'];
+                        $exp->end_day = $texp['end_day'];
                     }
                     $exp->save();
+                }
 
-
-                        //code goes here
-                    }
-             
-                    // if(isset($request->exp_job_title)){
-                    //     $exp->titel = $request->exp_job_title;
-                    // }
-                    // if(isset($request->academy_name)){
-                    //     $exp->academy_name = $request->academy_name;
-                    // }
-                    // if(isset($request->exp_start_day)){
-                    //     $exp->start_day = $request->exp_start_day;
-                    // }
-                    // if(isset($request->exp_end_day)){
-                    //     $exp->end_day = $request->exp_end_day;
-                    // }
-                    // if(isset($request->place_of_assuarance)){
-                    //   $exp->place_of_assuarance = $request->place_of_assuarance;
-                    //}
-                
-      
-                $eduction = new TeacherEducation();
-                    $userId = $request->id;
-                    $eduction->teacher_id = $userId;
-                    if (isset($request->educ_en_title)){
-                        $eduction->en_title = $request->educ_en_title;
-                    }
-                    if (isset($request->educ_ar_title)){
-                        $eduction->ar_title = $request->educ_ar_title;
-                    }
-                 
-                    if (isset($request->educ_start_date)){
-                        $eduction->start_date = $request->educ_start_date;
-                    }
-                    if (isset($request->educ_end_date)){
-                        $eduction->end_date = $request->educ_end_date;
-                    }
-                    $eduction->save();            
+                $teachDoc->save();
+                if (is_array($request->education) || is_object($request->education)){
+           
+                $userId = $request->id;
+                foreach($request->education as $tedu){
+                    $edu = new TeacherEducation();
+                    $edu->teacher_id = $userId;
+                    $edu->en_title = $tedu['en_title'];
+                    $edu->ar_title = $tedu['ar_title'];
+                    $edu->start_date = $tedu['start_date'];
+                    $edu->end_date = $tedu['end_date'];
+                }
+                $edu->save();
+            }
+       
                     $userId = $request->id;
                     $available = new Availability();
                     $available->teacher_id = $userId;
