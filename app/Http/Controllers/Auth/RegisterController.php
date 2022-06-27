@@ -15,6 +15,7 @@ use App\Models\Academies\AcademyLevels;
 use App\Models\Academies\Academy;
 use App\Models\Teachers\Teacher;
 use App\Models\Teachers\TeacherExperience;
+use App\Models\Teachers\TeacherEducation;
 use App\Models\Teachers\TeacherResume;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\AppMail;
@@ -49,8 +50,11 @@ class RegisterController extends Controller
         return 'success';
     }
     use fileUpload;
+
     public function UpdateUserType(Request $request)
-    { 
+    {
+
+        
         try {
             $userType = User::findOrFail($request->id);
             if ($userType->user_type == '255' || $userType->user_type == '256' ) {
@@ -61,9 +65,25 @@ class RegisterController extends Controller
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($userType->user_type  == '255') {
-               
                     $userId = $request->id;
                      $academy = new Academy();
+                     $validator = Validator::make($request->all(), [
+                        'ar_name' => 'sometimes|required',
+                        'en_name' => 'required',
+                        'contact_number' => 'required',
+                        'en_bio' => 'required',
+                        'ar_bio' => 'required',
+                        'ar_bio' => 'required',
+                        'avatar' => 'required',
+                        'years_of_teaching' => 'required',
+                        'size' => 'required',
+                        'images' => 'required|array'
+            
+                    ]);
+            
+                    if ($validator->fails()) {
+                        return response()->json(['error' => $validator->errors()], 401);
+                    }
                         $academy->user_id = $userId;        
                     if (asset($request->ar_name)) {
                         $academy->ar_name = $request->ar_name;
@@ -152,8 +172,29 @@ class RegisterController extends Controller
                     $userId = $request->id;
             
                     $teacher = new Teacher();
+                    $validator = Validator::make($request->all(), [
+                        'gender_id' => 'sometimes|required',
+                        'contact_number' => 'required',
+                        'contact_number' => 'required',
+                        'date_of_birth' => 'required',
+                        'en_last_name' => 'required',
+                        'en_last_name' => 'required',
+                        'ar_last_name' => 'required',
+                        'ar_last_name' => 'required',
+                        'en_bio' => 'required',
+                        'ar_bio' => 'required',
+                        'willing_to_travel' => 'required',
+                        'availability_id' => 'required',
+                        'avatar' => 'required',
+                        // 'images' => 'required|array'
+            
+                    ]);
+            
+                    if ($validator->fails()) {
+                        return response()->json(['error' => $validator->errors()], 401);
+                    }
               
-                        $teacher->user_id = $userId;
+                    $teacher->user_id = $userId;
                     
                     if(asset($request->gender_id)){
                         $teacher->gender_id = $request->gender_id;
@@ -239,10 +280,8 @@ class RegisterController extends Controller
                     }
                     if(isset($request->skill_en_name)){
                         $skill->skill_en_name = $request->skill_en_name;
-                    }
-         
+                    }   
                     $skill->save();
-    
                     $teachDoc =  new TeacherResume();
                     $teachDoc->teacher_id = $userId;
                     
@@ -263,7 +302,43 @@ class RegisterController extends Controller
                     }
                     $teachDoc->save();
     
+                    $exp = new TeacherExperience();
+                    $userId = $request->id;
+                    $exp->teacher_id = $userId;
                  
+                    if(isset($request->exp_job_title)){
+                        $exp->titel = $request->exp_job_title;
+                    }
+                    if(isset($request->academy_name)){
+                        $exp->academy_name = $request->academy_name;
+                    }
+                    if(isset($request->exp_start_day)){
+                        $exp->start_day = $request->exp_start_day;
+                    }
+                    if(isset($request->exp_end_day)){
+                        $exp->end_day = $request->exp_end_day;
+                    }
+                    // if(isset($request->place_of_assuarance)){
+                    //   $exp->place_of_assuarance = $request->place_of_assuarance;
+                    //}
+                    $exp->save();
+                    $eduction = new TeacherEducation();
+                    $userId = $request->id;
+                    $eduction->teacher_id = $userId;
+                    if (isset($request->educ_en_title)){
+                        $eduction->en_title = $request->educ_en_title;
+                    }
+                    if (isset($request->educ_ar_title)){
+                        $eduction->ar_title = $request->educ_ar_title;
+                    }
+                 
+                    if (isset($request->educ_start_date)){
+                        $eduction->start_date = $request->educ_start_date;
+                    }
+                    if (isset($request->educ_end_date)){
+                        $eduction->end_date = $request->educ_end_date;
+                    }
+                    $eduction->save();            
                     $userId = $request->id;
                     $available = new Availability();
                     $available->teacher_id = $userId;
@@ -271,7 +346,7 @@ class RegisterController extends Controller
                         $available->time_available = $request->time_available;
                     }
                     $available->save();       
-                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity'])->where('user_id', $userId)->get();
+                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity', 'experiences', 'education'])->where('user_id', $userId)->get();
                     return $this->onSuccess($teacherData);
                 }
             } catch (ModelNotFoundException $e) {
@@ -293,6 +368,7 @@ class RegisterController extends Controller
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
+        $this->sendVerificationEmail($request->email, 1);
         $user1 =  User::where('email', $request->email)->get(['id', 'email', 'is_active', 'email_verified'])->first();
         return response()->json([
             'status' => true,
