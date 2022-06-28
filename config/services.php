@@ -34,6 +34,12 @@ return [
         'redirect' => '',
     ],
 
+    'linkedin' => [
+        'client_id' => '77yk50w1lur7e3',
+        'client_secret' => 'ZFTJW0BFZTpyonZv',
+        'redirect' => '',
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

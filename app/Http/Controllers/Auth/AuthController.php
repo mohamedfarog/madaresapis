@@ -87,8 +87,8 @@ class AuthController extends Controller
 
     public function loginV2(Request $request)
     {
-      
-      
+
+
         $credentials = $request->only('email', 'password');
         //valid credential
         $validator = Validator::make($credentials, [
@@ -98,7 +98,6 @@ class AuthController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
-          
         }
         // Request is validated
         //Creat token
@@ -121,51 +120,88 @@ class AuthController extends Controller
 
     function googleAuth($accessToken)
     {
-        try{
+        try {
             $user = Socialite::driver('google')->userFromToken($accessToken);
-            if($user){
+            if ($user) {
                 $gUser = User::where('google_id', $user->id)
-                ->orWhere('email',$user->email)
-                ->first();
-                if($gUser){
+                    ->orWhere('email', $user->email)
+                    ->first();
+                if ($gUser) {
                     $token = JWTAuth::fromUser($gUser);
                     return [
                         'status' => true,
                         'token' => $token,
                         'user' => $gUser,
                     ];
-                 
-                }
-                else{
+                } else {
                     $gUser = new User();
                     if ($user->email)
-                    $email = $user->email;
-                else {
-                    $email = $user->name . '@google.com';
+                        $email = $user->email;
+                    else {
+                        $email = $user->name . '@google.com';
+                    }
+                    $gUser->email = $email;
+
+                    $gUser->google_id = $user->id;
+                    $gUser->email_verified = 1;
+                    $gUser->save();
+                    $token = JWTAuth::fromUser($gUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $gUser,
+                    ];
                 }
-                $gUser->email = $email;
-
-                $gUser->google_id = $user->id;
-                $gUser->email_verified = 1;
-                $gUser->save();
-                $token = JWTAuth::fromUser($gUser);
-                return [
-                    'status' => true,
-                    'token' => $token,
-                    'user' => $gUser,
-                ];
-                }              
-            }else{
+            } else {
                 return $this->onError("access token not valid");
-
             }
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return $e;
-        
         }
     }
- 
+
+    function linkedinAuth($accessToken)
+    {
+        try {
+            $user = Socialite::driver('linkedin')->userFromToken($accessToken);
+            if ($user) {
+                $gUser = User::where('linkedin_id', $user->id)
+                    ->orWhere('email', $user->email)
+                    ->first();
+                if ($gUser) {
+                    $token = JWTAuth::fromUser($gUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $gUser,
+                    ];
+                } else {
+                    $gUser = new User();
+                    if ($user->email)
+                        $email = $user->email;
+                    else {
+                        $email = $user->name . '@linkedin.com';
+                    }
+                    $gUser->email = $email;
+
+                    $gUser->linkedin_id = $user->id;
+                    $gUser->email_verified = 1;
+                    $gUser->save();
+                    $token = JWTAuth::fromUser($gUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $gUser,
+                    ];
+                }
+            } else {
+                return $this->onError("access token not valid");
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
 
     function facebookAuth($accessToken)
     {
@@ -174,7 +210,7 @@ class AuthController extends Controller
             $user = Socialite::driver('facebook')->userFromToken($accessToken);
             if ($user) {
 
-                $fUser = User::where('facebook_id', $user->id)->orWhere('email',$user->email)->first();
+                $fUser = User::where('facebook_id', $user->id)->orWhere('email', $user->email)->first();
                 if ($fUser) {
                     $token = JWTAuth::fromUser($fUser);
                     return [
@@ -226,9 +262,10 @@ class AuthController extends Controller
                 break;
             case 'google':
                 $data = $this->googleAuth($request->accessToken);
-
+            case 'linkedin':
+                $data = $this->linkedinAuth($request->accessToken);
         }
-        
+
         return $data;
     }
 
