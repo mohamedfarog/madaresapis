@@ -119,6 +119,52 @@ class AuthController extends Controller
         ]);
     }
 
+    function googleAuth($accessToken)
+    {
+        try{
+            $user = Socialite::driver('google')->userFromToken($accessToken);
+            if($user){
+                $gUser = User::where('google_id')->userFromToken->first();
+                if($gUser){
+                    $token = JWTAuth::fromUser($gUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $gUser,
+                    ];
+                 
+                }
+                else{
+                    $gUser = new User();
+                    if ($user->email)
+                    $email = $user->email;
+                else {
+                    $email = $user->name . '@google.com';
+                }
+                $gUser->email = $email;
+
+                $gUser->google_id = $user->id;
+                $gUser->email_verified = 1;
+                $gUser->save();
+                $token = JWTAuth::fromUser($gUser);
+                return [
+                    'status' => true,
+                    'token' => $token,
+                    'user' => $gUser,
+                ];
+                }              
+            }else{
+                return $this->onError("access token not valid");
+
+            }
+        }
+        catch(Exception $e){
+            return $e;
+        
+        }
+    }
+ 
+
     function facebookAuth($accessToken)
     {
         try {
@@ -176,7 +222,11 @@ class AuthController extends Controller
             case 'facebook':
                 $data = $this->facebookAuth($request->accessToken);
                 break;
+            case 'google':
+                $data = $this->googleAuth($request->accessToken);
+
         }
+            
 
         return $data;
     }
