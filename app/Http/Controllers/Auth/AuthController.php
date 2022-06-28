@@ -124,7 +124,9 @@ class AuthController extends Controller
         try{
             $user = Socialite::driver('google')->userFromToken($accessToken);
             if($user){
-                $gUser = User::where('google_id', $user->id)->first();
+                $gUser = User::where('google_id', $user->id)
+                ->orWhere('email',$user->email)
+                ->first();
                 if($gUser){
                     $token = JWTAuth::fromUser($gUser);
                     return [
@@ -172,7 +174,7 @@ class AuthController extends Controller
             $user = Socialite::driver('facebook')->userFromToken($accessToken);
             if ($user) {
 
-                $fUser = User::where('facebook_id', $user->id)->first();
+                $fUser = User::where('facebook_id', $user->id)->orWhere('email',$user->email)->first();
                 if ($fUser) {
                     $token = JWTAuth::fromUser($fUser);
                     return [
@@ -188,7 +190,7 @@ class AuthController extends Controller
                         $email = $user->name . '@facebook.com';
                     }
                     $fUser->email = $email;
-                    // $fUser->name = $user->name;
+                    //$fUser->name = $user->name;
                     $fUser->facebook_id = $user->id;
                     $fUser->email_verified = 1;
                     $fUser->save();
@@ -226,8 +228,7 @@ class AuthController extends Controller
                 $data = $this->googleAuth($request->accessToken);
 
         }
-            
-
+        
         return $data;
     }
 
