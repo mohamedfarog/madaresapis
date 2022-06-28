@@ -10,11 +10,9 @@ class TeacherExperience extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['teacher_id', 'curriculum_vitae' , 'cover_litter','extra_skills' ];
+    protected $fillable = ['teacher_id', 'titel' , 'academy_name','start_day', 'end_day' ];
     protected $guarded = ['id'];
-    protected $hidden = ['updated_at'];
-    protected $casts = [
-        'certificates' => 'array'
-    ];
+    protected $hidden = ['updated_at', 'created_at'];
+
 
 }

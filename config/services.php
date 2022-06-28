@@ -28,6 +28,11 @@ return [
         'client_secret' => 'a0390f05218397a8ce360cdd13fcb1f3',
         'redirect' => '',
     ],
+    'google' => [
+        'client_id' => '22469777881-nvmqpej13dc8mlpid7269r6la3lg4o9k.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => '',
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

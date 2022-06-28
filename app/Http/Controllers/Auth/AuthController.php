@@ -119,6 +119,54 @@ class AuthController extends Controller
         ]);
     }
 
+    function googleAuth($accessToken)
+    {
+        try{
+            $user = Socialite::driver('google')->userFromToken($accessToken);
+            if($user){
+                $gUser = User::where('google_id', $user->id)
+                ->orWhere('email',$user->email)
+                ->first();
+                if($gUser){
+                    $token = JWTAuth::fromUser($gUser);
+                    return [
+                        'status' => true,
+                        'token' => $token,
+                        'user' => $gUser,
+                    ];
+                 
+                }
+                else{
+                    $gUser = new User();
+                    if ($user->email)
+                    $email = $user->email;
+                else {
+                    $email = $user->name . '@google.com';
+                }
+                $gUser->email = $email;
+
+                $gUser->google_id = $user->id;
+                $gUser->email_verified = 1;
+                $gUser->save();
+                $token = JWTAuth::fromUser($gUser);
+                return [
+                    'status' => true,
+                    'token' => $token,
+                    'user' => $gUser,
+                ];
+                }              
+            }else{
+                return $this->onError("access token not valid");
+
+            }
+        }
+        catch(Exception $e){
+            return $e;
+        
+        }
+    }
+ 
+
     function facebookAuth($accessToken)
     {
         try {
@@ -126,7 +174,7 @@ class AuthController extends Controller
             $user = Socialite::driver('facebook')->userFromToken($accessToken);
             if ($user) {
 
-                $fUser = User::where('facebook_id', $user->id)->first();
+                $fUser = User::where('facebook_id', $user->id)->orWhere('email',$user->email)->first();
                 if ($fUser) {
                     $token = JWTAuth::fromUser($fUser);
                     return [
@@ -142,8 +190,9 @@ class AuthController extends Controller
                         $email = $user->name . '@facebook.com';
                     }
                     $fUser->email = $email;
-                    $fUser->name = $user->name;
+                    //$fUser->name = $user->name;
                     $fUser->facebook_id = $user->id;
+                    $fUser->email_verified = 1;
                     $fUser->save();
                     $token = JWTAuth::fromUser($fUser);
                     return [
@@ -157,7 +206,7 @@ class AuthController extends Controller
             }
         } catch (Exception $e) {
             return $e;
-            // return $this->onError("access token not valid exc");
+            //return $this->onError("access token not valid exc");
         }
     }
 
@@ -175,9 +224,12 @@ class AuthController extends Controller
             case 'facebook':
                 $data = $this->facebookAuth($request->accessToken);
                 break;
-        }
+            case 'google':
+                $data = $this->googleAuth($request->accessToken);
 
-        return $this->onSuccess($data);
+        }
+        
+        return $data;
     }
 
     public function testFace(Request $request)

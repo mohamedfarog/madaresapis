@@ -13,6 +13,8 @@ use App\Models\Skills;
 use App\Models\Availability;
 use App\Models\Teachers\TeacherResume;
 use App\Models\Teachers\TeacherExperience;
+use App\Models\Teachers\TeacherEducation;
+use App\Models\Teachers\TeacherFiles;
 use App\Models\Job\JobLevel;
 
 
@@ -51,11 +53,18 @@ class Teacher extends Model
    
         return $this->hasMany(TeacherExperience::class,'teacher_id', 'user_id');
     }
-
-
+    public function education(): HasMany
+    {
+   
+        return $this->hasMany(TeacherEducation::class,'teacher_id', 'user_id');
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function teacherFiles(): HasMany
+    {
+        return $this->hasMany(TeacherFiles::class, 'teacher_id', 'user_id');
     }
     
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsActiveToUsersTable extends Migration
+class CreateTeacherFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddIsActiveToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-
-            $table->tinyInteger('is_active')->default(0);
+        Schema::create('teacher_files', function (Blueprint $table) {
+            $table->id();
+            $table->string('file_name')->nullable();
+            $table->foreignId('teacher_id');
+            $table->string('file_url');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AddIsActiveToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('teacher_files');
     }
 }

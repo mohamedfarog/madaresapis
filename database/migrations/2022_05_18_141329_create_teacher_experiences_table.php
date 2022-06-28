@@ -15,7 +15,7 @@ class CreateTeacherExperiencesTable extends Migration
     {
         Schema::create('teacher_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('teacher_id');
             $table->string('titel', 50);
             $table->tinyText('academy_name');
             $table->boolean('current_work')->nullable();
