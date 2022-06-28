@@ -124,7 +124,7 @@ class AuthController extends Controller
         try{
             $user = Socialite::driver('google')->userFromToken($accessToken);
             if($user){
-                $gUser = User::where('google_id')->userFromToken->first();
+                $gUser = User::where('google_id', $user->id)->first();
                 if($gUser){
                     $token = JWTAuth::fromUser($gUser);
                     return [
