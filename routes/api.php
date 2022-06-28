@@ -15,6 +15,7 @@ use App\Http\Controllers\Website\TeachersController;
 use App\Http\Controllers\Website\SubjectsControlle;
 use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
 use App\Models\Gender;
 
@@ -67,6 +68,8 @@ Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
+Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
+
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
       // Route::post('/login', [AuthController::class, 'login']);
