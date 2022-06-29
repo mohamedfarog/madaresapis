@@ -369,7 +369,7 @@ class RegisterController extends Controller
 
     public function returnEmailVerifyed(Request $request){
         $checkEmail = User::where('email', $request->email)->first();
-        if($checkEmail['email_verified'] === 1){
+        if($checkEmail['email_verified'] == 1){
             return $this->onSuccess('Email is verifed');
 
         }
