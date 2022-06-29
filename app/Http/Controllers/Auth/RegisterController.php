@@ -374,7 +374,13 @@ class RegisterController extends Controller
 
         }
         else{
-             return $this->onError('Email is not verifed');
+            {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Email is not verifed',
+                ], 200);
+            }
+           
         }
     }
 }
