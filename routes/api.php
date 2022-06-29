@@ -69,6 +69,8 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
+Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
+
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
       // Route::post('/login', [AuthController::class, 'login']);

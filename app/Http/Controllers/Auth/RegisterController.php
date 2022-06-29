@@ -29,8 +29,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use File;
 use Illuminate\Support\Facades\Storage;
-
-
+use Psy\TabCompletion\Matcher\FunctionsMatcher;
 
 class RegisterController extends Controller
 {
@@ -366,6 +365,17 @@ class RegisterController extends Controller
         $user->verify_email_token_created_at = null;
         $user->save();
         return "<h2>Email has been verified successfully";
+    }
+
+    public function returnEmailVerifyed(Request $request){
+        $checkEmail = User::where('email', $request->email)->first();
+        if($checkEmail['email_verified'] === 1){
+            return $this->onSuccess('Email is verifed');
+
+        }
+        else{
+             return $this->onError('Email is not verifed');
+        }
     }
 }
  
