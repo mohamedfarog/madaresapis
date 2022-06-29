@@ -69,25 +69,22 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
-
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
       // Route::post('/login', [AuthController::class, 'login']);
    });
-   Route::post('FAQ', [HomePageController::class, 'getFaqInfo']);
-   Route::post('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
-   Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
-   Route::post('joblevel', [HomePageController::class, 'returnJobLevel']);
-   Route::post('HomeBanner', [HomePageController::class, 'getHomeBanner']);
-   Route::post('AvailableJobs', [HomePageController::class, 'AvailableJobs']);
-   Route::post('HpBannar', [HomePageController::class, 'homePageBanner']);
-   Route::post('teacher', [TeachersController::class, 'teacherData']);
-   Route::post('school', [SchoolsController::class, 'schoolData']);
-   Route::post('acadmy', [AcademyController::class, 'academyData']);
-   Route::post('jobs', [JobController::class, 'getJobsInfo']);
+   Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
+   Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
+   Route::get('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
+   Route::get('joblevel', [HomePageController::class, 'returnJobLevel']);
+   Route::get('HomeBanner', [HomePageController::class, 'getHomeBanner']);
+   Route::get('AvailableJobs', [HomePageController::class, 'AvailableJobs']);
+   Route::get('HpBannar', [HomePageController::class, 'homePageBanner']);
+   Route::get('teacher', [TeachersController::class, 'teacherData']);
+   Route::get('acadmy', [AcademyController::class, 'academyData']);
+   Route::get('jobs', [JobController::class, 'getJobsInfo']);
    Route::post('register', [RegisterController::class, 'register']);
-   Route::post('login', [AuthController::class, 'login']);
-   Route::post('about', [AboutController::class, 'aboutData']);
+   Route::get('about', [AboutController::class, 'aboutData']);
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {  // also you can this value in your config file and use here
       if (auth()->check() && auth()->id() > 1) {
          $user = auth()->user();

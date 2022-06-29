@@ -16,8 +16,8 @@ class CreateActivityTable extends Migration
         Schema::create('activity', function (Blueprint $table) {
             $table->id();
            // $table->foreignId('user_id');
-            $table->string('en_activity');
-            $table->string('ar_activity');
+            $table->string('activity');
+         
             $table->timestamps();
         });
     }

@@ -17,14 +17,12 @@ class CreateAcademiesTable extends Migration
         Schema::create('academies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('ar_name');
-            $table->string('en_name');
+            $table->string('name');
             $table->string('website');
             $table->string('contact_number')->nullable();
             $table->string('avatar')->nullable();
             $table->string('banner')->nullable();
-            $table->longText('ar_bio')->nullable();
-            $table->longText('en_bio')->nullable();
+            $table->longText('bio')->nullable();
             $table->string('size');
             $table->integer('years_of_teaching');
 

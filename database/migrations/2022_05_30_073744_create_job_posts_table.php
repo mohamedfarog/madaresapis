@@ -20,8 +20,7 @@ class CreateJobPostsTable extends Migration
             $table->foreignId('job_type_id');
             $table->foreignId('location_id');
             $table->timestamp('created_date');
-            $table->string('en_job_desc');
-            $table->string('ar_job_desc');
+            $table->string('job_desc');
             $table->boolean('is_active');
             $table->timestamps();
         });

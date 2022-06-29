@@ -13,6 +13,7 @@ class CreateAcademyFilesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('academy_files');
         Schema::create('academy_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('academy_id');

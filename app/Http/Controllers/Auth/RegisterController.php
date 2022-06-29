@@ -69,16 +69,14 @@ class RegisterController extends Controller
                     $userId = $request->id;
                      $academy = new Academy();
                      $validator = Validator::make($request->all(), [
-                        'ar_name' => 'sometimes|required',
-                        'en_name' => 'required',
+                    
+                        'name' => 'required',
                         'contact_number' => 'required',
-                        'en_bio' => 'required',
-                        'ar_bio' => 'required',
-                        'ar_bio' => 'required',
+                        'bio' => 'required',
                         'avatar' => 'required',
                         'years_of_teaching' => 'required',
                         'size' => 'required',
-                        'images' => 'required|array'
+                        'avatar' => 'required'
             
                     ]);
             
@@ -86,20 +84,15 @@ class RegisterController extends Controller
                         return response()->json(['error' => $validator->errors()], 401);
                     }
                         $academy->user_id = $userId;        
-                    if (asset($request->ar_name)) {
-                        $academy->ar_name = $request->ar_name;
+                    if (asset($request->name)) {
+                        $academy->name = $request->name;
                     }
-                    if (asset($request->en_name)) {
-                        $academy->en_name = $request->en_name;
-                    }
+                 
                     if (asset($request->contact_number)) {
                         $academy->contact_number = $request->contact_number;
                     }
-                    if (asset($request->en_bio)) {
-                        $academy->en_bio = $request->en_bio;
-                    }
-                    if (asset($request->ar_bio)) {
-                        $academy->ar_bio = $request->ar_bio;
+                    if (asset($request->bio)) {
+                        $academy->bio = $request->bio;
                     }
                     if ($file = $request->avatar) {
                         $icon = $this->uploadFile($file, 'avatars');
@@ -113,26 +106,16 @@ class RegisterController extends Controller
                     }
                     $academy->save();
                     $location = new Locations();
-                  
-                        $location->teacher_id = $userId;
+                    $academy->user_id = $userId;  
                     
-                    if (asset($request->ar_city)) {
-                        $location->ar_city_name = $request->ar_city;
+                    if (asset($request->city)) {
+                        $location->city = $request->city;
+                    }    
+                    if (asset($request->country)) {
+                        $location->country = $request->country;
                     }
-                    if (asset($request->en_city)) {
-                        $location->en_city_name = $request->en_city;
-                    }
-                    if (asset($request->en_country)) {
-                        $location->en_country = $request->en_country;
-                    }
-                    if (asset($request->ar_country)) {
-                        $location->ar_country = $request->ar_country;
-                    }
-                    if (asset($request->en_street)) {
-                        $location->en_street = $request->en_street;
-                    }
-                    if (asset($request->ar_street)) {
-                        $location->ar_street = $request->ar_street;
+                    if (asset($request->street)) {
+                        $location->street = $request->street;
                     }
                     $location->save();
                     
@@ -170,23 +153,19 @@ class RegisterController extends Controller
                 }
                 if ($request->type == '256') {
                     $userId = $request->id;
-            
                     $teacher = new Teacher();
                     $validator = Validator::make($request->all(), [
                         'gender_id' => 'sometimes|required',
                         'contact_number' => 'required',
                         'contact_number' => 'required',
                         'date_of_birth' => 'required',
-                        'en_last_name' => 'required',
-                        'en_last_name' => 'required',
-                        'ar_last_name' => 'required',
-                        'ar_last_name' => 'required',
-                        'en_bio' => 'required',
-                        'ar_bio' => 'required',
+                        'first_name' => 'required',        
+                        'last_name' => 'required',
+                        'bio' => 'required',
                         'willing_to_travel' => 'required',
                         'availability_id' => 'required',
                         'avatar' => 'required',
-                        // 'images' => 'required|array'
+                        //'images' => 'required|array'
             
                     ]);
             
@@ -206,31 +185,16 @@ class RegisterController extends Controller
                     if(asset($request->date_of_birth)){
                         $teacher->date_of_birth = $request->date_of_birth;
                     }
-                    if(asset($request->en_first_ame)){
-                        $teacher->en_first_name = $request->en_first_name;
+                    if(asset($request->first_ame)){
+                        $teacher->first_name = $request->first_name;
                     }
-                    if(asset($request->en_last_name)){
-                        $teacher->en_last_name = $request->en_last_name;
-                    }
-                    if(asset($request->en_last_name)){
-                        $teacher->en_last_name = $request->en_last_name;
-                    }
-                 
-                    if(asset($request->ar_first_ame)){
-                        $teacher->ar_first_name = $request->ar_first_name;
-                    }
-                    if(asset($request->ar_last_name)){
-                        $teacher->ar_last_name = $request->ar_last_name;
-                    }
-                    if(asset($request->ar_last_name)){
-                        $teacher->ar_last_name = $request->ar_last_name;
-                    }
-                    if(asset($request->en_bio)){
-                        $teacher->en_bio = $request->en_bio;
-                    }
-                    if(asset($request->ar_bio)){
-                        $teacher->ar_bio = $request->ar_bio;
-                    }
+               
+                    if(asset($request->last_name)){
+                        $teacher->last_name = $request->last_name;
+                    }               
+                    if(asset($request->bio)){
+                        $teacher->bio = $request->bio;
+                    }      
                     if(asset($request->willing_to_travel)){
                         $teacher->willing_to_travel = $request->willing_to_travel;
                     }
@@ -251,22 +215,17 @@ class RegisterController extends Controller
                     if (asset($request->ar_city)) {
                         $location->ar_city_name = $request->ar_city;
                     }
-                    if (asset($request->en_city)) {
-                        $location->en_city_name = $request->en_city;
+                    if (asset($request->city)) {
+                        $location->city = $request->city;
                     }
-                    if (asset($request->en_country)) {
-                        $location->en_country = $request->en_country;
+                    if (asset($request->country)) {
+                        $location->country = $request->country;
                     }
-                    if (asset($request->ar_country)) {
-                        $location->ar_country = $request->ar_country;
+           
+                    if (asset($request->street)) {
+                        $location->street = $request->street;
                     }
-                    if (asset($request->en_street)) {
-                        $location->en_street = $request->en_street;
-                    }
-                    if (asset($request->ar_street)) {
-                        $location->ar_street = $request->ar_street;
-                    }
-    
+                   
                     else {
     
                         return $this->onError('User Type is undefined');
@@ -278,8 +237,7 @@ class RegisterController extends Controller
                         foreach($request->skills as $skill){
                             $skil = new Skills();
                             $skil->teacher_id = $userId;
-                            $skil->skill_ar_name = $skill['ar_name'];
-                            $skil->skill_en_name = $skill['en_name'];
+                            $skil->skill_name = $skill['skill_name'];
                         }
                     $skil->save();
                 }
@@ -298,7 +256,7 @@ class RegisterController extends Controller
                         $teachDoc->cover_litter = $fileNmae;
                         
                     } 
-                    if(isset($request->skill_en_name)){
+                    if(isset($request->skill_name)){
                         $teachDoc->extra_skills = $request->extra_skills;
                     }
                     $teachDoc->save();
@@ -308,7 +266,7 @@ class RegisterController extends Controller
                     foreach($request->experience as $texp){
                         $exp = new TeacherExperience();
                         $exp->teacher_id = $userId;
-                        $exp->titel = $texp['title'];
+                        $exp->titel = $texp['exp_title'];
                         $exp->start_day = $texp['start_day'];
                         $exp->end_day = $texp['end_day'];
                     }
@@ -322,8 +280,7 @@ class RegisterController extends Controller
                 foreach($request->education as $tedu){
                     $edu = new TeacherEducation();
                     $edu->teacher_id = $userId;
-                    $edu->en_title = $tedu['en_title'];
-                    $edu->ar_title = $tedu['ar_title'];
+                    $edu->title = $tedu['edu_title'];
                     $edu->start_date = $tedu['start_date'];
                     $edu->end_date = $tedu['end_date'];
                 }

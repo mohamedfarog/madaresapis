@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Skills extends Model
 {
     use HasFactory;
-    protected $fillable = ['teacher_id','skill_ar_name', 'skill_en_name'];
+    protected $fillable = ['teacher_id','skill_name'];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at', 'created_at'];
 }

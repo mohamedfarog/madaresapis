@@ -13,6 +13,7 @@ class CreateAcademyLevelsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('academy_levels');
         Schema::create('academy_levels', function (Blueprint $table) {
             $table->id();
             $table->foreignId('academy_id');

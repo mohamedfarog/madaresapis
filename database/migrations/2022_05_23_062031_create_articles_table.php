@@ -16,13 +16,10 @@ class CreateArticlesTable extends Migration
         Schema::dropIfExists('articles');
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->text('en_title');
-            $table->text('ar_title');
-            $table->string('en_owner_name');
-            $table->string('ar_owner_name');
+            $table->text('title');
+            $table->string('owner_name');
             $table->timestamp('published_date');
-            $table->longText('en_body');
-            $table->longText('ar_body');
+            $table->longText('body');
             $table->timestamps();
         });
     }

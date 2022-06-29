@@ -13,7 +13,7 @@ class CreateSavedsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('saveds');
+        Schema::dropIfExists('saved');
         Schema::create('saved', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_id');

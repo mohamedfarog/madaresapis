@@ -17,16 +17,11 @@ class CreateGeneralJobStatusTable extends Migration
 
         Schema::create('general_job_status', function (Blueprint $table) {
             $table->id();
-            $table->string('en_applicant_name');
-            $table->string('ar_applicant_name');
-            $table->string('en_viwed');
-            $table->string('ar_viwed');
-            $table->string('en_interview');
-            $table->string('ar_interview');
-            $table->string('en_rejected');
-            $table->string('ar_rejected');
-            $table->string('en_accepted');
-            $table->string('ar_accepted');
+            $table->string('applicant_name');
+            $table->string('viwed');
+            $table->string('interview');
+            $table->string('rejected');
+            $table->string('accepted');
             $table->timestamps();
         });
     }

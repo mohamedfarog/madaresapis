@@ -16,8 +16,8 @@ class CreateJobLevelsTable extends Migration
         Schema::dropIfExists('job_levels');
         Schema::create('job_levels', function (Blueprint $table) {
             $table->id();
-            $table->tinyText('en_title');
-            $table->tinyText('ar_title');
+        
+            $table->tinyText('title');
             $table->tinyText('avater');
             $table->timestamps();
         });

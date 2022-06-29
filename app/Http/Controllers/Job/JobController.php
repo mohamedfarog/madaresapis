@@ -16,18 +16,13 @@ class JobController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-   public function getJobsInfo(Request $request)
+   public function getJobsInfo()
    {
 
-      if ($request->lang === "1") {
-         $job = Job::all('id', 'en_title', 'academy_id', 'job_type_id', 'en_advertise_area', 'en_hiring_budget', 'job_level_id', 'gender_id', 'job_vacancy', 'en_job_description', 'expected_start_date', 'job_deadline', 'en_job_responsibilities', 'en_job_benefits', 'en_job_experience', 'ar_job_experience')->load('academy');
+     
+         $job = Job::all('id', 'title', 'academy_id', 'job_type_id', 'advertise_area', 'hiring_budget', 'job_level_id', 'job_vacancy', 'job_description', 'expected_start_date', 'job_deadline', 'job_responsibilities', 'job_benefits', 'job_experience', 'job_experience')->load('academy');
          return $this->onSuccess($job);
-      }
-      if ($request->lang === "2") {
-         $job = Job::all('id', 'ar_title', 'academy_id', 'job_type_id', 'ar_advertise_area', 'ar_hiring_budget', 'job_level_id', 'gender_id', 'ar_job_description', 'expected_start_date', 'job_deadline', 'ar_job_responsibilities', 'en_job_benefits', 'ar_job_experience', 'ar_job_experience')->load('academy');
-      } else {
-         return $this->onSuccess('Invild Input');
-      }
+    
    }
 
    public function addJob(Request $request)
@@ -36,11 +31,9 @@ class JobController extends Controller
          'academy_id' => 'required',
          'job_type_id' => 'required',
          'job_level_id' => 'required',
-         'en_title' => 'required',
-         'ar_title' => 'required',
-         'en_advertise_area' => 'required',
-         'ar_advertise_area' => 'required',
-         'ar_advertise_area' => 'required',
+         'title' => 'required',
+         'advertise_area' => 'required',
+         'advertise_area' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -50,12 +43,10 @@ class JobController extends Controller
       $job->academy_id = $request->academy_id;
       $job->job_type_id = $request->job_type_id;
       $job->job_level_id = $request->job_level_id;
-      $job->en_title = $request->en_title;
-      $job->ar_title = $request->ar_title;
-      $job->en_advertise_area = $request->en_advertise_area;
-      $job->ar_advertise_area = $request->ar_advertise_area;
+      $job->title = $request->title;
+      $job->advertise_area = $request->advertise_area;
       $job->job_vacancy = $request->job_vacancy;
       $job->save();
-      return $this->onSuccess($jobLevel, 200, "job added successfully!");
+      return $this->onSuccess($job, 200, "job added successfully!");
    }
 }

@@ -18,12 +18,9 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->integer('country_id')->nullable();
-            $table->string('ar_country')->nullable();;
-            $table->string('en_country');
-            $table->string('ar_city_name');
-            $table->string('en_city_name');
-            $table->string('ar_street');
-            $table->string('en_street');
+            $table->string('country');
+            $table->string('city');
+            $table->string('street');
             $table->string('building_no')->nullable();;
             $table->string('location_code')->nullable();;
             $table->foreignId('teacher_id');
