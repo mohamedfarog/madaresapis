@@ -35,6 +35,10 @@ class RegisterController extends Controller
 {
 
   
+    public function testView(){
+        return view('emails.emailVerfied');
+
+    }
 
     function sendVerificationEmail($email, $userId)
     {
