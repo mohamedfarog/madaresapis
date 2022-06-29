@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="icon" href="./logo512.png">
+    <link rel="icon" href="logo512.png">
     <title class="tr">Madares</title>
 	<script>
 		window.addEventListener('load', (event) => {
@@ -12,7 +12,7 @@
             var downloadTimer = setInterval(function(){  
                 if(timeleft <= 0){
                     clearInterval(downloadTimer);
-                    window.location.replace('https://dashboard-madares.mvp-apps.ae/login')
+                  //  window.location.replace('https://dashboard-madares.mvp-apps.ae/login')
                 }
                 document.getElementById("progressBar").innerHTML = `You will be redirected after ${timeleft} seconds`;
                 timeleft -= 1;
@@ -20,6 +20,7 @@
         });
 	</script>
     <style>
+
         .login_page {
           min-height: 100vh;
           display: flex;
@@ -136,7 +137,8 @@
 
 <body>
     <div class="login_page">
-        <img src='./authBC.png' alt='login_img' class='login_img'/>
+       
+        <img src=public_path().'/authBC.png' alt='login_img' class='login_img'/>
         <div class='login_card_wrapper'>
             <h1 class="page-title">Email Verfication</h1>
             <div class='card overflow-hidden'>
