@@ -13,6 +13,7 @@ class CreateGendersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('genders');
         Schema::create('genders', function (Blueprint $table) {
             $table->id();
             $table->tinyText('title');
