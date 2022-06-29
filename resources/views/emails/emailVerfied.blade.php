@@ -138,7 +138,7 @@
 <body>
     <div class="login_page">
        
-        <img src=public_path().'/authBC.png' alt='login_img' class='login_img'/>
+        <img src='/authBC.png' alt='login_img' class='login_img'/>
         <div class='login_card_wrapper'>
             <h1 class="page-title">Email Verfication</h1>
             <div class='card overflow-hidden'>
