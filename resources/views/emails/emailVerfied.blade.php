@@ -16,7 +16,7 @@
             var downloadTimer = setInterval(function(){  
                 if(timeleft <= 0){
                     clearInterval(downloadTimer);
-                  //window.location.replace('https://dashboard-madares.mvp-apps.ae/login')
+                  window.location.replace('https://dashboard-madares.mvp-apps.ae/login')
                 }
                 document.getElementById("progressBar").innerHTML = `You will be redirected after ${timeleft} seconds`;
                 timeleft -= 1;
