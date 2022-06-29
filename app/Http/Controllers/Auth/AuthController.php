@@ -21,6 +21,7 @@ class AuthController extends Controller
     {
         return Auth::user();
     }
+
     public function login(Request $request)
     {
         $user = User::with(['usertype'])->where('email', $request->email)->first();

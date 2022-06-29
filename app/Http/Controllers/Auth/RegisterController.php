@@ -34,6 +34,8 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 class RegisterController extends Controller
 {
 
+  
+
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
@@ -364,7 +366,7 @@ class RegisterController extends Controller
         $user->verify_email_token = null;
         $user->verify_email_token_created_at = null;
         $user->save();
-        return "<h2>Email has been verified successfully";
+        return view('emails.emailVerfied');
     }
 
     public function returnEmailVerifyed(Request $request){
