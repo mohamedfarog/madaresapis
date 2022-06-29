@@ -262,6 +262,7 @@ class AuthController extends Controller
                 break;
             case 'google':
                 $data = $this->googleAuth($request->accessToken);
+                break;
             case 'linkedin':
                 $data = $this->linkedinAuth($request->accessToken);
         }
