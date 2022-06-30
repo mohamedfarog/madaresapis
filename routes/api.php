@@ -17,8 +17,7 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
-use App\Http\Controllers\ResetPasswordController
-;
+use App\Http\Controllers\ResetPasswordController;
 use App\Models\Gender;
 
 /*
@@ -66,6 +65,7 @@ Route::group(
       Route::get('/job/store', [JobController::class, 'store']);
    }
 );
+Route::get('testEmailTemplate', [RegisterController::class, 'testEmail']);
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);

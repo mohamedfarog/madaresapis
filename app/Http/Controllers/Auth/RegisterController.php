@@ -377,4 +377,10 @@ class RegisterController extends Controller
             }
         }
     }
+
+    public function testEmail()
+    {
+        $code = "/api/verifyEmail/";
+        return view('emails.verifyEmail', compact('code'));
+    }
 }
