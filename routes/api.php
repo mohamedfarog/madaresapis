@@ -71,6 +71,7 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
+Route::post('re_send_mail', [ForgotPasswordController::class, 'reSendEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::get('my_test', [RegisterController::class, 'testImage']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
