@@ -35,106 +35,60 @@ class HomePageController extends Controller
     {
         //
     }
-    public function getHomeBanner(Request $request): JsonResponse
+    public function getHomeBanner(): JsonResponse
     {
-        if ($request->lang === '1') {
-            $banner = HomeBanner::all('id', 'avatar', 'en_text');
+       
+ 
+            $banner = HomeBanner::all();
             return $this->onSuccess($banner);
-        }
-        if ($request->lang === '2') {
-            $banner = HomeBanner::all('id', 'avatar', 'ar_text');
-            return $this->onSuccess($banner);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+   
     }
-    public function getArticaleInfo(Request $request): JsonResponse
+    public function getArticaleInfo(): JsonResponse
     {
-        if ($request->lang === '1') {
-            $articleInfo = Articles::all('id', 'en_title', 'en_owner_name', 'published_date', 'en_body');
+
+            $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
             return $this->onSuccess($articleInfo);
-        }
-        if (
-            $request->lang === '2'
-        ) {
-            $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
-            return $this->onSuccess($articleInfo);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+    
     }
-    public function getSubjectsTitle(Request $request): JsonResponse
+    public function getSubjectsTitle(): JsonResponse
     {
-        if ($request->lang === '1') {
-            $title = subjects::all('id', 'en_title', 'icon')->append('count')->toArray();
+       
+            $title = subjects::all('id', 'title', 'icon')->append('count')->toArray();
             return $this->onSuccess($title);
-        }
-        if ($request->lang === '2') {
-            $title = subjects::all('id', 'ar_title', 'icon')->append('count')->toArray();
-            return $this->onSuccess($title);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+      
     }
-    public function returnJobLevel(Request $request): JsonResponse
+    public function returnJobLevel(): JsonResponse
     {
-        if ($request->lang === '1') {
-            $jobLevel = JobLevel::all('id', 'en_title', 'avater');
+  
+            $jobLevel = JobLevel::all('id', 'title', 'avater');
             return $this->onSuccess($jobLevel);
-        }
-        if ($request->lang === '2') {
-            $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
-            return $this->onSuccess($jobLevel);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+     
     }
-    public function getFaqInfo(Request $request)
+    public function getFaqInfo()
     {
 
 
-        if ($request->lang === '1') {
-            $faq = QuestionedAnswers::all('id', 'en_title', 'en_body');
+     
+            $faq = QuestionedAnswers::all('id', 'title', 'body');
             return $this->onSuccess($faq);
-        }
-        if ($request->lang === '2') {
-            $faq = QuestionedAnswers::all('id', 'ar_title', 'ar_body');
-            return $this->onSuccess($faq);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+     
     }
 
 
-    public function AvailableJobs(Request $request)
+    public function AvailableJobs()
     {
-        if ($request->lang === '1') {
-            $jobs = Academy::get(['id', 'en_name', 'avatar', 'banner', 'en_bio'])
+        
+            $jobs = Academy::get(['id', 'name', 'avatar', 'banner', 'bio'])
                 ->append(['totaljobs', 'vacancies'])->toArray();
             return $this->onSuccess($jobs);
-        }
-        if ($request->lang === '2') {
-            $jobs = Academy::get(['id', 'ar_name', 'avatar', 'banner', 'ar_bio'])
-                ->append(['totaljobs', 'vacancies'])->toArray();
-            return $this->onSuccess($jobs);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+   
     }
-    public function homePageBanner(Request $request)
+    public function homePageBanner()
     {
-        if ($request->lang === '1') {
-            $banner = HomeBanner::all('id', 'ar_name', 'avatar', 'en_text');
+      
+            $banner = HomeBanner::all('id', 'avatar', 'text');
             return $this->onSuccess($banner);
-        }
-        if (
-            $request->lang === '2'
-        ) {
-            $banner = HomeBanner::all('id', 'avatar', 'ar_text');
-            return $this->onSuccess($banner);
-        } else {
-            return $this->onError("Invalid Lang Input");
-        }
+
     }
 
     public function testJwt()

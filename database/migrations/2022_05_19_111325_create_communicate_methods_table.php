@@ -13,6 +13,8 @@ class CreateCommunicateMethodsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('communicate_methods');
+
         Schema::create('communicate_methods', function (Blueprint $table) {
             $table->id();
             $table->tinyText('type');    //['email' , 'walk-in' , 'phone']

@@ -18,7 +18,6 @@ class CreateTeacherResumesTable extends Migration
             $table->id();
             $table->foreignId('teacher_id')->nullable();
             $table->string('curriculum_vitae')->nullable();
-            $table->string('cover_litter')->nullable();
             $table->string('extra_skills')->nullable();
             $table->timestamps();
         });

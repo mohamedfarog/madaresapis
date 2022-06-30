@@ -18,7 +18,7 @@ class JobPost extends Model
 
     public function getAcademiesInfoAttribute()
     {
-            $academy = Academy::select('en_name','avatar', 'en_city','en_country', 'ar_name')->where('id', $this->id)->get();
+            $academy = Academy::select('name','avatar')->where('id', $this->id)->get();
             return $academy;
 
         }

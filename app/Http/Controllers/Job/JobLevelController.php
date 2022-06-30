@@ -15,8 +15,7 @@ class JobLevelController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'ar_title' => 'required|string',
-            'en_title' => 'required|string',
+            'title' => 'required|string',
             'file' => 'required|file'
         ]);
         if ($validator->fails()) {
@@ -26,8 +25,7 @@ class JobLevelController extends Controller
             $icon = $this->uploadFile($file, 'job_level_icons');
             $jobLevel = new JobLevel();
             $jobLevel->avater = $icon;
-            $jobLevel->en_title = $request->en_title;
-            $jobLevel->ar_title = $request->ar_title;
+            $jobLevel->title = $request->title;
             $jobLevel->save();
             return $this->onSuccess($jobLevel, 200, "job level added successfully!");
         }
@@ -37,8 +35,7 @@ class JobLevelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'job_id' => 'required',
-            'ar_title' => 'required|string',
-            'en_title' => 'required|string'
+            'title' => 'required|string'
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 400);
@@ -51,8 +48,8 @@ class JobLevelController extends Controller
             $icon = $this->uploadFile($file, 'job_level_icons');
             $jobLevel->avater = $icon;
         }
-        $jobLevel->en_title = $request->en_title;
-        $jobLevel->ar_title = $request->ar_title;
+        $jobLevel->title = $request->title;
+
         $jobLevel->save();
         return $this->onSuccess($jobLevel, 200, "job level updated successfully!");
     }

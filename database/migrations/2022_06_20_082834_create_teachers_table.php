@@ -25,13 +25,10 @@ class CreateTeachersTable extends Migration
            $table->foreignId('availability_id');
            $table->integer('contact_number');
            $table->date('date_of_birth');
-           $table->string('en_first_name', 50);
-           $table->string('en_last_name', 50);
-           $table->string('ar_first_name', 50);
-           $table->string('ar_last_name', 50);
+           $table->string('first_name', 50);
+           $table->string('last_name', 50);
            $table->boolean('willing_to_travel')->default(0);
-           $table->text('en_bio')->nullable();
-           $table->text('ar_bio')->nullable();
+           $table->text('bio')->nullable();
            $table->string('avatar', 250)->nullable();
            $table->string('academic_major', 100)->nullable();
            $table->timestamps();

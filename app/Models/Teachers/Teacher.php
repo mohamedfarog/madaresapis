@@ -22,8 +22,8 @@ class Teacher extends Model
 {
     use HasFactory;
 
-     protected $fillable = ['user_id', 'en_first_name' , 'en_first_name','ar_first_name','ar_last_name', 'willing_to_travel',
-     'date_of_birth' , 'avatar' , 'academic_major' , 'en_bio', 'ar_bio' , 'gender_id', 'job_level_id', 'availability_id', 'contact_number'];
+     protected $fillable = ['user_id', 'first_name' , 'last_name', 'willing_to_travel',
+     'date_of_birth' , 'avatar' , 'academic_major' , 'bio', 'gender_id', 'job_level_id', 'availability_id', 'contact_number'];
     protected $guarded = ['id'];
 
     protected $hidden = ['created_id', 'updated_at'];

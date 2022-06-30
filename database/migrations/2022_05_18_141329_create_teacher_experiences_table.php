@@ -13,6 +13,8 @@ class CreateTeacherExperiencesTable extends Migration
      */
     public function up()
     {
+        
+        Schema::dropIfExists('teacher_experiences');
         Schema::create('teacher_experiences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teacher_id');

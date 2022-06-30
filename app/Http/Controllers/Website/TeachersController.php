@@ -19,18 +19,12 @@ class TeachersController extends Controller
      */
     
     
-    public function teacherData(Request $request)
+    public function teacherData()
     {
-        if($request->lang === '1'){
-            $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
-            return $this->onSuccess($teacher);
-        }
-        if($request->lang === '2'){
-            $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
-            return $this->onSuccess($teacher);
-        }
-        else{
-            return $this->onSuccess('Invild lang Input');
-        }
+        $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
+        return $this->onSuccess($teacher);
     }
+       
+   
+    
 }

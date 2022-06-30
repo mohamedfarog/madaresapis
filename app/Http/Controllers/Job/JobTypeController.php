@@ -14,15 +14,14 @@ class JobTypeController extends Controller
     {
         // return $request->ar_title;
         $validator = Validator::make($request->all(), [
-            'ar_title' => 'required|string',
-            'en_title' => 'required|string',
+            'title' => 'required|string',
+        
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 400);
         }
         $jobType = new JobType();
-        $jobType->ar_title = $request->ar_title;
-        $jobType->en_title = $request->en_title;
+        $jobType->title = $request->title;
         $jobType->save();
         return $this->onSuccess($jobType, 200, "job type added successfully");
     }
@@ -40,14 +39,13 @@ class JobTypeController extends Controller
             $this->onError("job type not found");
         }
         $validator = Validator::make($request->all(), [
-            'ar_title' => 'required|string',
-            'en_title' => 'required|string',
+            'title' => 'required|string',
+
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 400);
         }
-        $jobType->ar_title = $request->ar_title;
-        $jobType->en_title = $request->en_title;
+        $jobType->title = $request->title;
         $jobType->save();
         return $this->onSuccess($jobType, 200, "job type updated successfully successfully");
     }

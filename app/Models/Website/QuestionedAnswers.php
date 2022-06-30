@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class QuestionedAnswers extends Model
 {
     use HasFactory;
-    //public $translatable = ['en_title' , 'ar_title', 'ar_body', 'ar_title'];
+   // public $translatable = ['title' ,'body'];
     protected $hidden = ['created_at','updated_at'];
     protected $guarded = ['id'];
 }

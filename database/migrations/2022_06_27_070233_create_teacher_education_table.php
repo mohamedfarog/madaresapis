@@ -17,8 +17,7 @@ class CreateTeacherEducationTable extends Migration
         Schema::create('teacher_education', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teacher_id');
-            $table->string('ar_title');
-            $table->string('en_title');
+            $table->string('title');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->timestamps();

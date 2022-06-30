@@ -13,8 +13,8 @@ class AddJobTitleToAboutsTable extends Migration
     public function up()
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->string('en_title');
-            $table->string('ar_title');
+            $table->string('title');
+
         });
     }
 

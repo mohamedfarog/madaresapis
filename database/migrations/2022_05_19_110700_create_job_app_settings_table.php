@@ -13,6 +13,9 @@ class CreateJobAppSettingsTable extends Migration
      */
     public function up()
     {
+        
+            Schema::dropIfExists('job_app_settings');
+    
         Schema::create('job_app_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('communicate_method_id');

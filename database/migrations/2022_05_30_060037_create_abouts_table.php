@@ -16,10 +16,8 @@ class CreateAboutsTable extends Migration
         Schema::dropIfExists('abouts');
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('en_name');
-            $table->string('ar_name');
-            $table->longText('ar_body');
-            $table->longText('en_body');
+            $table->string('name');
+            $table->longText('body');
             $table->timestamps();
         });
     }

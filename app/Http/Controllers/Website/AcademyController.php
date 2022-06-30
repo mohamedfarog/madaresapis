@@ -13,17 +13,10 @@ class AcademyController extends Controller
      * @return \Illuminate\Http\Response
      * @return \Illuminate\Http\Response
      */
-    public function academyData(Request $request){
-        if($request->lang === '1'){
-            $academy = Academy::all('id', 'en_name', 'avatar')->append(['Totaljobs'])->toArray();
+    public function academyData(){
+
+            $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
             return $this->onSuccess($academy);
-        }
-        if($request->lang === '2'){
-            $academy = Academy::all('id', 'ar_name', 'avatar')->append(['Totaljobs'])->toArray();
-            return $this->onSuccess($academy);
-        }
-        else{
-            return $this->onSuccess('Invild lang Input');
-        }
+   
     }
 }
