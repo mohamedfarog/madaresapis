@@ -34,7 +34,6 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 class RegisterController extends Controller
 {
 
-  
 
     function sendVerificationEmail($email, $userId)
     {
@@ -324,7 +323,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
-        //snd email
+  
         
         if ($validator->fails())
         {
@@ -360,7 +359,7 @@ class RegisterController extends Controller
     {
         $user = User::where('verify_email_token', $token)->first();
         if (!$user) {
-            return "code expired";
+            return view('emails.codeExpired');
         }
         $user->email_verified = 1;
         $user->verify_email_token = null;
