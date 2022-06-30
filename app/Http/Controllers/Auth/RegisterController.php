@@ -34,6 +34,10 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 class RegisterController extends Controller
 {
 
+    public function testImage(){
+        return view('emails.verifyEmail');
+    }
+
 
     function sendVerificationEmail($email, $userId)
     {

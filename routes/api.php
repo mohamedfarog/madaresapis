@@ -72,6 +72,7 @@ Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
+Route::get('my_test', [RegisterController::class, 'testImage']);
 
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
 Route::group(['prefix' => 'website'], function () {
