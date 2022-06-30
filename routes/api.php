@@ -17,6 +17,8 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
+use App\Http\Controllers\ResetPasswordController
+;
 use App\Models\Gender;
 
 /*
@@ -69,6 +71,7 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
+Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
 Route::group(['prefix' => 'website'], function () {
