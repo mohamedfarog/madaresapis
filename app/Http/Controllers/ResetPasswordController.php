@@ -17,17 +17,15 @@ class ResetPasswordController extends Controller {
   {
 
   $request->validate([
-      'email' => 'required|email|exists:users',
+    //   'email' => 'required|email|exists:users',
       'password' => 'required|string|min:6|confirmed',
       'password_confirmation' => 'required',
 
   ]);
 
   $updatePassword = DB::table('password_resets')
-                      ->where(['email' => $request->email, 'token' => $request->token])
+                      ->where(['token' => $request->token])
                       ->first();
-                 
-
   if(!$updatePassword)
   return "Invalid token";
      // return back()->withInput()->with('error', 'Invalid token!');
