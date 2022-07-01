@@ -94,12 +94,13 @@ class HomePageController extends Controller
     {
         if($request->lang == 1){
                 $skill = Skill::all('id', 'en_skill_name');
-                return $skill;
+                return $this->onSuccess($skill);
 
         }
         elseif($request->lang == 2){
                 $skill = Skill::all('id', 'ar_skill_name');
-                return $skill;
+                return $this->onSuccess($skill);
+
 
         }
         else{
