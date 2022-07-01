@@ -32,8 +32,24 @@
 
         }
 
-
         .body_inner {
+            position: relative;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            /* padding: 10px; */
+            width: 50%;
+            overflow: hidden;
+            min-height: 200px;
+            text-align: center;
+            align-items: center;
+            /* display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; */
+        }
+
+        /* .body_inner {
             margin: 50px;
             background-color: #fff;
             box-shadow: 1px 0px 8px rgba(128, 128, 128, 0.342);
@@ -47,7 +63,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
+        } */
 
         .body_inner h1,
         .body_inner label,
