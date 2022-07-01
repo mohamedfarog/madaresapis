@@ -16,6 +16,7 @@ class AppMail extends Mailable
      *
      * @return void
      */
+    
     public function __construct($code)
     {
         //

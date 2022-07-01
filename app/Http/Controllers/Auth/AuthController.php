@@ -266,6 +266,7 @@ class AuthController extends Controller
                 break;
             case 'linkedin':
                 $data = $this->linkedinAuth($request->accessToken);
+                break;
         }
 
         return $data;

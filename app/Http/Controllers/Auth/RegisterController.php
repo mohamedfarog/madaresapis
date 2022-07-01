@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -85,21 +87,20 @@ class RegisterController extends Controller
     public function UpdateUserType(Request $request)
     {
 
-        
+
         try {
             $userType = User::findOrFail($request->id);
-            if ($userType->user_type == '255' || $userType->user_type == '256' ) {
+            if ($userType->user_type == '255' || $userType->user_type == '256') {
                 return $this->onError("Sorry This User already has a type");
-            }
-            else{
-        
+            } else {
+
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
-                     $academy = new Academy();
-                     $validator = Validator::make($request->all(), [
-                    
+                    $academy = new Academy();
+                    $validator = Validator::make($request->all(), [
+
                         'name' => 'required',
                         'contact_number' => 'required',
                         'bio' => 'required',
@@ -107,17 +108,17 @@ class RegisterController extends Controller
                         'years_of_teaching' => 'required',
                         'size' => 'required',
                         'avatar' => 'required'
-            
+
                     ]);
-            
+
                     if ($validator->fails()) {
                         return response()->json(['error' => $validator->errors()], 401);
                     }
-                        $academy->user_id = $userId;        
+                    $academy->user_id = $userId;
                     if (asset($request->name)) {
                         $academy->name = $request->name;
                     }
-                 
+
                     if (asset($request->contact_number)) {
                         $academy->contact_number = $request->contact_number;
                     }
@@ -136,11 +137,11 @@ class RegisterController extends Controller
                     }
                     $academy->save();
                     $location = new Locations();
-                    $academy->user_id = $userId;  
-                    
+                    $academy->user_id = $userId;
+
                     if (asset($request->city)) {
                         $location->city = $request->city;
-                    }    
+                    }
                     if (asset($request->country)) {
                         $location->country = $request->country;
                     }
@@ -148,38 +149,34 @@ class RegisterController extends Controller
                         $location->street = $request->street;
                     }
                     $location->save();
-                    
+
                     $academy_levels = [];
-                    if (is_array($request->academy_levels) || is_object($request->academy_levels))
-                    {
-                        foreach ($request->academy_levels as $level)
-                        {
-                            array_push($academy_levels,[
-                                "academy_id"=> $userId,
-                                "level_id"=>$level
+                    if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
+                        foreach ($request->academy_levels as $level) {
+                            array_push($academy_levels, [
+                                "academy_id" => $userId,
+                                "level_id" => $level
                             ]);
-                         
                         }
-                     AcademyLevels::insert($academy_levels);
+                        AcademyLevels::insert($academy_levels);
                     }
 
                     $AcademyFiles = [];
-                    if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)){
-                        foreach ($request->AcademyFiles as $image) {                     
+                    if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)) {
+                        foreach ($request->AcademyFiles as $image) {
                             $academyImages = $this->uploadFile($image, 'academyFiles');
 
-                            array_push($AcademyFiles,[
+                            array_push($AcademyFiles, [
                                 "file_url" =>  $academyImages,
                                 "academy_id" =>  $userId
 
                             ]);
-                        
                         }
                         AcademyFile::insert($AcademyFiles);
                     }
-                            
-                $academyData = Academy::with(['AcademyLevels', 'academyLocations','academyFiles'])->where('user_id',$userId)->get();
-                return $this->onSuccess($academyData);
+
+                    $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
+                    return $this->onSuccess($academyData);
                 }
                 if ($request->type == '256') {
                     $userId = $request->id;
@@ -189,111 +186,107 @@ class RegisterController extends Controller
                         'contact_number' => 'required',
                         'contact_number' => 'required',
                         'date_of_birth' => 'required',
-                        'first_name' => 'required',        
+                        'first_name' => 'required',
                         'last_name' => 'required',
                         'bio' => 'required',
                         'willing_to_travel' => 'required',
                         'availability_id' => 'required',
                         'avatar' => 'required',
                         //'images' => 'required|array'
-            
+
                     ]);
-            
+
                     if ($validator->fails()) {
                         return response()->json(['error' => $validator->errors()], 401);
                     }
-              
+
                     $teacher->user_id = $userId;
-                    
-                    if(asset($request->gender_id)){
+
+                    if (asset($request->gender_id)) {
                         $teacher->gender_id = $request->gender_id;
                     }
-                  
-                    if(asset($request->contact_number)){
+
+                    if (asset($request->contact_number)) {
                         $teacher->contact_number = $request->contact_number;
                     }
-                    if(asset($request->date_of_birth)){
+                    if (asset($request->date_of_birth)) {
                         $teacher->date_of_birth = $request->date_of_birth;
                     }
-                    if(asset($request->first_ame)){
+                    if (asset($request->first_ame)) {
                         $teacher->first_name = $request->first_name;
                     }
-               
-                    if(asset($request->last_name)){
+
+                    if (asset($request->last_name)) {
                         $teacher->last_name = $request->last_name;
-                    }               
-                    if(asset($request->bio)){
+                    }
+                    if (asset($request->bio)) {
                         $teacher->bio = $request->bio;
-                    }      
-                    if(asset($request->willing_to_travel)){
+                    }
+                    if (asset($request->willing_to_travel)) {
                         $teacher->willing_to_travel = $request->willing_to_travel;
                     }
-                    if(asset($request->availability_id)){
+                    if (asset($request->availability_id)) {
                         $teacher->availability_id = $request->availability_id;
                     }
                     if ($file = $request->avatar) {
                         $icon = $this->uploadFile($file, 'avatars');
                         $teacher->avatar = $icon;
-                       
                     }
                     $teacher->save();
                 }
-                    $userId = $request->id;
-                    $location = new Locations();      
-                    $location->teacher_id = $userId;
-                    
-                    if (asset($request->ar_city)) {
-                        $location->ar_city_name = $request->ar_city;
-                    }
-                    if (asset($request->city)) {
-                        $location->city = $request->city;
-                    }
-                    if (asset($request->country)) {
-                        $location->country = $request->country;
-                    }
-           
-                    if (asset($request->street)) {
-                        $location->street = $request->street;
-                    }
-                   
-                    else {
-    
-                        return $this->onError('User Type is undefined');
-                    }
+                $userId = $request->id;
+                $location = new Locations();
+                $location->teacher_id = $userId;
 
-                    if (is_array($request->skills) || is_object($request->skills)){
-           
-                        $userId = $request->id;
-                        foreach($request->skills as $skill){
-                            $skil = new Skills();
-                            $skil->teacher_id = $userId;
-                            $skil->skill_name = $skill['skill_name'];
-                        }
+                if (asset($request->ar_city)) {
+                    $location->ar_city_name = $request->ar_city;
+                }
+                if (asset($request->city)) {
+                    $location->city = $request->city;
+                }
+                if (asset($request->country)) {
+                    $location->country = $request->country;
+                }
+
+                if (asset($request->street)) {
+                    $location->street = $request->street;
+                } else {
+
+                    return $this->onError('User Type is undefined');
+                }
+
+                if (is_array($request->skills) || is_object($request->skills)) {
+
+                    $userId = $request->id;
+                    foreach ($request->skills as $skill) {
+                        $skil = new Skills();
+                        $skil->teacher_id = $userId;
+                        $skil->skill_name = $skill['skill_name'];
+                    }
                     $skil->save();
                 }
                 $teachDoc =  new TeacherResume();
                 $teachDoc->teacher_id = $userId;
-                    
-                    if (isset($request->curriculum_vitae)) {
-                        $fileNmae = time().'_'.$request->curriculum_vitae->getClientOriginalName();
-                        $fileNmae = $request->curriculum_vitae->store('public/uploads/resumes');
-                        $teachDoc->curriculum_vitae = $fileNmae;
-                    }
-               
-                    if (isset($request->cover_litter)) {
-                        $fileNmae = time().'_'.$request->cover_litter->getClientOriginalName();
-                        $fileNmae = $request->cover_litter->store('public/uploads/cover_letters');
-                        $teachDoc->cover_litter = $fileNmae;
-                        
-                    } 
-                    if(isset($request->skill_name)){
-                        $teachDoc->extra_skills = $request->extra_skills;
-                    }
-                    $teachDoc->save();
-                    if (is_array($request->experience) || is_object($request->experience)){
-               
+
+                if (isset($request->curriculum_vitae)) {
+                    $fileNmae = time() . '_' . $request->curriculum_vitae->getClientOriginalName();
+                    $fileNmae = $request->curriculum_vitae->store('public/uploads/resumes');
+                    $teachDoc->curriculum_vitae = $fileNmae;
+                }
+
+                if (isset($request->cover_litter)) {
+                    $fileNmae = time() . '_' . $request->cover_litter->getClientOriginalName();
+                    $fileNmae = $request->cover_litter->store('public/uploads/cover_letters');
+                    $teachDoc->cover_litter = $fileNmae;
+                }
+                if (isset($request->skill_name)) {
+                    $teachDoc->extra_skills = $request->extra_skills;
+                }
+                $teachDoc->save();
+                if (is_array($request->experience) || is_object($request->experience)) {
+
                     $userId = $request->id;
-                    foreach($request->experience as $texp){
+                    foreach ($request->experience as $texp) {
                         $exp = new TeacherExperience();
                         $exp->teacher_id = $userId;
                         $exp->titel = $texp['exp_title'];
@@ -304,59 +297,57 @@ class RegisterController extends Controller
                 }
 
                 $teachDoc->save();
-                if (is_array($request->education) || is_object($request->education)){
-           
+                if (is_array($request->education) || is_object($request->education)) {
+
+                    $userId = $request->id;
+                    foreach ($request->education as $tedu) {
+                        $edu = new TeacherEducation();
+                        $edu->teacher_id = $userId;
+                        $edu->title = $tedu['edu_title'];
+                        $edu->start_date = $tedu['start_date'];
+                        $edu->end_date = $tedu['end_date'];
+                    }
+                    $edu->save();
+                }
+
                 $userId = $request->id;
-                foreach($request->education as $tedu){
-                    $edu = new TeacherEducation();
-                    $edu->teacher_id = $userId;
-                    $edu->title = $tedu['edu_title'];
-                    $edu->start_date = $tedu['start_date'];
-                    $edu->end_date = $tedu['end_date'];
+                $available = new Availability();
+                $available->teacher_id = $userId;
+                if (asset($request->time_available)) {
+                    $available->time_available = $request->time_available;
                 }
-                $edu->save();
-            }
-       
-                    $userId = $request->id;
-                    $available = new Availability();
-                    $available->teacher_id = $userId;
-                    if(asset($request->time_available)){
-                        $available->time_available = $request->time_available;
-                    }
-                    $available->save();
-                    
-                    $userId = $request->id;
-                    $TeacherFiles = [];
-                    if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)){
-                        foreach ($request->TeacherFiles as $tFile) {                     
-                            $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
+                $available->save();
 
-                            array_push($TeacherFiles,[
-                                "file_url" =>  $teacherfiles,
-                                "teacher_id" =>  $userId
+                $userId = $request->id;
+                $TeacherFiles = [];
+                if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)) {
+                    foreach ($request->TeacherFiles as $tFile) {
+                        $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
 
-                            ]);
-                        
-                        }
-                        TeacherFiles::insert($TeacherFiles);
+                        array_push($TeacherFiles, [
+                            "file_url" =>  $teacherfiles,
+                            "teacher_id" =>  $userId
+
+                        ]);
                     }
-                    $teacherData = Teacher::with(['resumes', 'teacherLocations','teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
-                    return $this->onSuccess($teacherData);
+                    TeacherFiles::insert($TeacherFiles);
                 }
-            } catch (ModelNotFoundException $e) {
-                return $this->onError('User ID NOT FOUND');
+                $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
+                return $this->onSuccess($teacherData);
             }
+        } catch (ModelNotFoundException $e) {
+            return $this->onError('User ID NOT FOUND');
         }
-        public function register(Request $request)
-        { 
-            $validator = Validator::make($request->all(), [
+    }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
-  
-        
-        if ($validator->fails())
-        {
+
+
+        if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
             //return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
@@ -372,14 +363,14 @@ class RegisterController extends Controller
     }
     public function ueserRegistered()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             return  $this->onSuccess("Welcome");
         }
-            return 'Opps! You do not have access';
-        }
-        protected function respondWithToken($token)
-        {
-            return response()->json([
+        return 'Opps! You do not have access';
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth::factory()->getTTL() * 60
@@ -398,21 +389,24 @@ class RegisterController extends Controller
         return view('emails.emailVerfied');
     }
 
-    public function returnEmailVerifyed(Request $request){
+    public function returnEmailVerifyed(Request $request)
+    {
         $checkEmail = User::where('email', $request->email)->first();
-        if($checkEmail['email_verified'] == 1){
+        if ($checkEmail['email_verified'] == 1) {
             return $this->onSuccess('Email is verifed');
-
-        }
-        else{
-            {
+        } else { {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email is not verifed',
                 ], 200);
             }
-           
         }
+    }
+
+    public function testEmail()
+    {
+        $code = "/api/verifyEmail/";
+        return view('emails.verifyEmail', compact('code'));
     }
 }
 
