@@ -38,8 +38,7 @@ class HomePageController extends Controller
     }
     public function getHomeBanner(): JsonResponse
     {
-        $banner = HomeBanner::all();
-        return $this->onSuccess($banner);
+        $banner = HomeBanner::all();return $this->onSuccess($banner);
    
     }
     public function getArticaleInfo(): JsonResponse
@@ -90,7 +89,7 @@ class HomePageController extends Controller
 
     }
 
-    public function userSkills(){
+    public function userSkills(Request $request){
         $skill = Skills::all();
         return $this->onSuccess($skill);
     }
