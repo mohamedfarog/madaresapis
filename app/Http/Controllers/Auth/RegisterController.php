@@ -34,10 +34,35 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 class RegisterController extends Controller
 {
 
-    public function testImage(){
-        return view('emails.verifyEmail');
-    }
 
+    public function reSendVerificationSendEmail(Request $request)
+
+    {
+        
+        $user = User::where('email',  $request->email)->first();
+        if ($user->email_verified == 1){
+            return $this->onError('This User is already verified');
+          
+        }
+        else{
+            $vCode = Str::random(30);
+            Mail::to($request->email)->send(new AppMail($vCode));
+            $user->verify_email_token = $vCode;
+            $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
+            $user->save();
+            return $user;
+    
+        }
+ 
+       
+
+        
+
+
+            
+       
+    
+    }
 
     function sendVerificationEmail($email, $userId)
     {
@@ -390,4 +415,6 @@ class RegisterController extends Controller
         }
     }
 }
- 
+
+
+

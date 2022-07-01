@@ -57,7 +57,6 @@
 <body>
     <div class=“body_inner” >
         <div class=“greenBC”></div>
-        <img src="{{$message->embed(asset('emails/authBC.png'))}}">
         <h1>Welcome To Madares</h1>
         <label>You can verifiy your email by clicking <a href=“{{$code}}“>here</a></label>
     </div>
