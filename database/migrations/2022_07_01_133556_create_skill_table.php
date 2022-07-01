@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddArabicNameToSkills extends Migration
+class CreateSkillTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddArabicNameToSkills extends Migration
      */
     public function up()
     {
-        Schema::table('skills', function (Blueprint $table) {
-            $table->string('skill_ar_name');
-            //
+        Schema::create('skill', function (Blueprint $table) {
+            $table->id();
+            $table->string('ar_skill_name');
+            $table->string('en_skill_name');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +28,6 @@ class AddArabicNameToSkills extends Migration
      */
     public function down()
     {
-        Schema::table('skills', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('skill');
     }
 }

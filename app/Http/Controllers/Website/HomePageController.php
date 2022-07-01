@@ -8,6 +8,7 @@ use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
 use App\Models\Skills;
+use App\Models\Skill;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
 use Illuminate\Http\Request;
@@ -89,10 +90,22 @@ class HomePageController extends Controller
 
     }
 
-    public function userSkills(Request $request){
+    public function userSkills(Request $request)
+    {
+        if($request->lang == 1){
+                $skill = Skill::all('id', 'en_skill_name');
+                return $skill;
 
-        $skill = Skills::all();
-        return $this->onSuccess($skill);
+        }
+        elseif($request->lang == 2){
+                $skill = Skill::all('id', 'ar_skill_name');
+                return $skill;
+
+        }
+        else{
+               return $this->onError('Please, select lang!');
+        }
+     
     }
     public function testJwt()
     {

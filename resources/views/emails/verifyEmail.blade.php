@@ -41,7 +41,7 @@
             /* padding: 10px; */
             width: 50%;
             overflow: hidden;
-            min-height: 200px;
+            min-height: 160px;
             text-align: center;
             align-items: center;
             /* display: flex;
