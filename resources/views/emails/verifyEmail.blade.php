@@ -68,6 +68,7 @@
         .body_inner h1,
         .body_inner label,
         .body_inner p {
+            padding: 10px;
             z-index: 99;
         }
 
@@ -102,4 +103,5 @@
     </table>
 
 </body>
+
 </html>
