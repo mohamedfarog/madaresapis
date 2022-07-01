@@ -31,7 +31,7 @@ class ForgotPasswordController extends Controller
          $message->subject('Reset Password Notification');
      });
 
-     return $this->onSuccess();
+     return $this->onSuccess($token);
  }
 
 

@@ -17,7 +17,6 @@ class AboutController extends Controller
      */
 
     public function aboutData(){
-   
         $about = new About();
         $data['total_jobs']= $about->totalJobs();
         $data['total_teachers']= $about->totalTeachers();

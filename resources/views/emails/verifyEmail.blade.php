@@ -27,6 +27,7 @@
 
 
         table {
+            min-height: 500px;
             background-size: cover;
             background-image: url('https://cdn.baynounahsc.ae/storage/cdn/F0nIydXCxlgP1Ae2kIsDbPKdOhUUyqZRYC4svjcD.png');
 
@@ -40,7 +41,7 @@
             /* padding: 10px; */
             width: 50%;
             overflow: hidden;
-            min-height: 200px;
+            min-height: 160px;
             text-align: center;
             align-items: center;
             /* display: flex;
@@ -74,6 +75,7 @@
 
         .body_inner h1 {
             margin: 0px;
+            padding-top: 20px;
         }
 
         .greenBC {
@@ -101,7 +103,5 @@
         </tr>
 
     </table>
-
 </body>
-
 </html>
