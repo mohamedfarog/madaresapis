@@ -7,6 +7,7 @@ use App\Models\Academies\Academy;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
+use App\Models\Skills;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
 use Illuminate\Http\Request;
@@ -90,6 +91,13 @@ class HomePageController extends Controller
             return $this->onSuccess($banner);
 
     }
+
+    public function userSkills(){
+        $skill = Skills::all();
+        return $this->onSuccess($skill);
+    }
+
+
 
     public function testJwt()
     {
