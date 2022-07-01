@@ -37,7 +37,7 @@ return [
     'linkedin' => [
         'client_id' => '77yk50w1lur7e3',
         'client_secret' => 'ZFTJW0BFZTpyonZv',
-        'redirect' => '',
+        'redirect' => 'https://dashboard-madares.mvp-apps.ae/linkedIn',
     ],
 
     'ses' => [

@@ -164,39 +164,64 @@ class AuthController extends Controller
     function linkedinAuth($accessToken)
     {
         try {
-            $user = Socialite::driver('linkedin')->userFromToken($accessToken);
-            if ($user) {
-                $gUser = User::where('linkedin_id', $user->id)
-                    ->orWhere('email', $user->email)
-                    ->first();
-                if ($gUser) {
-                    $token = JWTAuth::fromUser($gUser);
-                    return [
-                        'status' => true,
-                        'token' => $token,
-                        'user' => $gUser,
-                    ];
-                } else {
-                    $gUser = new User();
-                    if ($user->email)
-                        $email = $user->email;
-                    else {
-                        $email = $user->name . '@linkedin.com';
-                    }
-                    $gUser->email = $email;
 
-                    $gUser->linkedin_id = $user->id;
-                    $gUser->email_verified = 1;
-                    $gUser->save();
-                    $token = JWTAuth::fromUser($gUser);
-                    return [
-                        'status' => true,
-                        'token' => $token,
-                        'user' => $gUser,
-                    ];
-                }
+            $endpoint = "https://www.linkedin.com/oauth/v2/accessToken";
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $endpoint);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt(
+                $ch,
+                CURLOPT_POSTFIELDS,
+                "grant_type=authorization_code&code=$accessToken&client_id=77yk50w1lur7e3&client_secret=ZFTJW0BFZTpyonZv&redirect_uri=https://dashboard-madares.mvp-apps.ae/linkedIn"
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $server_output = curl_exec($ch);
+
+            curl_close($ch);
+
+            $output = json_decode($server_output);
+
+            $url = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
+
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $headers = array(
+                "Authorization:Bearer $output->access_token"
+            );
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+            $resp = curl_exec($curl);
+            curl_close($curl);
+            $resp = json_decode($resp);
+            $element =  $resp->elements[0];
+            $element = (array)$element;
+
+            $lUser = User::where('email', $element["handle~"]->emailAddress)
+                ->first();
+            if ($lUser) {
+                $token = JWTAuth::fromUser($lUser);
+                return [
+                    'status' => true,
+                    'token' => $token,
+                    'user' => $lUser,
+                ];
             } else {
-                return $this->onError("access token not valid");
+                $lUser = new User();
+                $email = $element["handle~"]->emailAddress;
+
+                $lUser->email = $email;
+                $lUser->email_verified = 1;
+                $lUser->save();
+                $token = JWTAuth::fromUser($lUser);
+                return [
+                    'status' => true,
+                    'token' => $token,
+                    'user' => $lUser,
+                ];
             }
         } catch (Exception $e) {
             return $e;
