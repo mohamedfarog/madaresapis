@@ -50,7 +50,7 @@ class RegisterController extends Controller
             $user->verify_email_token = $vCode;
             $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
             $user->save();
-            return $user;
+            return $this->onSuccess();
     
         }
  
