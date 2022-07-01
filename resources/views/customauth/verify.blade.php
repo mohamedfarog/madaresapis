@@ -27,6 +27,7 @@
 
 
         table {
+            min-height: 500px;
             background-size: cover;
             background-image: url('https://cdn.baynounahsc.ae/storage/cdn/F0nIydXCxlgP1Ae2kIsDbPKdOhUUyqZRYC4svjcD.png');
 
@@ -75,6 +76,7 @@
 
         .body_inner_c h1 {
             margin: 0px;
+            padding-top:  20px;
         }
 
         .greenBC {
@@ -96,14 +98,11 @@
                 <div class="body_inner_c">
                     <div class="greenBC"></div>
                     <h1>Greetings from Madares</h1>
-                    <br />
                     <label>You can reset your password by clicking <a href="https://dashboard-madares.mvp-apps.ae/reset-password/{{$token}}">here</a></label>
                 </div>
             </td>
         </tr>
-
     </table>
-
 </body>
 
 </html>

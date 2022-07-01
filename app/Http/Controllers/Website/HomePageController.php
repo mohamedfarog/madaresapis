@@ -90,14 +90,16 @@ class HomePageController extends Controller
     }
 
     public function userSkills(Request $request){
+
         $skill = Skills::all();
         return $this->onSuccess($skill);
     }
-
-
-
     public function testJwt()
     {
         return $this->user;
     }
 }
+
+
+
+

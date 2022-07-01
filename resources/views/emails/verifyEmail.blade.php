@@ -75,6 +75,7 @@
 
         .body_inner h1 {
             margin: 0px;
+            padding-top: 20px;
         }
 
         .greenBC {
@@ -102,7 +103,5 @@
         </tr>
 
     </table>
-
 </body>
-
 </html>
