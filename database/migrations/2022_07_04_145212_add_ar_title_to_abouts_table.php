@@ -14,7 +14,8 @@ class AddArTitleToAboutsTable extends Migration
     public function up()
     {
         Schema::table('abouts', function (Blueprint $table) {
-            //
+            $table->string('ar_title');
+
         });
     }
 
@@ -26,7 +27,6 @@ class AddArTitleToAboutsTable extends Migration
     public function down()
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->string('ar_title');
         });
     }
 }
