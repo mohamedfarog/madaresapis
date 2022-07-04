@@ -43,13 +43,30 @@ class HomePageController extends Controller
         $banner = HomeBanner::all();return $this->onSuccess($banner);
    
     }
-    public function getArticaleInfo(): JsonResponse
-    {
+  
 
-            $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
-            return $this->onSuccess($articleInfo);
+    public function getArticaleInfo(Request $request): JsonResponse
+    {
+        if($request->lang == 1){
+                $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
+                return $this->onSuccess($articleInfo);
+        
+        }
+        elseif($request->lang == 2){
+                $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
+                return $this->onSuccess($articleInfo);
+        }
+        else{
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
+        }
+
+          
     
     }
+    
     public function getSubjectsTitle(): JsonResponse
     {
        
