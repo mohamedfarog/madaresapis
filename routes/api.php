@@ -46,12 +46,11 @@ Route::group(['prefix' => 'job_level'], function () {
    Route::get("get",  [JobLevelController::class, 'get']);
    Route::delete('destroy/{id}', [JobLevelController::class, 'destroy']);
 });
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
 // Route::get('/', function () {
-//    return response()->json('Madars-Backend'); 
+//return response()->json('Madars-Backend'); 
 // })->name('login');
 Route::group(['prefix' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
@@ -71,7 +70,7 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
-// Route::post('re_send_verfiy', [ForgotPasswordController::class, 'reSendEmail']);
+//Route::post('re_send_verfiy', [ForgotPasswordController::class, 'reSendEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
@@ -81,7 +80,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
-   Route::get('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
+   Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
    Route::get('joblevel', [HomePageController::class, 'returnJobLevel']);
    Route::get('HomeBanner', [HomePageController::class, 'getHomeBanner']);
    Route::get('AvailableJobs', [HomePageController::class, 'AvailableJobs']);
