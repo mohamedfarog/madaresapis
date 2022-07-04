@@ -68,7 +68,6 @@ class AuthController extends Controller
     {
         return $this->respondWithToken(auth('api')->refresh());
     }
-
     /**
      * Get the token array structure.
      *
@@ -227,7 +226,6 @@ class AuthController extends Controller
             return $e;
         }
     }
-
 
     function facebookAuth($accessToken)
     {

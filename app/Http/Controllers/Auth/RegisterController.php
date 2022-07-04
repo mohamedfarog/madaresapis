@@ -309,7 +309,6 @@ class RegisterController extends Controller
                     }
                     $edu->save();
                 }
-
                 $userId = $request->id;
                 $available = new Availability();
                 $available->teacher_id = $userId;

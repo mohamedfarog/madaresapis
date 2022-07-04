@@ -31,3 +31,4 @@ class CreateAvailabilitiesTable extends Migration
         Schema::dropIfExists('availabilities');
     }
 }
+

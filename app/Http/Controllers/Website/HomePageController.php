@@ -65,23 +65,17 @@ class HomePageController extends Controller
     }
     public function getFaqInfo()
     {
-
-
-     
-            $faq = QuestionedAnswers::all('id', 'title', 'body');
-            return $this->onSuccess($faq);
-     
-    }
+        $faq = QuestionedAnswers::all('id', 'title', 'body');
+        return $this->onSuccess($faq);
+}
 
 
     public function AvailableJobs()
     {
-        
-            $jobs = Academy::get(['id', 'name', 'avatar', 'banner', 'bio'])
-                ->append(['totaljobs', 'vacancies'])->toArray();
-            return $this->onSuccess($jobs);
-   
-    }
+        $jobs = Academy::get(['id', 'name', 'avatar', 'banner', 'bio'])
+        ->append(['totaljobs', 'vacancies'])->toArray();
+        return $this->onSuccess($jobs);
+        }
     public function homePageBanner()
     {
       
@@ -104,7 +98,10 @@ class HomePageController extends Controller
 
         }
         else{
-               return $this->onError('Please, select lang!');
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
         }
      
     }
