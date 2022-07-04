@@ -15,7 +15,6 @@ class AddArToHomeBannersTable extends Migration
     {
         Schema::table('home_banners', function (Blueprint $table) {
             //
-            $table->string('ar_text');
         });
     }
 
