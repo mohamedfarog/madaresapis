@@ -35,10 +35,7 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 
 class RegisterController extends Controller
 {
-
-
     public function reSendVerificationSendEmail(Request $request)
-
     {
         
         $user = User::where('email',  $request->email)->first();
@@ -53,17 +50,7 @@ class RegisterController extends Controller
             $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
             $user->save();
             return $this->onSuccess();
-    
         }
- 
-       
-
-        
-
-
-            
-       
-    
     }
 
     function sendVerificationEmail($email, $userId)
@@ -75,8 +62,8 @@ class RegisterController extends Controller
         $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
         $user->save();
         return $user;
-  
     }
+    
     public function testVerifyEmail(Request $request)
     {
         $this->sendVerificationEmail($request->email, 1);

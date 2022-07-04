@@ -9,6 +9,7 @@ use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
 use App\Models\Skills;
 use App\Models\Skill;
+use App\Models\Available;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
 use Illuminate\Http\Request;
@@ -96,6 +97,25 @@ class HomePageController extends Controller
                 return $this->onSuccess($skill);
 
 
+        }
+        else{
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
+        }
+     
+    }
+    public function AvailableApplicant(Request $request)
+    {
+        if($request->lang == 1){
+                $availabe = Available::all('id', 'en_text');
+                return $this->onSuccess($availabe);
+
+        }
+        elseif($request->lang == 2){
+                $availabe = Available::all('id', 'ar_text');
+                return $this->onSuccess($availabe);
         }
         else{
                 return response()->json([

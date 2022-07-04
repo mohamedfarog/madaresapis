@@ -92,6 +92,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::get('about', [AboutController::class, 'aboutData']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
+   Route::post('available', [HomePageController::class, 'AvailableApplicant']);
+
+
 
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {  // also you can this value in your config file and use here
       if (auth()->check() && auth()->id() > 1) {

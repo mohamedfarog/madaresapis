@@ -147,6 +147,7 @@ class AuthController extends Controller
                     $gUser->save();
                     $token = JWTAuth::fromUser($gUser);
                     return [
+                        
                         'status' => true,
                         'token' => $token,
                         'user' => $gUser,
