@@ -94,13 +94,19 @@ class HomePageController extends Controller
         ->append(['totaljobs', 'vacancies'])->toArray();
         return $this->onSuccess($jobs);
         }
-    public function homePageBanner()
+    public function homePageBanner(Request $request)
     {
-      
-            $banner = HomeBanner::all('id', 'avatar', 'text');
-            return $this->onSuccess($banner);
+        if($request->lang == 1){
+                $banner = HomeBanner::all('id', 'avatar', 'text');
+                return $this->onSuccess($banner);
 
-    }
+        }
+        elseif($request->lang == 2){
+                $banner = HomeBanner::all('id', 'avatar', 'ar_text');
+                return $this->onSuccess($banner);
+        }
+}
+
 
     public function userSkills(Request $request)
     {
