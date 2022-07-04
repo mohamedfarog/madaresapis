@@ -18,8 +18,7 @@ class ArticlesSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i <= 10; $i++){
-            DB::table('articles')->insert([
-           
+            DB::table('articles')->insert([ 
                 'title' =>Str::random(13),
                 'body' =>Str::random(13),
                 'owner_name' => Str::random(13),
