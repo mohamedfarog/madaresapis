@@ -74,6 +74,8 @@ Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
+Route::get('testt', [RegisterController::class, 'testData']);
+
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
    // Route::post('/login', [AuthController::class, 'login']);

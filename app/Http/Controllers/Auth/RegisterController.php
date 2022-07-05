@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -37,11 +35,9 @@ class RegisterController extends Controller
 {
     public function reSendVerificationSendEmail(Request $request)
     {
-        
         $user = User::where('email',  $request->email)->first();
         if ($user->email_verified == 1){
             return $this->onError('This User is already verified');
-          
         }
         else{
             $vCode = Str::random(30);
@@ -76,18 +72,24 @@ class RegisterController extends Controller
 
 
         try {
+            
             $userType = User::findOrFail($request->id);
-            if ($userType->user_type == '255' || $userType->user_type == '256') {
+            if($userType->email_verified == 0){
+                return $this->onError('This User is not verified yet');
+            }
+            elseif($request->type != 255 && $request->type != 256 ){
+                return $this->onError('Please Enter a vaild User type');
+             }
+            elseif ($userType->user_type == '255' || $userType->user_type == '256') {
                 return $this->onError("Sorry This User already has a type");
-            } else {
-
+            } 
+            else {
                 $userType->user_type = $request->type;
                 $userType->save();
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
                     $academy = new Academy();
                     $validator = Validator::make($request->all(), [
-
                         'name' => 'required',
                         'contact_number' => 'required',
                         'bio' => 'required',
@@ -95,7 +97,6 @@ class RegisterController extends Controller
                         'years_of_teaching' => 'required',
                         'size' => 'required',
                         'avatar' => 'required'
-
                     ]);
 
                     if ($validator->fails()) {
@@ -105,7 +106,6 @@ class RegisterController extends Controller
                     if (asset($request->name)) {
                         $academy->name = $request->name;
                     }
-
                     if (asset($request->contact_number)) {
                         $academy->contact_number = $request->contact_number;
                     }
