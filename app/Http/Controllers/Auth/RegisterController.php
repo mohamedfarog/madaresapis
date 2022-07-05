@@ -48,7 +48,6 @@ class RegisterController extends Controller
             return $this->onSuccess();
         }
     }
-
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
@@ -74,7 +73,7 @@ class RegisterController extends Controller
         try {
             
             $userType = User::findOrFail($request->id);
-            if($userType->email_verified == 0){
+            if($userType->email_verified == 0 && $request->type == 255){
                 return $this->onError('This User is not verified yet');
             }
             elseif($request->type != 255 && $request->type != 256 ){
@@ -166,6 +165,10 @@ class RegisterController extends Controller
                     return $this->onSuccess($academyData);
                 }
                 if ($request->type == '256') {
+                    $userType->save();
+                    $UVEmail = User::where('id',$request->id)->first();
+                    $UVEmail->email_verified = 1;
+                    $UVEmail->save();
                     $userId = $request->id;
                     $teacher = new Teacher();
                     $validator = Validator::make($request->all(), [
