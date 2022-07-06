@@ -181,7 +181,6 @@ class RegisterController extends Controller
 
                     if ($validator->fails()) {
                         return $this->onError($validator->errors()->all());
-                        //return response()->json(['error' => $validator->errors()], 400);
                     }
                     $teacher->user_id = $userId;
 
@@ -247,7 +246,7 @@ class RegisterController extends Controller
                     foreach ($request->skills as $skill) {
                         array_push($skills, [
                             'teacher_id' => $userId,     
-                           // "kill_id" => $skill
+                            'kill_id' => $skill
 
                         ]);
                     }
@@ -305,7 +304,6 @@ class RegisterController extends Controller
                     $available->time_available = $request->time_available;
                 }
                 $available->save();
-
                 $userId = $request->id;
                 $TeacherFiles = [];
                 if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)) {

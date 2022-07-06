@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
    Route::post('about', [AboutController::class, 'aboutData']);
-   Route::get('joblevel', [HomePageController::class, 'returnJobLevel']);
+   Route::post('joblevel', [HomePageController::class, 'returnJobLevel']);
    Route::post('HomeBanner', [HomePageController::class, 'getHomeBanner']);
    Route::get('AvailableJobs', [HomePageController::class, 'AvailableJobs']);
    Route::get('HpBannar', [HomePageController::class, 'homePageBanner']);

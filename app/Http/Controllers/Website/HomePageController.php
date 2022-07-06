@@ -72,10 +72,21 @@ class HomePageController extends Controller
       
     }
 
-    public function returnJobLevel(): JsonResponse
+    public function returnJobLevel(Request $request): JsonResponse
     {
-        $jobLevel = JobLevel::all('id', 'title', 'avater');
-        return $this->onSuccess($jobLevel);
+        if($request->lang == 1){
+                $jobLevel = JobLevel::all('id', 'title', 'avater');
+                return $this->onSuccess($jobLevel);
+        }
+        if($request->lang == 2){
+                $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
+                return $this->onSuccess($jobLevel);
+        }
+        return response()->json([
+                'massage' => 'please select languge',
+                'status' => false
+        ]);
+      
      
     }
     public function getFaqInfo()
