@@ -35,6 +35,7 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
         'is_active',
         'is_verified'
+    
     ];
     /**
      * The attributes that should be hidden for serialization.

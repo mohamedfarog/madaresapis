@@ -67,6 +67,7 @@ Route::get('testEmailTemplate', [RegisterController::class, 'testEmail']);
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
+Route::post('type_to_null', [RegisterController::class, 'setTypeToNull']);
 Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 //Route::post('re_send_verfiy', [ForgotPasswordController::class, 'reSendEmail']);
@@ -74,7 +75,6 @@ Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
 Route::get('dash_header_count', [AcademyController::class, 'getAcademyHeadercount']);
-
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //Route::post('/login', [AuthController::class, 'login']);
@@ -93,7 +93,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('available', [HomePageController::class, 'AvailableApplicant']);
-   
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {
       //also you can this value in your config file and use here
       if (auth()->check() && auth()->id() > 1) {

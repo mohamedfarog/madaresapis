@@ -146,7 +146,7 @@ class RegisterController extends Controller
                         }
                         AcademyLevels::insert($academy_levels);
                     }
-
+                    
                     $AcademyFiles = [];
                     if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)) {
                         foreach ($request->AcademyFiles as $image) {
@@ -181,9 +181,7 @@ class RegisterController extends Controller
                         'bio' => 'required',
                         'willing_to_travel' => 'required',
                         'availability_id' => 'required',
-                        'avatar' => 'required',
-                        //'images' => 'required|array'
-
+                        'avatar' => 'required'
                     ]);
 
                     if ($validator->fails()) {
@@ -245,15 +243,29 @@ class RegisterController extends Controller
                     return $this->onError('User Type is undefined');
                 }
 
+                // $academy_levels = [];
+                // if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
+                //     foreach ($request->academy_levels as $level) {
+                //         array_push($academy_levels, [
+                //             "academy_id" => $userId,
+                //             "level_id" => $level
+                //         ]);
+                //     }
+                //     AcademyLevels::insert($academy_levels);
+                // }
+                $skills = [];
+
                 if (is_array($request->skills) || is_object($request->skills)) {
 
                     $userId = $request->id;
                     foreach ($request->skills as $skill) {
-                        $skil = new Skills();
-                        $skil->teacher_id = $userId;
-                        $skil->skill_name = $skill['skill_name'];
+                        array_push($skills, [
+                            'teacher_id' => $userId,
+                            'skill_name' => $skill
+
+                        ]);
                     }
-                    $skil->save();
+                    Skills::insert($skills);
                 }
                 $teachDoc =  new TeacherResume();
                 $teachDoc->teacher_id = $userId;
@@ -281,7 +293,7 @@ class RegisterController extends Controller
                         $exp->teacher_id = $userId;
                         $exp->titel = $texp['exp_title'];
                         $exp->start_day = $texp['start_day'];
-                        $exp->place_of_assuarance['place_of_assuarance'];
+                        $exp->place_of_assuarance = $texp['place_of_assuarance'];
                         $exp->end_day = $texp['end_day'];
                     }
                     $exp->save();
@@ -391,10 +403,11 @@ class RegisterController extends Controller
             }
         }
     }
-    public function testEmail()
+    public function setTypeToNull(Request $request)
     {
-        $code = "/api/verifyEmail/";
-        return view('emails.verifyEmail', compact('code'));
+        $setType = User::where('email', $request->email)->first();
+        $setType->user_type = null;
+        $setType->save();
     }
 }
 

@@ -78,4 +78,8 @@ class Academy extends Model
     public function HiredApplicants(){
         return 0;
     }
+
+    public function receivedApplicationsForLast8Month(){
+        
+    }
 }
