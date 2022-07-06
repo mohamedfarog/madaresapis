@@ -21,7 +21,7 @@ class AcademyController extends Controller
         $academy = new Academy();
         $data['profile_views'] = $academy->profileViews();
         $data['unread_messages'] = $academy->unReadMessages();
-        $data['aeceived_applications'] = $academy->applicationsReceived();
+        $data['received_applications'] = $academy->applicationsReceived();
         $data['answered_applications'] = $academy->applicationsAnswered();
         $data['applicants_interviewed'] = $academy->interviewedApplicants();
         $data['applicants_hired'] = $academy->HiredApplicants();
