@@ -75,7 +75,10 @@ Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSen
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
 Route::get('profile_views', [AcademyController::class, 'profileViews']);
 Route::get('unread_messages', [AcademyController::class, 'unReadMessages']);
-
+Route::get('apps_received', [AcademyController::class, 'applicationsReceived']);
+Route::get('apps_answered', [AcademyController::class, 'applicationsAnswered']);
+Route::get('interviewed', [AcademyController::class, 'interviewedApplicants']);
+Route::get('hired', [AcademyController::class, 'HiredApplicants']);
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
    // Route::post('/login', [AuthController::class, 'login']);

@@ -24,4 +24,16 @@ class AcademyController extends Controller
 public function unReadMessages(){
         return $this->onSuccess(0);
 }
+public function applicationsReceived(){
+        return $this->onSuccess(0);
+}
+public function applicationsAnswered(){
+        return $this->onSuccess(0);
+}
+public function interviewedApplicants(){
+        return $this->onSuccess(0);
+}
+public function HiredApplicants(){
+        return $this->onSuccess(0);
+}
 }
