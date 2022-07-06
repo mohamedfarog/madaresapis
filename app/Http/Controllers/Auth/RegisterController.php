@@ -243,16 +243,7 @@ class RegisterController extends Controller
                     return $this->onError('User Type is undefined');
                 }
 
-                // $academy_levels = [];
-                // if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
-                //     foreach ($request->academy_levels as $level) {
-                //         array_push($academy_levels, [
-                //             "academy_id" => $userId,
-                //             "level_id" => $level
-                //         ]);
-                //     }
-                //     AcademyLevels::insert($academy_levels);
-                // }
+      
                 $skills = [];
 
                 if (is_array($request->skills) || is_object($request->skills)) {
