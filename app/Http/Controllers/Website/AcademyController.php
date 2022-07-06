@@ -24,11 +24,7 @@ class AcademyController extends Controller
         $data['received_applications'] = $academy->applicationsReceived();
         $data['answered_applications'] = $academy->applicationsAnswered();
         $data['applicants_interviewed'] = $academy->interviewedApplicants();
-        $data['applicants_hired'] = $academy->HiredApplicants();
-       
+        $data['applicants_hired'] = $academy->HiredApplicants(); 
         return $this->onSuccess($data);
-        
-
-        
-   }
+}
 }
