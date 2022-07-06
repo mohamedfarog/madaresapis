@@ -58,18 +58,14 @@ class RegisterController extends Controller
         $user->save();
         return $user;
     }
-    
     public function testVerifyEmail(Request $request)
     {
         $this->sendVerificationEmail($request->email, 1);
         return 'success';
     }
     use fileUpload;
-
     public function UpdateUserType(Request $request)
     {
-
-
         try {
             
             $userType = User::findOrFail($request->id);
@@ -97,7 +93,6 @@ class RegisterController extends Controller
                         'size' => 'required',
                         'avatar' => 'required'
                     ]);
-
                     if ($validator->fails()) {
                         return $this->onError($validator->errors()->all());
                     }
@@ -251,8 +246,8 @@ class RegisterController extends Controller
                     $userId = $request->id;
                     foreach ($request->skills as $skill) {
                         array_push($skills, [
-                            'teacher_id' => $userId,
-                            'skill_name' => $skill
+                            'teacher_id' => $userId,     
+                            "kill_id" => $skill
 
                         ]);
                     }
