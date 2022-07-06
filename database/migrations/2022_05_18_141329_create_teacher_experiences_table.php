@@ -19,7 +19,7 @@ class CreateTeacherExperiencesTable extends Migration
             $table->id();
             $table->foreignId('teacher_id');
             $table->string('titel', 50);
-            $table->tinyText('academy_name');
+            $table->tinyText('place_of_assuarance');
             $table->boolean('current_work')->nullable();
             $table->date('start_day');
             $table->date('end_day');

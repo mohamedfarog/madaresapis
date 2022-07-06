@@ -281,6 +281,7 @@ class RegisterController extends Controller
                         $exp->teacher_id = $userId;
                         $exp->titel = $texp['exp_title'];
                         $exp->start_day = $texp['start_day'];
+                        $exp->place_of_assuarance['place_of_assuarance'];
                         $exp->end_day = $texp['end_day'];
                     }
                     $exp->save();
