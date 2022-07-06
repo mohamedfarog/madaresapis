@@ -246,7 +246,7 @@ class RegisterController extends Controller
                     foreach ($request->skills as $skill) {
                         array_push($skills, [
                             'teacher_id' => $userId,     
-                            'kill_id' => $skill
+                            'skill_id' => $skill
 
                         ]);
                     }
