@@ -21,15 +21,13 @@ use JWTAuth;
 
 class HomePageController extends Controller
 {
-
-    // protected $user;
-
-    // public function __construct()
-    // {
-    //     $this->user = JWTAuth::parseToken()->authenticate();
-    // }
-    /**
-     * Handle the incoming request.
+        //protected $user;
+        //public function __construct()
+        // {
+                //     $this->user = JWTAuth::parseToken()->authenticate();
+                // }
+                /**
+                 * * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -69,16 +67,15 @@ class HomePageController extends Controller
     
     public function getSubjectsTitle(): JsonResponse
     {
-       
-            $title = subjects::all('id', 'title', 'icon')->append('count')->toArray();
-            return $this->onSuccess($title);
+        $title = subjects::all('id', 'title', 'icon')->append('count')->toArray();
+        return $this->onSuccess($title);
       
     }
+
     public function returnJobLevel(): JsonResponse
     {
-  
-            $jobLevel = JobLevel::all('id', 'title', 'avater');
-            return $this->onSuccess($jobLevel);
+        $jobLevel = JobLevel::all('id', 'title', 'avater');
+        return $this->onSuccess($jobLevel);
      
     }
     public function getFaqInfo()
@@ -86,16 +83,14 @@ class HomePageController extends Controller
         $faq = QuestionedAnswers::all('id', 'title', 'body');
         return $this->onSuccess($faq);
 }
-
-
-    public function AvailableJobs()
-    {
+public function AvailableJobs()
+{
         $jobs = Academy::get(['id', 'name', 'avatar', 'banner', 'bio'])
         ->append(['totaljobs', 'vacancies'])->toArray();
         return $this->onSuccess($jobs);
-        }
-    public function homePageBanner(Request $request)
-    {
+}
+public function homePageBanner(Request $request)
+{
         if($request->lang == 1){
                 $banner = HomeBanner::all('id', 'avatar', 'text');
                 return $this->onSuccess($banner);
@@ -106,10 +101,8 @@ class HomePageController extends Controller
                 return $this->onSuccess($banner);
         }
 }
-
-
-    public function userSkills(Request $request)
-    {
+public function userSkills(Request $request)
+{
         if($request->lang == 1){
                 $skill = Skill::all('id', 'en_skill_name');
                 return $this->onSuccess($skill);

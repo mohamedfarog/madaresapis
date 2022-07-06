@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class JobTypeController extends Controller
 {
-    //
+  
     public function create(Request $request)
     {
-        // return $request->ar_title;
+        //return $request->ar_title;
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
         

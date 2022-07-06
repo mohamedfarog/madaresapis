@@ -30,7 +30,6 @@ use App\Models\Gender;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
@@ -49,9 +48,9 @@ Route::group(['prefix' => 'job_level'], function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
-// Route::get('/', function () {
-//return response()->json('Madars-Backend'); 
-// })->name('login');
+ // Route::get('/', function () {
+ //return response()->json('Madars-Backend'); 
+ //})->name('login');
 Route::group(['prefix' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class, 'refresh']);
@@ -74,7 +73,8 @@ Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
-Route::get('testt', [RegisterController::class, 'testData']);
+Route::get('profile_views', [AcademyController::class, 'profileViews']);
+Route::get('unread_messages', [AcademyController::class, 'unReadMessages']);
 
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -94,10 +94,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('available', [HomePageController::class, 'AvailableApplicant']);
-
-
-
-   if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {  // also you can this value in your config file and use here
+  
+   
+   if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {
+      //also you can this value in your config file and use here
       if (auth()->check() && auth()->id() > 1) {
          $user = auth()->user();
          auth()->logout();

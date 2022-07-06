@@ -14,7 +14,7 @@ class AddArTitleToAboutsTable extends Migration
     public function up()
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->dropIfExists('ar_title');
+            $table->string('ar_title');
 
         });
     }

@@ -48,4 +48,5 @@ class JobController extends Controller
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
+
 }

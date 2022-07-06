@@ -17,6 +17,11 @@ class AcademyController extends Controller
 
             $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
             return $this->onSuccess($academy);
-   
-    }
+        }
+    public function profileViews(){
+        return $this->onSuccess(0);
+}
+public function unReadMessages(){
+        return $this->onSuccess(0);
+}
 }

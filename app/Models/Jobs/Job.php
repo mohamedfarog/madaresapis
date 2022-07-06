@@ -9,16 +9,14 @@ use App\Models\Academies\Academy;
 use App\Models\Jobs\JobType;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\JobAppSetting;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    use HasFactory;
 
+    use HasFactory;
     protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
-
 
     public function academy(): BelongsTo
     {  
@@ -39,14 +37,11 @@ class Job extends Model
     }
     public function setting(): HasOne
     {
-      
         return $this->hasOne(JobAppSetting::class);
     }
-
     public function getAcademiesInfoAttribute()
     {
         $academy = Academy::select('en_name','avatar', 'ar_name')->where('id', $this->id)->get();
         return $academy;
-        }
-
+    }
 }
