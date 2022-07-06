@@ -73,15 +73,11 @@ Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
-Route::get('profile_views', [AcademyController::class, 'profileViews']);
-Route::get('unread_messages', [AcademyController::class, 'unReadMessages']);
-Route::get('apps_received', [AcademyController::class, 'applicationsReceived']);
-Route::get('apps_answered', [AcademyController::class, 'applicationsAnswered']);
-Route::get('interviewed', [AcademyController::class, 'interviewedApplicants']);
-Route::get('hired', [AcademyController::class, 'HiredApplicants']);
+Route::get('dash_header_count', [AcademyController::class, 'getAcademyHeadercount']);
+
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
-   // Route::post('/login', [AuthController::class, 'login']);
+//Route::post('/login', [AuthController::class, 'login']);
 });
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
@@ -97,7 +93,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('available', [HomePageController::class, 'AvailableApplicant']);
-  
    
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {
       //also you can this value in your config file and use here

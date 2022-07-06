@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddArArToAboutsTable extends Migration
+class CreateAboutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class AddArArToAboutsTable extends Migration
      */
     public function up()
     {
-        Schema::table('abouts', function (Blueprint $table) {
+        Schema::dropIfExists('abouts');
+        Schema::create('abouts', function (Blueprint $table) {
+            $table->id();
+            $table->string('en_title');
             $table->string('ar_title');
+            $table->string('en_name');
             $table->string('ar_name');
-            $table->string('ar_body');
-
-
+            $table->longText('en_body');
+            $table->longText('ar_body');
+            $table->timestamps();
         });
     }
 
@@ -29,8 +33,6 @@ class AddArArToAboutsTable extends Migration
      */
     public function down()
     {
-        Schema::table('abouts', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('abouts');
     }
 }

@@ -24,7 +24,7 @@ class AboutController extends Controller
         $data['total_accepted ']= $about->totalAccepted();
 
 if($request->lang == 1){
-    $data['comments'] = About::all(['id','title','name', 'body'])->append('');
+    $data['comments'] = About::all(['id','en_title','en_name', 'en_body'])->append('');
     return $this->onSuccess($data);
 }
 

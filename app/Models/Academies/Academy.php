@@ -60,4 +60,22 @@ class Academy extends Model
     {
         return $this->hasMany(AcademyFile::class, 'academy_id', 'user_id');
     }
+    public function profileViews(){
+        return 0;
+    }
+    public function unReadMessages(){
+        return 0;
+    }
+    public function applicationsReceived(){
+        return 0;
+    }
+    public function applicationsAnswered(){
+        return 0;
+    }
+    public function interviewedApplicants(){
+        return 0;
+    }
+    public function HiredApplicants(){
+        return 0;
+    }
 }

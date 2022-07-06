@@ -14,26 +14,21 @@ class AcademyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function academyData(){
+        $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
+        return $this->onSuccess($academy);
+}
+   public function getAcademyHeadercount(){
+        $academy = new Academy();
+        $data['profile_views'] = $academy->profileViews();
+        $data['unread_messages'] = $academy->unReadMessages();
+        $data['aeceived_applications'] = $academy->applicationsReceived();
+        $data['answered_applications'] = $academy->applicationsAnswered();
+        $data['applicants_interviewed'] = $academy->interviewedApplicants();
+        $data['applicants_hired'] = $academy->HiredApplicants();
+       
+        return $this->onSuccess($data);
+        
 
-            $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
-            return $this->onSuccess($academy);
-        }
-    public function profileViews(){
-        return $this->onSuccess(0);
-}
-public function unReadMessages(){
-        return $this->onSuccess(0);
-}
-public function applicationsReceived(){
-        return $this->onSuccess(0);
-}
-public function applicationsAnswered(){
-        return $this->onSuccess(0);
-}
-public function interviewedApplicants(){
-        return $this->onSuccess(0);
-}
-public function HiredApplicants(){
-        return $this->onSuccess(0);
-}
+        
+   }
 }
