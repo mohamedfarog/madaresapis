@@ -99,7 +99,7 @@ class RegisterController extends Controller
                     ]);
 
                     if ($validator->fails()) {
-                        return response()->json(['error' => $validator->errors()], 400);
+                        return $this->onError($validator->errors()->all());
                     }
                     $academy->user_id = $userId;
                     if (asset($request->name)) {
@@ -187,9 +187,9 @@ class RegisterController extends Controller
                     ]);
 
                     if ($validator->fails()) {
-                        return response()->json(['error' => $validator->errors()], 400);
+                        return $this->onError($validator->errors()->all());
+                        //return response()->json(['error' => $validator->errors()], 400);
                     }
-
                     $teacher->user_id = $userId;
 
                     if (asset($request->gender_id)) {
@@ -338,7 +338,6 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
-            //return response()->json(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
@@ -391,7 +390,6 @@ class RegisterController extends Controller
             }
         }
     }
-
     public function testEmail()
     {
         $code = "/api/verifyEmail/";
