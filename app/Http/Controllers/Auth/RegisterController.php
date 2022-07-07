@@ -159,14 +159,13 @@ class RegisterController extends Controller
                     }
 
                     $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
+                    // return $this->onSuccess($academyData);
                     return response()->json([
                         'status' => true,
-                        'data' => $teacherData,
+                        'data' => $academyData,
                         'token'=> $token,
                         'message' => 'Successfully Registered!'
                     ]);
-                }
-                    // return $this->onSuccess($academyData);
                 }
                 if ($request->type == '256') {
                     $userType->save();
