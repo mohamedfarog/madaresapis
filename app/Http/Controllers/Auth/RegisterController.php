@@ -82,6 +82,8 @@ class RegisterController extends Controller
             else {
                 $userType->user_type = $request->type;
                 $userType->save();
+                $UVEmail = User::where('id',$request->id)->first();
+                $token = JWTAuth::fromUser($UVEmail);
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
                     $academy = new Academy();
@@ -158,7 +160,7 @@ class RegisterController extends Controller
                     }
 
                     $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
-                    return $this->onSuccess($academyData);
+                    return $this->onSuccess([$academyData, 'Token' => $token]);
                 }
                 if ($request->type == '256') {
                     $userType->save();
@@ -346,6 +348,7 @@ class RegisterController extends Controller
             'message' => 'Successfully Registered!'
         ]);
     }
+
     public function ueserRegistered()
     {
         if (Auth::check()) {
