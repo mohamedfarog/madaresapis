@@ -323,7 +323,7 @@ class RegisterController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'data' => $$teacherData,
+                    'data' => $teacherData,
                     'token'=> $token,
                     'message' => 'Successfully Registered!'
                 ]);
