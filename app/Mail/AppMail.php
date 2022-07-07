@@ -20,7 +20,6 @@ class AppMail extends Mailable
     public function __construct($code)
     {
         //
-        $this->subject('Verify your Email');
         $this->code = env("BASE_URL", "") . "/api/verifyEmail/" . $code;
     }
 
@@ -31,6 +30,6 @@ class AppMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.verifyEmail');
+        return $this->view('emails.verifyEmail')->subject("Verify your Email");
     }
 }
