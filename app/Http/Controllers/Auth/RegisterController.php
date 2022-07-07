@@ -299,9 +299,6 @@ class RegisterController extends Controller
                 $userId = $request->id;
                 $available = new Availability();
                 $available->teacher_id = $userId;
-                if (asset($request->time_available)) {
-                    $available->time_available = $request->time_available;
-                }
                 $available->save();
                 $userId = $request->id;
                 $TeacherFiles = [];
