@@ -82,8 +82,7 @@ class RegisterController extends Controller
             else {
                 $userType->user_type = $request->type;
                 $userType->save();
-                $UVEmail = User::where('id',$request->id)->first(); //line
-                $token = JWTAuth::fromUser($UVEmail);
+                $token = JWTAuth::fromUser($userType);
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
                     $academy = new Academy();
@@ -187,7 +186,6 @@ class RegisterController extends Controller
                     //     'availability_id' => 'required',
                     //     'avatar' => 'required'
                     // ]);
-
                     // if ($validator->fails()) {
                     //     return $this->onError($validator->errors()->all());
                     // }
