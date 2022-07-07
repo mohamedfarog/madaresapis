@@ -30,7 +30,8 @@ use Illuminate\Support\Facades\Mail;
 use File;
 use Illuminate\Support\Facades\Storage;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
-
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 class RegisterController extends Controller
 {
     public function reSendVerificationSendEmail(Request $request)
@@ -162,7 +163,8 @@ class RegisterController extends Controller
                 if ($request->type == '256') {
                     $userType->save();
                     $UVEmail = User::where('id',$request->id)->first();
-                    $UVEmail->email_verified = 1;
+                    $token = JWTAuth::fromUser($UVEmail);
+                    $UVEmail->email_verified = 1; 
                     $UVEmail->save();
                     $userId = $request->id;
                     $teacher = new Teacher();
@@ -314,8 +316,10 @@ class RegisterController extends Controller
                     }
                     TeacherFiles::insert($TeacherFiles);
                 }
+           
                 $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
-                return $this->onSuccess($teacherData);
+                return $this->onSuccess([$teacherData, 'Token' => $token]);
+
             }
         } catch (ModelNotFoundException $e) {
             return $this->onError('User ID NOT FOUND');

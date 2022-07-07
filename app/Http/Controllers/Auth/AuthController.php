@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +11,7 @@ use App\Models\Role;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 use Laravel\Socialite\Facades\Socialite;
-
 class AuthController extends Controller
 {
     public function test()
@@ -87,8 +84,6 @@ class AuthController extends Controller
 
     public function loginV2(Request $request)
     {
-
-
         $credentials = $request->only('email', 'password');
         //valid credential
         $validator = Validator::make($credentials, [
@@ -99,8 +94,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
         }
-        // Request is validated
-        //Creat token
+         //Request is validated
+         //Creat token
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->onError(
@@ -108,7 +103,7 @@ class AuthController extends Controller
                 );
             }
         } catch (JWTException $e) {
-            // return $credentials;
+            //return $credentials;
             return $this->onError('Login credentials are invalid.');
         }
         return response()->json([
