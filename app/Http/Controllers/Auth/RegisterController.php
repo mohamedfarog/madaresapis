@@ -157,12 +157,13 @@ class RegisterController extends Controller
                         AcademyFile::insert($AcademyFiles);
                     }
 
-                    $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
-          
+                    $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->first();
+                    
                     return response()->json([
                         'status' => true,
                         'data' => $academyData,
                         'token'=> $token,
+                        'user'=> $userType,
                         'message' => 'Successfully Registered!'
                     ]);
                 }
@@ -325,12 +326,13 @@ class RegisterController extends Controller
                     TeacherFiles::insert($TeacherFiles);
                 }
            
-                $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
+                $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->first();
         
                 return response()->json([
                     'status' => true,
                     'data' => $teacherData,
                     'token'=> $token,
+                    "user" => $userType,
                     'teacherFiles'=>$TeacherFiles,
                     'message' => 'Successfully Registered!'
                 ]);
