@@ -82,7 +82,7 @@ class RegisterController extends Controller
             else {
                 $userType->user_type = $request->type;
                 $userType->save();
-                $UVEmail = User::where('id',$request->id)->first();
+                $UVEmail = User::where('id',$request->id)->first(); //line
                 $token = JWTAuth::fromUser($UVEmail);
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
@@ -159,7 +159,7 @@ class RegisterController extends Controller
                     }
 
                     $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
-                    // return $this->onSuccess($academyData);
+          
                     return response()->json([
                         'status' => true,
                         'data' => $academyData,
@@ -169,7 +169,7 @@ class RegisterController extends Controller
                 }
                 if ($request->type == '256') {
                     $userType->save();
-                    $UVEmail = User::where('id',$request->id)->first();
+                    $UVEmail = User::where('id',$request->id)->first(); //line
                     $token = JWTAuth::fromUser($UVEmail);
                     $UVEmail->email_verified = 1; 
                     $UVEmail->save();
@@ -305,11 +305,14 @@ class RegisterController extends Controller
                     }
                     $edu->save();
                 }
+
                 $userId = $request->id;
                 $available = new Availability();
                 $available->teacher_id = $userId;
                 $available->save();
+
                 $userId = $request->id;
+
                 $TeacherFiles = [];
                 if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)) {
                     foreach ($request->TeacherFiles as $tFile) {
@@ -330,6 +333,7 @@ class RegisterController extends Controller
                     'status' => true,
                     'data' => $teacherData,
                     'token'=> $token,
+                    'teacherFiles'=>$TeacherFiles,
                     'message' => 'Successfully Registered!'
                 ]);
             }
