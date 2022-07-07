@@ -159,7 +159,14 @@ class RegisterController extends Controller
                     }
 
                     $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
-                    return $this->onSuccess($academyData);
+                    return response()->json([
+                        'status' => true,
+                        'data' => $teacherData,
+                        'token'=> $token,
+                        'message' => 'Successfully Registered!'
+                    ]);
+                }
+                    // return $this->onSuccess($academyData);
                 }
                 if ($request->type == '256') {
                     $userType->save();
@@ -319,8 +326,7 @@ class RegisterController extends Controller
                 }
            
                 $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
-                // return $this->onSuccess([$teacherData, 'Token' => $token]);
-
+        
                 return response()->json([
                     'status' => true,
                     'data' => $teacherData,
