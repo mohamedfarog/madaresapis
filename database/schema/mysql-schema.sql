@@ -9,14 +9,14 @@ DROP TABLE IF EXISTS `abouts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `abouts` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   `en_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ar_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `en_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ar_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -26,14 +26,12 @@ DROP TABLE IF EXISTS `academies`;
 CREATE TABLE `academies` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
-  `ar_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `website` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `banner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ar_bio` longtext COLLATE utf8mb4_unicode_ci,
-  `en_bio` longtext COLLATE utf8mb4_unicode_ci,
+  `bio` longtext COLLATE utf8mb4_unicode_ci,
   `size` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `years_of_teaching` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -48,24 +46,6 @@ CREATE TABLE `academy_files` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `academy_id` bigint(20) unsigned NOT NULL,
   `file_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `academy_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `academy_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `ar_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sets` int(10) unsigned DEFAULT NULL,
-  `stablish_date` timestamp NULL DEFAULT NULL,
-  `website_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -111,9 +91,7 @@ DROP TABLE IF EXISTS `activity`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activity` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `en_activity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_activity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -150,16 +128,16 @@ DROP TABLE IF EXISTS `articles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `articles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_owner_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_owner_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `published_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `en_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `ar_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ar_owner_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ar_body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -170,6 +148,18 @@ CREATE TABLE `availabilities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `teacher_id` bigint(20) unsigned NOT NULL,
   `time_available` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `availables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `availables` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `en_text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ar_text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -260,46 +250,12 @@ CREATE TABLE `countries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `curriculum`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `curriculum` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `curr_arr_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `curr_en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_arr_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_type_ar_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_type_en_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `degree`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `degree` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `degree_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `eacher_education`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `eacher_education` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `teacher_id` int(10) unsigned DEFAULT NULL,
-  `dgree_id` int(10) unsigned DEFAULT NULL,
-  `major` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `academy_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `academy_id` int(10) unsigned DEFAULT NULL,
-  `start_date` timestamp NULL DEFAULT NULL,
-  `end_date` timestamp NULL DEFAULT NULL,
-  `precentage` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cgpa` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -346,16 +302,11 @@ DROP TABLE IF EXISTS `general_job_status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `general_job_status` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_applicant_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_applicant_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_viwed` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_viwed` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_interview` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_interview` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_rejected` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_rejected` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_accepted` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_accepted` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `applicant_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `viwed` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interview` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rejected` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accepted` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -377,10 +328,10 @@ DROP TABLE IF EXISTS `home_banners`;
 CREATE TABLE `home_banners` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `ar_text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -389,9 +340,11 @@ DROP TABLE IF EXISTS `job_act_apply`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_act_apply` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `teacher_id` int(10) unsigned DEFAULT NULL,
-  `job_id` int(10) unsigned DEFAULT NULL,
-  `apply_date` timestamp NULL DEFAULT NULL,
+  `teacher_id` bigint(20) unsigned NOT NULL,
+  `job_id` bigint(20) unsigned NOT NULL,
+  `apply_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL,
+  `remark` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -426,11 +379,11 @@ DROP TABLE IF EXISTS `job_levels`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_levels` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_title` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_title` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
   `avater` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -439,7 +392,6 @@ DROP TABLE IF EXISTS `job_post_status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_post_status` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
   `text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -455,8 +407,7 @@ CREATE TABLE `job_posts` (
   `job_type_id` bigint(20) unsigned NOT NULL,
   `location_id` bigint(20) unsigned NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `en_job_desc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_job_desc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_desc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -507,6 +458,7 @@ DROP TABLE IF EXISTS `job_types`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_types` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `academy_id` bigint(20) unsigned NOT NULL,
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -522,21 +474,16 @@ CREATE TABLE `jobs` (
   `job_type_id` bigint(20) unsigned NOT NULL,
   `job_level_id` bigint(20) unsigned NOT NULL,
   `gender` bigint(20) unsigned NOT NULL,
-  `en_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_advertise_area` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_advertise_area` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_hiring_budget` json DEFAULT NULL,
-  `ar_hiring_budget` json DEFAULT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `advertise_area` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hiring_budget` json DEFAULT NULL,
   `job_vacancy` bigint(20) unsigned NOT NULL DEFAULT '1',
-  `en_job_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_job_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `expected_start_date` date NOT NULL,
   `job_deadline` date NOT NULL,
-  `en_job_responsibilities` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_job_benefits` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_job_experience` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_job_experience` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_responsibilities` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_benefits` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_experience` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` int(11) NOT NULL,
@@ -558,42 +505,16 @@ DROP TABLE IF EXISTS `locations`;
 CREATE TABLE `locations` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `country_id` int(11) DEFAULT NULL,
-  `ar_country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_city_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_city_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_street` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_street` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `street` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `building_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `teacher_id` bigint(20) unsigned DEFAULT NULL,
   `academy_id` bigint(20) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `main_user_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `main_user_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_type_id` int(10) unsigned DEFAULT NULL,
-  `country_id` int(10) unsigned DEFAULT NULL,
-  `location_id` int(10) unsigned DEFAULT NULL,
-  `profile_pic` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cover_image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_of_birth` timestamp NULL DEFAULT NULL,
-  `phone_number` int(11) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  `reg_date` timestamp NULL DEFAULT NULL,
-  `twitter_profile` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `facebook_profile` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `linkend_profile` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `main_user_info_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `messages`;
@@ -742,10 +663,8 @@ DROP TABLE IF EXISTS `questioned_answers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `questioned_answers` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_body` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_body` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -792,16 +711,27 @@ CREATE TABLE `schools` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `skill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `skill` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `ar_skill_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `en_skill_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `skills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `skills` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `teacher_id` bigint(20) unsigned DEFAULT NULL,
-  `skill_ar_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `skill_en_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `teacher_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `skill_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -810,9 +740,8 @@ DROP TABLE IF EXISTS `subjects`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subjects` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `en_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `icon` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -834,8 +763,7 @@ DROP TABLE IF EXISTS `teacher_education`;
 CREATE TABLE `teacher_education` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `teacher_id` bigint(20) unsigned NOT NULL,
-  `ar_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -848,20 +776,17 @@ DROP TABLE IF EXISTS `teacher_experiences`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teacher_experiences` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `t` bigint(20) unsigned DEFAULT NULL,
+  `teacher_id` bigint(20) unsigned NOT NULL,
   `titel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `academy_name` tinytext COLLATE utf8mb4_unicode_ci,
+  `place_of_assuarance` tinytext COLLATE utf8mb4_unicode_ci,
   `current_work` tinyint(1) DEFAULT NULL,
-  `start_day` date NOT NULL,
-  `end_day` date NOT NULL,
+  `start_day` date DEFAULT NULL,
+  `end_day` date DEFAULT NULL,
   `description` tinytext COLLATE utf8mb4_unicode_ci,
   `certificates` json DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `teacher_id` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `teacher_id` (`t`),
-  CONSTRAINT `teacher_experiences_teacher_id_foreign` FOREIGN KEY (`t`) REFERENCES `teachers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `teacher_files`;
@@ -871,20 +796,7 @@ CREATE TABLE `teacher_files` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `file_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `teacher_id` bigint(20) unsigned NOT NULL,
-  `file_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `teacher_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `teacher_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `teacher_id` int(10) unsigned DEFAULT NULL,
-  `resume` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -897,7 +809,6 @@ CREATE TABLE `teacher_resumes` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `teacher_id` bigint(20) unsigned DEFAULT NULL,
   `curriculum_vitae` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cover_litter` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `extra_skills` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -912,16 +823,13 @@ CREATE TABLE `teachers` (
   `user_id` bigint(20) unsigned NOT NULL,
   `gender_id` bigint(20) unsigned NOT NULL,
   `job_level_id` bigint(20) unsigned DEFAULT NULL,
-  `availability_id` bigint(20) unsigned NOT NULL,
-  `contact_number` int(11) NOT NULL,
-  `date_of_birth` date NOT NULL,
-  `en_first_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `en_last_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_first_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ar_last_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `availability_id` bigint(20) unsigned DEFAULT NULL,
+  `contact_number` bigint(20) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `willing_to_travel` tinyint(1) NOT NULL DEFAULT '0',
-  `en_bio` text COLLATE utf8mb4_unicode_ci,
-  `ar_bio` text COLLATE utf8mb4_unicode_ci,
+  `bio` text COLLATE utf8mb4_unicode_ci,
   `avatar` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `academic_major` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -949,9 +857,12 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `twitter_profile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_profile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `linkedin_profile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `info_flag` int(11) NOT NULL DEFAULT '0',
@@ -959,7 +870,6 @@ CREATE TABLE `users` (
   `email_verified` int(11) NOT NULL DEFAULT '0',
   `verify_email_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `verify_email_token_created_at` timestamp NULL DEFAULT NULL,
-  `is_active` tinyint(4) NOT NULL DEFAULT '0',
   `facebook_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `google_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `linkedin_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -987,10 +897,6 @@ CREATE TABLE `work_there` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
-INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
-INSERT INTO `migrations` VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
-INSERT INTO `migrations` VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
 INSERT INTO `migrations` VALUES (5,'2022_05_10_062138_main_user_info',1);
 INSERT INTO `migrations` VALUES (6,'2022_05_10_071516_teacher_education',1);
 INSERT INTO `migrations` VALUES (7,'2022_05_10_072227_teacher_info',1);
@@ -1025,67 +931,84 @@ INSERT INTO `migrations` VALUES (35,'2022_05_13_054654_create_articles_table',1)
 INSERT INTO `migrations` VALUES (36,'2022_05_13_054723_create_comments_table',1);
 INSERT INTO `migrations` VALUES (37,'2022_05_13_055110_create_banner_table',1);
 INSERT INTO `migrations` VALUES (38,'2022_05_17_123617_add_academy_cover',2);
-INSERT INTO `migrations` VALUES (74,'2022_05_15_060322_create_roles_table',3);
 INSERT INTO `migrations` VALUES (75,'2022_05_18_130413_create_teachers_table',3);
 INSERT INTO `migrations` VALUES (76,'2022_05_18_135026_create_teacher_resumes_table',3);
-INSERT INTO `migrations` VALUES (77,'2022_05_18_141329_create_teacher_experiences_table',3);
-INSERT INTO `migrations` VALUES (78,'2022_05_18_144220_create_branches_table',3);
 INSERT INTO `migrations` VALUES (79,'2022_05_18_145132_create_academies_table',3);
 INSERT INTO `migrations` VALUES (80,'2022_05_18_192637_create_questioned_answers_table',3);
 INSERT INTO `migrations` VALUES (81,'2022_05_19_053149_create_jobs_table',3);
-INSERT INTO `migrations` VALUES (82,'2022_05_19_053529_create_job_types_table',3);
-INSERT INTO `migrations` VALUES (83,'2022_05_19_075202_create_genders_table',3);
-INSERT INTO `migrations` VALUES (84,'2022_05_19_110700_create_job_app_settings_table',3);
-INSERT INTO `migrations` VALUES (85,'2022_05_19_111325_create_communicate_methods_table',3);
-INSERT INTO `migrations` VALUES (86,'2022_05_19_113752_create_app_interactions_table',3);
-INSERT INTO `migrations` VALUES (87,'2022_05_20_063527_create_subjects_table',3);
-INSERT INTO `migrations` VALUES (88,'2022_05_23_062031_create_articles_table',3);
-INSERT INTO `migrations` VALUES (89,'2022_05_24_113842_create_home_banners_table',3);
-INSERT INTO `migrations` VALUES (90,'2022_05_24_151649_create_job_levels_table',3);
-INSERT INTO `migrations` VALUES (91,'2022_05_27_144738_create_saveds_table',3);
 INSERT INTO `migrations` VALUES (120,'2022_05_30_055516_create_schools_table',4);
-INSERT INTO `migrations` VALUES (121,'2022_05_30_060037_create_abouts_table',4);
-INSERT INTO `migrations` VALUES (122,'2022_05_30_072455_create_general_job_status_table',4);
-INSERT INTO `migrations` VALUES (123,'2022_05_30_073744_create_job_posts_table',4);
-INSERT INTO `migrations` VALUES (124,'2022_05_30_073817_create_job_statuses_table',4);
 INSERT INTO `migrations` VALUES (130,'2022_05_31_115357_create_academies_table',5);
-INSERT INTO `migrations` VALUES (131,'2022_05_31_140407_add_job_title_to_abouts_table',5);
-INSERT INTO `migrations` VALUES (135,'2022_06_02_081434_create_jobs_table',6);
-INSERT INTO `migrations` VALUES (136,'2016_06_01_000001_create_oauth_auth_codes_table',7);
-INSERT INTO `migrations` VALUES (137,'2016_06_01_000002_create_oauth_access_tokens_table',7);
-INSERT INTO `migrations` VALUES (138,'2016_06_01_000003_create_oauth_refresh_tokens_table',7);
-INSERT INTO `migrations` VALUES (139,'2016_06_01_000004_create_oauth_clients_table',7);
-INSERT INTO `migrations` VALUES (140,'2016_06_01_000005_create_oauth_personal_access_clients_table',7);
-INSERT INTO `migrations` VALUES (141,'2022_06_07_054327_add_status_to_jobs_table',8);
-INSERT INTO `migrations` VALUES (143,'2022_06_07_055201_create_job_post_status_table',9);
-INSERT INTO `migrations` VALUES (144,'2022_06_07_060029_create_activity_table',9);
 INSERT INTO `migrations` VALUES (145,'2022_06_07_060650_add_status_to_articles_table',10);
-INSERT INTO `migrations` VALUES (146,'2022_06_07_060859_add_status_to_articles_table',11);
-INSERT INTO `migrations` VALUES (147,'2022_06_07_061746_add_info_flag_to_users_table',12);
 INSERT INTO `migrations` VALUES (150,'2022_06_07_072310_create_user_types_table',13);
-INSERT INTO `migrations` VALUES (153,'2022_06_08_131218_create_questioned_answers_table',14);
-INSERT INTO `migrations` VALUES (154,'2022_06_13_130716_add_user_type_to_users',15);
 INSERT INTO `migrations` VALUES (155,'2022_06_14_081115_create_locations_table',16);
-INSERT INTO `migrations` VALUES (188,'2022_06_14_123326_create_academy_levels_table',17);
-INSERT INTO `migrations` VALUES (189,'2022_06_14_123603_create_academy_files_table',17);
 INSERT INTO `migrations` VALUES (200,'2022_06_14_125436_add_years_of_teaching_and_size_toacademies_table_academies',18);
 INSERT INTO `migrations` VALUES (201,'2022_06_14_125840_add_academy_id_to_academies_table_locations',18);
-INSERT INTO `migrations` VALUES (202,'2022_06_16_073148_add_otp_to_users_table',18);
-INSERT INTO `migrations` VALUES (203,'2022_06_20_082834_create_teachers_table',18);
 INSERT INTO `migrations` VALUES (204,'2022_06_20_130816_create_skills_table',18);
 INSERT INTO `migrations` VALUES (205,'2022_06_20_134539_create_locations_table',18);
 INSERT INTO `migrations` VALUES (206,'2022_06_20_135159_create_locations_table',19);
 INSERT INTO `migrations` VALUES (208,'2022_06_20_135545_create_locations_table',20);
-INSERT INTO `migrations` VALUES (214,'2022_06_20_140930_create_locations_table',21);
 INSERT INTO `migrations` VALUES (215,'2022_06_20_141736_add_size_to_academes',22);
-INSERT INTO `migrations` VALUES (216,'2022_06_20_142941_create_academies_table',23);
-INSERT INTO `migrations` VALUES (218,'2022_06_20_144435_create_skills_table',24);
 INSERT INTO `migrations` VALUES (219,'2022_06_20_161407_create_teacher_resumes_table',25);
-INSERT INTO `migrations` VALUES (220,'2022_06_21_055424_create_availabilities_table',26);
 INSERT INTO `migrations` VALUES (221,'2022_06_21_075510_create_teacher_resumes_table',27);
-INSERT INTO `migrations` VALUES (226,'2022_06_21_113416_rename_gender_jobs_table',28);
-INSERT INTO `migrations` VALUES (227,'2022_06_22_131239_add_facebook_id_to_users_table',28);
-INSERT INTO `migrations` VALUES (228,'2022_06_22_135333_modify_facebook_id_to_users_table',28);
-INSERT INTO `migrations` VALUES (230,'2022_06_27_070233_create_teacher_education_table',29);
-INSERT INTO `migrations` VALUES (233,'2022_06_27_113305_create_teacher_files_table',30);
-INSERT INTO `migrations` VALUES (234,'2022_06_27_141341_create_teacher_resumes_table',31);
+INSERT INTO `migrations` VALUES (481,'2014_10_12_000000_create_users_table',28);
+INSERT INTO `migrations` VALUES (482,'2014_10_12_100000_create_password_resets_table',28);
+INSERT INTO `migrations` VALUES (483,'2016_06_01_000001_create_oauth_auth_codes_table',28);
+INSERT INTO `migrations` VALUES (484,'2016_06_01_000002_create_oauth_access_tokens_table',28);
+INSERT INTO `migrations` VALUES (485,'2016_06_01_000003_create_oauth_refresh_tokens_table',28);
+INSERT INTO `migrations` VALUES (486,'2016_06_01_000004_create_oauth_clients_table',28);
+INSERT INTO `migrations` VALUES (487,'2016_06_01_000005_create_oauth_personal_access_clients_table',28);
+INSERT INTO `migrations` VALUES (488,'2019_08_19_000000_create_failed_jobs_table',28);
+INSERT INTO `migrations` VALUES (489,'2019_12_14_000001_create_personal_access_tokens_table',28);
+INSERT INTO `migrations` VALUES (490,'2022_05_15_060322_create_roles_table',28);
+INSERT INTO `migrations` VALUES (491,'2022_05_18_141329_create_teacher_experiences_table',28);
+INSERT INTO `migrations` VALUES (492,'2022_05_18_144220_create_branches_table',28);
+INSERT INTO `migrations` VALUES (493,'2022_05_19_053529_create_job_types_table',28);
+INSERT INTO `migrations` VALUES (494,'2022_05_19_075202_create_genders_table',28);
+INSERT INTO `migrations` VALUES (495,'2022_05_19_110700_create_job_app_settings_table',28);
+INSERT INTO `migrations` VALUES (496,'2022_05_19_111325_create_communicate_methods_table',28);
+INSERT INTO `migrations` VALUES (497,'2022_05_19_113752_create_app_interactions_table',28);
+INSERT INTO `migrations` VALUES (498,'2022_05_20_063527_create_subjects_table',28);
+INSERT INTO `migrations` VALUES (499,'2022_05_23_062031_create_articles_table',28);
+INSERT INTO `migrations` VALUES (500,'2022_05_24_113842_create_home_banners_table',28);
+INSERT INTO `migrations` VALUES (501,'2022_05_24_151649_create_job_levels_table',28);
+INSERT INTO `migrations` VALUES (502,'2022_05_27_144738_create_saveds_table',28);
+INSERT INTO `migrations` VALUES (503,'2022_05_30_060037_create_abouts_table',28);
+INSERT INTO `migrations` VALUES (504,'2022_05_30_072455_create_general_job_status_table',28);
+INSERT INTO `migrations` VALUES (505,'2022_05_30_073744_create_job_posts_table',28);
+INSERT INTO `migrations` VALUES (506,'2022_05_30_073817_create_job_statuses_table',28);
+INSERT INTO `migrations` VALUES (507,'2022_05_31_140407_add_job_title_to_abouts_table',28);
+INSERT INTO `migrations` VALUES (508,'2022_06_02_081434_create_jobs_table',28);
+INSERT INTO `migrations` VALUES (509,'2022_06_07_054327_add_status_to_jobs_table',28);
+INSERT INTO `migrations` VALUES (510,'2022_06_07_055201_create_job_post_status_table',28);
+INSERT INTO `migrations` VALUES (511,'2022_06_07_060029_create_activity_table',28);
+INSERT INTO `migrations` VALUES (512,'2022_06_07_060859_add_status_to_articles_table',28);
+INSERT INTO `migrations` VALUES (513,'2022_06_07_061746_add_info_flag_to_users_table',28);
+INSERT INTO `migrations` VALUES (514,'2022_06_08_131218_create_questioned_answers_table',28);
+INSERT INTO `migrations` VALUES (515,'2022_06_13_130716_add_user_type_to_users',28);
+INSERT INTO `migrations` VALUES (516,'2022_06_14_123326_create_academy_levels_table',28);
+INSERT INTO `migrations` VALUES (517,'2022_06_14_123603_create_academy_files_table',28);
+INSERT INTO `migrations` VALUES (518,'2022_06_16_073148_add_otp_to_users_table',28);
+INSERT INTO `migrations` VALUES (519,'2022_06_20_082834_create_teachers_table',28);
+INSERT INTO `migrations` VALUES (520,'2022_06_20_140930_create_locations_table',28);
+INSERT INTO `migrations` VALUES (521,'2022_06_20_142941_create_academies_table',28);
+INSERT INTO `migrations` VALUES (522,'2022_06_20_144435_create_skills_table',28);
+INSERT INTO `migrations` VALUES (523,'2022_06_21_055424_create_availabilities_table',28);
+INSERT INTO `migrations` VALUES (524,'2022_06_21_113416_rename_gender_jobs_table',28);
+INSERT INTO `migrations` VALUES (525,'2022_06_22_131239_add_facebook_id_to_users_table',28);
+INSERT INTO `migrations` VALUES (526,'2022_06_22_135333_modify_facebook_id_to_users_table',28);
+INSERT INTO `migrations` VALUES (527,'2022_06_27_070233_create_teacher_education_table',28);
+INSERT INTO `migrations` VALUES (528,'2022_06_27_113305_create_teacher_files_table',28);
+INSERT INTO `migrations` VALUES (529,'2022_06_27_141341_create_teacher_resumes_table',28);
+INSERT INTO `migrations` VALUES (530,'2022_07_01_084814_create_password_resets_table',29);
+INSERT INTO `migrations` VALUES (531,'2022_07_01_131457_add_arabic_name_to_skills',30);
+INSERT INTO `migrations` VALUES (535,'2022_07_01_133556_create_skill_table',31);
+INSERT INTO `migrations` VALUES (536,'2022_07_01_134126_add_skill_id_to_skills',32);
+INSERT INTO `migrations` VALUES (537,'2022_07_04_063810_create_availables_table',33);
+INSERT INTO `migrations` VALUES (538,'2022_07_04_130940_add_ar_to_articles_table',34);
+INSERT INTO `migrations` VALUES (539,'2022_07_04_134025_add_articale_ar_to_abouts_table',35);
+INSERT INTO `migrations` VALUES (540,'2022_07_04_143018_add_ar_to_home_banners_table',36);
+INSERT INTO `migrations` VALUES (543,'2022_07_04_145212_add_ar_title_to_abouts_table',37);
+INSERT INTO `migrations` VALUES (544,'2022_07_06_065710_create_abouts_table',38);
+INSERT INTO `migrations` VALUES (545,'2022_07_06_070601_create_job_act_apply_table',39);
+INSERT INTO `migrations` VALUES (546,'2022_07_06_113900_add_skill_name_to_skills',40);
+INSERT INTO `migrations` VALUES (547,'2022_07_06_140320_add_skill_ar_title_to_job_levels',41);

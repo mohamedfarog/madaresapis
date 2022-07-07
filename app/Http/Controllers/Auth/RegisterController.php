@@ -175,7 +175,6 @@ class RegisterController extends Controller
                         'last_name' => 'required',
                         'bio' => 'required',
                         'willing_to_travel' => 'required',
-                        'availability_id' => 'required',
                         'avatar' => 'required'
                     ]);
 
@@ -206,9 +205,6 @@ class RegisterController extends Controller
                     }
                     if (asset($request->willing_to_travel)) {
                         $teacher->willing_to_travel = $request->willing_to_travel;
-                    }
-                    if (asset($request->availability_id)) {
-                        $teacher->availability_id = $request->availability_id;
                     }
                     if ($file = $request->avatar) {
                         $icon = $this->uploadFile($file, 'avatars');
@@ -247,7 +243,6 @@ class RegisterController extends Controller
                         array_push($skills, [
                             'teacher_id' => $userId,     
                             'skill_id' => $skill
-
                         ]);
                     }
                     Skills::insert($skills);
