@@ -133,7 +133,6 @@ class RegisterController extends Controller
                         $location->street = $request->street;
                     }
                     $location->save();
-
                     $academy_levels = [];
                     if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
                         foreach ($request->academy_levels as $level) {
@@ -160,7 +159,7 @@ class RegisterController extends Controller
                     }
 
                     $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->get();
-                    return $this->onSuccess([$academyData, 'Token' => $token]);
+                    return $this->onSuccess($academyData);
                 }
                 if ($request->type == '256') {
                     $userType->save();
