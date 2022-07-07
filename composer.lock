@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
+    "content-hash": "3bc6055f871f50d8f46c2d4b7e72b5ff",
+=======
     "content-hash": "532498e2e928161043c150ec6894e466",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1105,6 +1109,18 @@
         },
         {
             "name": "guzzlehttp/guzzle",
+<<<<<<< HEAD
+            "version": "7.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
+                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
+=======
             "version": "7.4.5",
             "source": {
                 "type": "git",
@@ -1115,6 +1131,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/guzzle/zipball/1dd98b0564cb3f6bd16ce683cb755f94c10fbd82",
                 "reference": "1dd98b0564cb3f6bd16ce683cb755f94c10fbd82",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -1209,7 +1226,11 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/guzzle/guzzle/tree/7.4.3"
+=======
                 "source": "https://github.com/guzzle/guzzle/tree/7.4.5"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
             },
             "funding": [
                 {
@@ -1225,7 +1246,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2022-05-25T13:24:33+00:00"
+=======
             "time": "2022-06-20T22:16:13+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "guzzlehttp/promises",
@@ -1427,6 +1452,19 @@
             "time": "2022-06-20T21:43:11+00:00"
         },
         {
+<<<<<<< HEAD
+            "name": "laravel/framework",
+            "version": "v8.83.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "141cf126f1746c7264f59aa78c923a84eaab501e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/141cf126f1746c7264f59aa78c923a84eaab501e",
+                "reference": "141cf126f1746c7264f59aa78c923a84eaab501e",
+=======
             "name": "juliomotol/laravel-auth-timeout",
             "version": "v3.1.1",
             "source": {
@@ -1505,6 +1543,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/2cf142cd5100b02da248acad3988bdaba5635e16",
                 "reference": "2cf142cd5100b02da248acad3988bdaba5635e16",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -1664,6 +1703,9 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< HEAD
+            "time": "2022-05-24T14:04:02+00:00"
+=======
             "time": "2022-06-21T14:38:31+00:00"
         },
         {
@@ -1742,6 +1784,7 @@
                 "source": "https://github.com/laravel/passport"
             },
             "time": "2022-04-16T13:38:08+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "laravel/sanctum",
@@ -1866,6 +1909,8 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2022-05-16T17:09:47+00:00"
+<<<<<<< HEAD
+=======
         },
         {
             "name": "laravel/socialite",
@@ -1935,6 +1980,7 @@
                 "source": "https://github.com/laravel/socialite"
             },
             "time": "2022-03-10T15:26:19+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "laravel/tinker",
@@ -2005,6 +2051,19 @@
             "time": "2022-03-23T12:38:24+00:00"
         },
         {
+<<<<<<< HEAD
+            "name": "lcobucci/jwt",
+            "version": "3.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/jwt.git",
+                "reference": "c1123697f6a2ec29162b82f170dd4a491f524773"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/c1123697f6a2ec29162b82f170dd4a491f524773",
+                "reference": "c1123697f6a2ec29162b82f170dd4a491f524773",
+=======
             "name": "lcobucci/clock",
             "version": "2.2.0",
             "source": {
@@ -2077,6 +2136,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/lcobucci/jwt/zipball/fe2d89f2eaa7087af4aa166c6f480ef04e000582",
                 "reference": "fe2d89f2eaa7087af4aa166c6f480ef04e000582",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -2084,6 +2144,23 @@
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
+<<<<<<< HEAD
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.5",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/php-invoker": "~1.1",
+                "phpunit/phpunit": "^5.7 || ^7.3",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+=======
                 "ext-sodium": "*",
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
@@ -2102,6 +2179,7 @@
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -2113,7 +2191,7 @@
             ],
             "authors": [
                 {
-                    "name": "Luís Cobucci",
+                    "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
                     "role": "Developer"
                 }
@@ -2125,7 +2203,11 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/lcobucci/jwt/tree/3.3.3"
+=======
                 "source": "https://github.com/lcobucci/jwt/tree/4.1.5"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
             },
             "funding": [
                 {
@@ -2137,6 +2219,22 @@
                     "type": "patreon"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2020-08-20T13:22:28+00:00"
+        },
+        {
+            "name": "league/commonmark",
+            "version": "2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "cb36fee279f7fca01d5d9399ddd1b37e48e2eca1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/cb36fee279f7fca01d5d9399ddd1b37e48e2eca1",
+                "reference": "cb36fee279f7fca01d5d9399ddd1b37e48e2eca1",
+=======
             "time": "2021-09-28T19:34:56+00:00"
         },
         {
@@ -2151,6 +2249,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/0da1dca5781dd3cfddbe328224d9a7a62571addc",
                 "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -2243,7 +2342,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2022-05-14T15:37:39+00:00"
+=======
             "time": "2022-06-07T21:28:26+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "league/config",
@@ -2532,6 +2635,19 @@
             "time": "2022-04-17T13:12:02+00:00"
         },
         {
+<<<<<<< HEAD
+            "name": "monolog/monolog",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/247918972acd74356b0a91dfaa5adcaec069b6c0",
+                "reference": "247918972acd74356b0a91dfaa5adcaec069b6c0",
+=======
             "name": "league/oauth1-client",
             "version": "v1.10.1",
             "source": {
@@ -2876,6 +2992,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5579edf28aee1190a798bfa5be8bc16c563bd524",
                 "reference": "5579edf28aee1190a798bfa5be8bc16c563bd524",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -2954,7 +3071,11 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/Seldaek/monolog/tree/2.6.0"
+=======
                 "source": "https://github.com/Seldaek/monolog/tree/2.7.0"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
             },
             "funding": [
                 {
@@ -2966,7 +3087,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2022-05-10T09:36:00+00:00"
+=======
             "time": "2022-06-09T08:59:12+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "namshi/jose",
@@ -4530,6 +4655,8 @@
             "time": "2022-03-27T21:42:02+00:00"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "spatie/laravel-package-tools",
             "version": "1.12.0",
             "source": {
@@ -4589,28 +4716,28 @@
             "time": "2022-06-19T20:01:24+00:00"
         },
         {
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
             "name": "spatie/laravel-translatable",
-            "version": "5.2.0",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-translatable.git",
-                "reference": "4567de39c483f7e43dddab9b8cb657796b139fd2"
+                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/4567de39c483f7e43dddab9b8cb657796b139fd2",
-                "reference": "4567de39c483f7e43dddab9b8cb657796b139fd2",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/5900d6002a5795712058a04c7ca7c2c44b3e0850",
+                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^8.0|^9.0",
-                "illuminate/support": "^8.0|^9.0",
-                "php": "^8.0",
-                "spatie/laravel-package-tools": "^1.9"
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^6.23|^7.0"
+                "orchestra/testbench": "^4.0|^5.0|^6.0"
             },
             "type": "library",
             "extra": {
@@ -4661,7 +4788,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-translatable/issues",
-                "source": "https://github.com/spatie/laravel-translatable/tree/5.2.0"
+                "source": "https://github.com/spatie/laravel-translatable/tree/4.6.0"
             },
             "funding": [
                 {
@@ -4669,6 +4796,9 @@
                     "type": "custom"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2020-11-19T14:19:29+00:00"
+=======
             "time": "2022-01-13T11:15:07+00:00"
         },
         {
@@ -4717,6 +4847,7 @@
                 "source": "https://gitlab.com/stella-maris/clock/-/tree/0.1.4"
             },
             "time": "2022-04-17T14:12:26+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7203,37 +7334,35 @@
         },
         {
             "name": "tymon/jwt-auth",
-            "version": "dev-develop",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth.git",
-                "reference": "014be8d493d228d14bbc291b24e835d330c092a0"
+                "reference": "e588cb719539366c0e2f6017f975379cb73e9680"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/014be8d493d228d14bbc291b24e835d330c092a0",
-                "reference": "014be8d493d228d14bbc291b24e835d330c092a0",
+                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/e588cb719539366c0e2f6017f975379cb73e9680",
+                "reference": "e588cb719539366c0e2f6017f975379cb73e9680",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "^5.2|^6|^7|^8|^9",
-                "illuminate/contracts": "^5.2|^6|^7|^8|^9",
-                "illuminate/http": "^5.2|^6|^7|^8|^9",
-                "illuminate/support": "^5.2|^6|^7|^8|^9",
-                "lcobucci/jwt": "^3.4|^4.0",
+                "illuminate/auth": "^5.2|^6|^7|^8",
+                "illuminate/contracts": "^5.2|^6|^7|^8",
+                "illuminate/http": "^5.2|^6|^7|^8",
+                "illuminate/support": "^5.2|^6|^7|^8",
+                "lcobucci/jwt": "<3.4",
                 "namshi/jose": "^7.0",
                 "nesbot/carbon": "^1.0|^2.0",
-                "php": "^7.4|^8.0"
+                "php": "^5.5.9|^7.0"
             },
             "require-dev": {
-                "illuminate/console": "^5.2|^6|^7|^8|^9",
-                "illuminate/database": "^5.2|^6|^7|^8|^9",
-                "illuminate/routing": "^5.2|^6|^7|^8|^9",
+                "illuminate/console": "^5.2|^6|^7|^8",
+                "illuminate/database": "^5.2|^6|^7|^8",
+                "illuminate/routing": "^5.2|^6|^7|^8",
                 "mockery/mockery": ">=0.9.9",
-                "phpunit/phpunit": "^8.5|^9.4",
-                "yoast/phpunit-polyfills": "^0.2.0"
+                "phpunit/phpunit": "~4.8|~6.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -7285,7 +7414,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-04-27T08:53:50+00:00"
+            "time": "2020-11-27T12:32:42+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -8175,6 +8304,18 @@
         },
         {
             "name": "laravel/sail",
+<<<<<<< HEAD
+            "version": "v1.14.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sail.git",
+                "reference": "c049316f9bcb02598607307f18b514b66202b639"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/c049316f9bcb02598607307f18b514b66202b639",
+                "reference": "c049316f9bcb02598607307f18b514b66202b639",
+=======
             "version": "v1.14.11",
             "source": {
                 "type": "git",
@@ -8185,6 +8326,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sail/zipball/6edf45a247b3688e0d07e149570a62fd9bc11c73",
                 "reference": "6edf45a247b3688e0d07e149570a62fd9bc11c73",
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
                 "shasum": ""
             },
             "require": {
@@ -8231,7 +8373,11 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
+<<<<<<< HEAD
+            "time": "2022-05-21T17:14:14+00:00"
+=======
             "time": "2022-06-13T18:32:48+00:00"
+>>>>>>> d9130cb8c7b43708a9230e4233bf5b3dcd1e39f2
         },
         {
             "name": "mockery/mockery",
