@@ -70,6 +70,7 @@ class RegisterController extends Controller
         try {
             
             $userType = User::findOrFail($request->id);
+            
             if($userType->email_verified == 0 && $request->type == 255){
                 return $this->onError('This User is not verified yet');
             }
@@ -99,38 +100,39 @@ class RegisterController extends Controller
                     //     return $this->onError($validator->errors()->all());
                     // }
                     $academy->user_id = $userId;
-                    if (asset($request->name)) {
+                    if (isset($request->name)) {
                         $academy->name = $request->name;
                     }
-                    if (asset($request->contact_number)) {
+                    if (isset($request->contact_number)) {
                         $academy->contact_number = $request->contact_number;
                     }
-                    if (asset($request->bio)) {
+                    if (isset($request->bio)) {
                         $academy->bio = $request->bio;
                     }
                     if ($file = $request->avatar) {
                         $icon = $this->uploadFile($file, 'avatars');
                         $academy->avatar = $icon;
                     }
-                    if (asset($request->years_of_teaching)) {
+                    if (isset($request->years_of_teaching)) {
                         $academy->years_of_teaching = $request->years_of_teaching;
                     }
-                    if (asset($request->size)) {
+                    if (isset($request->size)) {
                         $academy->size = $request->years_of_teaching;
                     }
                     $academy->save();
                     $location = new Locations();
                     $academy->user_id = $userId;
 
-                    if (asset($request->city)) {
+                    if (isset($request->city)) {
                         $location->city = $request->city;
                     }
-                    if (asset($request->country)) {
+                    if (isset($request->country)) {
                         $location->country = $request->country;
                     }
-                    if (asset($request->street)) {
+                    if (isset($request->street)) {
                         $location->street = $request->street;
                     }
+                    $location->academy_id=$userId;
                     $location->save();
                     $academy_levels = [];
                     if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
@@ -192,30 +194,30 @@ class RegisterController extends Controller
                     // }
                     $teacher->user_id = $userId;
 
-                    if (asset($request->gender_id)) {
+                    if (isset($request->gender_id)) {
                         $teacher->gender_id = $request->gender_id;
                     }
 
-                    if (asset($request->contact_number)) {
+                    if (isset($request->contact_number)) {
                         $teacher->contact_number = $request->contact_number;
                     }
-                    if (asset($request->date_of_birth)) {
+                    if (isset($request->date_of_birth)) {
                         $teacher->date_of_birth = $request->date_of_birth;
                     }
-                    if (asset($request->first_ame)) {
+                    if (isset($request->first_ame)) {
                         $teacher->first_name = $request->first_name;
                     }
 
-                    if (asset($request->last_name)) {
+                    if (isset($request->last_name)) {
                         $teacher->last_name = $request->last_name;
                     }
-                    if (asset($request->bio)) {
+                    if (isset($request->bio)) {
                         $teacher->bio = $request->bio;
                     }
-                    if (asset($request->willing_to_travel)) {
+                    if (isset($request->willing_to_travel)) {
                         $teacher->willing_to_travel = $request->willing_to_travel;
                     }
-                    if (asset($request->availability_id)) {
+                    if (isset($request->availability_id)) {
                         $teacher->availability_id = $request->availability_id;
                     }
                     if ($file = $request->avatar) {
@@ -228,17 +230,17 @@ class RegisterController extends Controller
                 $location = new Locations();
                 $location->teacher_id = $userId;
 
-                if (asset($request->ar_city)) {
+                if (isset($request->ar_city)) {
                     $location->ar_city_name = $request->ar_city;
                 }
-                if (asset($request->city)) {
+                if (isset($request->city)) {
                     $location->city = $request->city;
                 }
-                if (asset($request->country)) {
+                if (isset($request->country)) {
                     $location->country = $request->country;
                 }
 
-                if (asset($request->street)) {
+                if (isset($request->street)) {
                     $location->street = $request->street;
                 } else {
 
@@ -327,7 +329,8 @@ class RegisterController extends Controller
                 }
            
                 $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->first();
-        
+                $userType->verify_email_token=NULL;
+                $userType->verify_email_token_created_at=NULL;
                 return response()->json([
                     'status' => true,
                     'data' => $teacherData,
