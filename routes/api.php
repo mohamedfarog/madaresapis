@@ -105,3 +105,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
       }
    }
 });
+Route::get('/updates', function () {
+   $output = shell_exec('cd ../ && git pull && php artisan migrate --force');
+   echo "<pre>$output</pre>";;
+});
