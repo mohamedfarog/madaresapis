@@ -319,8 +319,14 @@ class RegisterController extends Controller
                 }
            
                 $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->get();
-                return $this->onSuccess([$teacherData, 'Token' => $token]);
+                // return $this->onSuccess([$teacherData, 'Token' => $token]);
 
+                return response()->json([
+                    'status' => true,
+                    'data' => $$teacherData,
+                    'token'=> $token,
+                    'message' => 'Successfully Registered!'
+                ]);
             }
         } catch (ModelNotFoundException $e) {
             return $this->onError('User ID NOT FOUND');
