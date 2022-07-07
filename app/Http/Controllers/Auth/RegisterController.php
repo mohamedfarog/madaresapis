@@ -87,18 +87,18 @@ class RegisterController extends Controller
                 if ($userType->user_type  == '255') {
                     $userId = $request->id;
                     $academy = new Academy();
-                    $validator = Validator::make($request->all(), [
-                        'name' => 'required',
-                        'contact_number' => 'required',
-                        'bio' => 'required',
-                        'avatar' => 'required',
-                        'years_of_teaching' => 'required',
-                        'size' => 'required',
-                        'avatar' => 'required'
-                    ]);
-                    if ($validator->fails()) {
-                        return $this->onError($validator->errors()->all());
-                    }
+                    // $validator = Validator::make($request->all(), [
+                    //     'name' => 'required',
+                    //     'contact_number' => 'required',
+                    //     'bio' => 'required',
+                    //     'avatar' => 'required',
+                    //     'years_of_teaching' => 'required',
+                    //     'size' => 'required',
+                    //     'avatar' => 'required'
+                    // ]);
+                    // if ($validator->fails()) {
+                    //     return $this->onError($validator->errors()->all());
+                    // }
                     $academy->user_id = $userId;
                     if (asset($request->name)) {
                         $academy->name = $request->name;
@@ -169,22 +169,22 @@ class RegisterController extends Controller
                     $UVEmail->save();
                     $userId = $request->id;
                     $teacher = new Teacher();
-                    $validator = Validator::make($request->all(), [
-                        'gender_id' => 'sometimes|required',
-                        'contact_number' => 'required',
-                        'contact_number' => 'required',
-                        'date_of_birth' => 'required',
-                        'first_name' => 'required',
-                        'last_name' => 'required',
-                        'bio' => 'required',
-                        'willing_to_travel' => 'required',
-                        'availability_id' => 'required',
-                        'avatar' => 'required'
-                    ]);
+                    // $validator = Validator::make($request->all(), [
+                    //     'gender_id' => 'sometimes|required',
+                    //     'contact_number' => 'required',
+                    //     'contact_number' => 'required',
+                    //     'date_of_birth' => 'required',
+                    //     'first_name' => 'required',
+                    //     'last_name' => 'required',
+                    //     'bio' => 'required',
+                    //     'willing_to_travel' => 'required',
+                    //     'availability_id' => 'required',
+                    //     'avatar' => 'required'
+                    // ]);
 
-                    if ($validator->fails()) {
-                        return $this->onError($validator->errors()->all());
-                    }
+                    // if ($validator->fails()) {
+                    //     return $this->onError($validator->errors()->all());
+                    // }
                     $teacher->user_id = $userId;
 
                     if (asset($request->gender_id)) {
