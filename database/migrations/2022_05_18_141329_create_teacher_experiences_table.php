@@ -13,11 +13,13 @@ class CreateTeacherExperiencesTable extends Migration
      */
     public function up()
     {
+        
+        Schema::dropIfExists('teacher_experiences');
         Schema::create('teacher_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('teacher_id');
             $table->string('titel', 50);
-            $table->tinyText('academy_name');
+            $table->tinyText('place_of_assuarance');
             $table->boolean('current_work')->nullable();
             $table->date('start_day');
             $table->date('end_day');

@@ -1,51 +1,88 @@
 <?php
 
 namespace App\Models\Teachers;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Teachers\TeacherResume;
-use App\Models\Teachers\TeacherExperience;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
+use App\Models\Locations;
+use App\Models\Skills;
+use App\Models\Availability;
+use App\Models\Teachers\TeacherResume;
+use App\Models\Teachers\TeacherExperience;
+use App\Models\Teachers\TeacherEducation;
+use App\Models\Teachers\TeacherFiles;
 use App\Models\Job\JobLevel;
+
 
 class Teacher extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['user_id', 'first_name' , 'last_name','mobile' , 'date_of_birth' , 'avatar' , 'academic_major' , 'bio' , 'gender'  ];
+     protected $fillable = ['user_id', 'first_name' , 'last_name', 'willing_to_travel',
+     'date_of_birth' , 'avatar' , 'academic_major' , 'bio', 'gender_id', 'job_level_id', 'availability_id', 'contact_number'];
     protected $guarded = ['id'];
 
-    protected $hidden = ['updated_at'];
+    protected $hidden = ['created_id', 'updated_at'];
 
-
+    public function getAvatarAttribute($value){
+        return "http://api.madaresweb.mvp-apps.ae".$value;
+    }   
+    public function teacherLocations(): HasOne
+    {
+        return $this->HasOne(Locations::class, 'teacher_id', 'user_id');
+    }
+    public function resumes(): HasOne
+    {
+        return $this->hasOne(TeacherResume::class,'teacher_id', 'user_id');
+    }
+    
+    public function teacherSkills(): HasMany
+    {
+        return $this->HasMany(Skills::class,'teacher_id', 'user_id');
+    }
+    public function teacherAvailabity(): HasOne
+    {
+        return $this->HasOne(Availability::class, 'teacher_id', 'user_id');
+    }
+    public function experiences(): HasMany
+    {
+   
+        return $this->hasMany(TeacherExperience::class,'teacher_id', 'user_id');
+    }
+    public function education(): HasMany
+    {
+   
+        return $this->hasMany(TeacherEducation::class,'teacher_id', 'user_id');
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    
-
-    public function resume(): HasOne
+    public function teacherFiles(): HasMany
     {
-        return $this->hasOne(TeacherResume::class);
+        return $this->hasMany(TeacherFiles::class, 'teacher_id', 'user_id');
     }
+    
 
     public function gender(): HasOne
     {
         return $this->hasOne(Gender::class);
     }
-
-
-    public function experiences(): HasMany
-    {
-        return $this->hasMany(TeacherExperience::class);
-    }
-
+  
     public function level(): HasOne
     {
         return $this->hasOne(JobLevel::class);
+    }
+    
+    public function getExperienceAttribute(){
+
+        $start_day = TeacherExperience::where('teacher_id',$this->id)->first()->start_day;
+        $end_day = TeacherExperience::where('teacher_id',$this->id)->first()->end_day;
+        $exp = TeacherExperience::whereBetween('end_day', [$start_day, $end_day])->count();
+        return $exp;
     }
 }

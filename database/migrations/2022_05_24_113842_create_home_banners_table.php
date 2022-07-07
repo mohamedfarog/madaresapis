@@ -17,8 +17,7 @@ class CreateHomeBannersTable extends Migration
         Schema::create('home_banners', function (Blueprint $table) {
             $table->id();
             $table->string('avatar');
-            $table->text('en_text');
-            $table->text('ar_text');
+            $table->text('text');
             $table->timestamps();
         });
     }

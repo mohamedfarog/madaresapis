@@ -29,7 +29,6 @@ return [
     | your application ready for upcoming major versions of dependencies.
     |
     */
-
     'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
 
     /*

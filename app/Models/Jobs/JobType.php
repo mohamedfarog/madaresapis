@@ -13,7 +13,7 @@ class JobType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ar_title', 'en_title'] ;
+    protected $fillable = ['title'] ;
     protected $hidden = ['created_at' , 'updated_at'];
 
     public function jobs(): BelongsToMany

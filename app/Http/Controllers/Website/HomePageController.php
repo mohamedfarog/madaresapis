@@ -1,20 +1,33 @@
 <?php
+
 namespace App\Http\Controllers\Website;
+
 use App\Http\Controllers\Controller;
+use App\Models\Academies\Academy;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
+use App\Models\Skills;
+use App\Models\Skill;
+use App\Models\Available;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
 use Illuminate\Http\Request;
 use App\Models\Website\Articles;
+use App\Models\Website\QuestionedAnswers;
 use App\Models\Website\subjects;
 use Illuminate\Support\Js;
+use JWTAuth;
 
 class HomePageController extends Controller
 {
-    /**
-     * Handle the incoming request.
+        //protected $user;
+        //public function __construct()
+        // {
+                //     $this->user = JWTAuth::parseToken()->authenticate();
+                // }
+                /**
+                 * * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -23,64 +36,129 @@ class HomePageController extends Controller
     {
         //
     }
-    public function getHomeBanner(Request $request): JsonResponse {
-        if($request->lang === '1'){
-            $banner = HomeBanner::all('id','avatar', 'en_text');
-            return $this->onSuccess($banner);
-        }
-        if($request->lang === '2'){
-            $banner = HomeBanner::all('id','avatar', 'ar_text');
-            return $this->onSuccess($banner);
-        }
+    public function getHomeBanner(): JsonResponse
+    {
+        $banner = HomeBanner::all();return $this->onSuccess($banner);
+   
     }
-    public function getArticaleInfo(Request $request) : JsonResponse {
-        if($request->lang === '1'){
-            $articleInfo = Articles::all('id', 'en_title', 'en_owner_name', 'published_date', 'en_body');
-            return $this->onSuccess($articleInfo);
+  
+
+    public function getArticaleInfo(Request $request): JsonResponse
+    {
+        if($request->lang == 1){
+                $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
+                return $this->onSuccess($articleInfo);
+        
         }
-        if($request->lang === '2'
-        ){
-            $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
-            return $this->onSuccess($articleInfo);
-        }else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
+        elseif($request->lang == 2){
+                $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
+                return $this->onSuccess($articleInfo);
         }
+        else{
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
+        }
+
+          
+    
+    }
+    
+    public function getSubjectsTitle(): JsonResponse
+    {
+        $title = subjects::all('id', 'title', 'icon')->append('count')->toArray();
+        return $this->onSuccess($title);
+      
     }
 
-    public function getSubjectsTitle(Request $request): JsonResponse{
-        if ($request->lang === '1'){
-            $title = Subjects::all('id','en_title', 'icon')->append('count')->toArray();
-            return $this->onSuccess($title);
+    public function returnJobLevel(Request $request): JsonResponse
+    {
+
+        if($request->lang == '1'){
+                $jobLevel = JobLevel::all('id', 'title', 'avater');
+                return $this->onSuccess($jobLevel);
         }
-        if($request->lang === '2'){
-            $title = subjects::all('id', 'ar_title', 'icon')->append('count')->toArray();
-            return $this->onSuccess($title);
+        if($request->lang == '2'){
+                $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
+                return $this->onSuccess($jobLevel);
         }
-        else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
-        }
-    }
-    public function returnJobLevel(Request $request): JsonResponse{
-        if ($request->lang === '1'){
-            $jobLevel = JobLevel::all('id','en_title', 'avater');
-            return $this->onSuccess($jobLevel);
-        }
-        if($request->lang === '2'){
-            $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
-            return $this->onSuccess($jobLevel);
-        }
-        else{
-            return $this->onSuccess("Invilid, Please send 1 for English or 2 for Arabic titles");
-        }
-    }
-//     public function AvailableJobs(Request $request): JsonResponse
-//     {
-        
+        return response()->json([
+                'massage' => 'please select languge',
+                'status' => false
+        ]);
       
-//         $data['count']= Job::count();
-//         $data['job_vacancy']= Job::all('job_vacancy');
-//         $data['academy_name'] = Job::with('academy')->where('id', 'academy_id')->first()
-//         return $this->onSuccess($data);
-//     }
-// }
+     
+    }
+    public function getFaqInfo()
+    {
+        $faq = QuestionedAnswers::all('id', 'title', 'body');
+        return $this->onSuccess($faq);
 }
+public function AvailableJobs()
+{
+        $jobs = Academy::get(['id', 'name', 'avatar', 'banner', 'bio'])
+        ->append(['totaljobs', 'vacancies'])->toArray();
+        return $this->onSuccess($jobs);
+}
+public function homePageBanner(Request $request)
+{
+        if($request->lang == 1){
+                $banner = HomeBanner::all('id', 'avatar', 'text');
+                return $this->onSuccess($banner);
+
+        }
+        elseif($request->lang == 2){
+                $banner = HomeBanner::all('id', 'avatar', 'ar_text');
+                return $this->onSuccess($banner);
+        }
+}
+public function userSkills(Request $request)
+{
+        if($request->lang == 1){
+                $skill = Skill::all('id', 'en_skill_name');
+                return $this->onSuccess($skill);
+
+        }
+        elseif($request->lang == 2){
+                $skill = Skill::all('id', 'ar_skill_name');
+                return $this->onSuccess($skill);
+
+
+        }
+        else{
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
+        }
+     
+    }
+    public function AvailableApplicant(Request $request)
+    {
+        if($request->lang == 1){
+                $availabe = Available::all('id', 'en_text');
+                return $this->onSuccess($availabe);
+
+        }
+        elseif($request->lang == 2){
+                $availabe = Available::all('id', 'ar_text');
+                return $this->onSuccess($availabe);
+        }
+        else{
+                return response()->json([
+                        'massage' => 'please select languge',
+                        'status' => false
+                ]);
+        }
+     
+    }
+    public function testJwt()
+    {
+        return $this->user;
+    }
+}
+
+
+
+

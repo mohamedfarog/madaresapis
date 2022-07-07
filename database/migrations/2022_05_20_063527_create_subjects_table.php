@@ -13,12 +13,13 @@ class CreateSubjectsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('subjects');
+
 
         Schema::create('subjects', function (Blueprint $table) {        
             $table->id();
-            $table->string('en_title');
-            $table->string('ar_title');
-            $table->string('job_type');
+            $table->string('title');
+            $table->string('type');
             $table->string('icon');
             $table->timestamps();
         });

@@ -11,14 +11,14 @@ use App\Models\Jobs\Job;
 class JobLevel extends Model
 {
     use HasFactory;
-    protected $fillable = ['en_title', 'ar_title'] ;
+    protected $fillable = ['id','title', 'avater', 'ar_title'];
+    protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
 
     public function jobs(): BelongsToMany
     {
         return $this->belongsToMany(Job::class);
     }
-
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(Teacher::class);

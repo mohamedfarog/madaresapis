@@ -16,6 +16,7 @@ class CreateJobTypesTable extends Migration
         Schema::dropIfExists('job_types');
         Schema::create('job_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('academy_id');
             $table->text('title' , 80);
             $table->timestamps();
         });

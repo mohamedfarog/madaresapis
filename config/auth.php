@@ -17,8 +17,6 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-
-    
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -35,19 +33,17 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' =>false,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -113,5 +109,6 @@ return [
     */
 
     'password_timeout' => 10800,
+    //'password_timeout' => 100,
 
 ];
