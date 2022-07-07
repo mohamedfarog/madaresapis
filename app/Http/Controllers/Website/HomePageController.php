@@ -74,11 +74,12 @@ class HomePageController extends Controller
 
     public function returnJobLevel(Request $request): JsonResponse
     {
-        if($request->lang == 1){
+
+        if($request->lang == '1'){
                 $jobLevel = JobLevel::all('id', 'title', 'avater');
                 return $this->onSuccess($jobLevel);
         }
-        if($request->lang == 2){
+        if($request->lang == '2'){
                 $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
                 return $this->onSuccess($jobLevel);
         }

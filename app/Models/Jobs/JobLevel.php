@@ -11,7 +11,7 @@ use App\Models\Jobs\Job;
 class JobLevel extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','title', 'avater'];
+    protected $fillable = ['id','title', 'avater', 'ar_title'];
     protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
 
