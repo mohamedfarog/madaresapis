@@ -27,4 +27,27 @@ class AcademyController extends Controller
         $data['applicants_hired'] = $academy->HiredApplicants(); 
         return $this->onSuccess($data);
 }
+public function AllRecivedApplications(){
+        $academy = new Academy();
+        $data['last_eight_months'] = $academy->receivedApplicationsForLast8Month();
+        $data['last_month'] = $academy->receivedApplicationsForLastMonth();
+        $data['last_week'] = $academy->receivedApplicationsForLastWeek(); 
+        return $this->onSuccess($data);
+}
+public function AllRejectedApplications(){
+        $academy = new Academy();
+        $data['last_eight_months'] = $academy->rejectedApplicationsForLast8Month();
+        $data['last_month'] = $academy->rejectedApplicationsForLastMonth();
+        $data['last_week'] = $academy->rejectedApplicationsForLastWeek(); 
+        return $this->onSuccess($data);
+}
+
+public function AllInterviwedApplications()
+{
+        $academy = new Academy();
+        $data['last_eight_months'] = $academy->interviwedApplicationsForLast8Month();
+        $data['last_month'] = $academy->interviwedApplicationsForLastMonth();
+        $data['last_week'] = $academy->interviwedApplicationsForLastWeek(); 
+        return $this->onSuccess($data);
+}
 }

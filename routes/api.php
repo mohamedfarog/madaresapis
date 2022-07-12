@@ -75,6 +75,10 @@ Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
 Route::get('dash_header_count', [AcademyController::class, 'getAcademyHeadercount']);
+Route::get('received_applications', [AcademyController::class, 'AllRecivedApplications']);
+Route::get('rejected_applications', [AcademyController::class, 'AllRejectedApplications']);
+Route::get('interviwed_applications', [AcademyController::class, 'AllInterviwedApplications']);
+
 Route::group(['prefix' => 'website'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
 //Route::post('/login', [AuthController::class, 'login']);

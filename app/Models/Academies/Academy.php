@@ -75,11 +75,45 @@ class Academy extends Model
     public function interviewedApplicants(){
         return 0;
     }
-    public function HiredApplicants(){
+    public function HiredApplicants()
+    {
         return 0;
     }
+    public function receivedApplicationsForLast8Month()
+    {
+        return 8;
+    }
+    public function receivedApplicationsForLastMonth()
+    {
+        return 1;
+    }
+    public function receivedApplicationsForLastWeek()
+    {
+        return 7;
+    }
 
-    public function receivedApplicationsForLast8Month(){
-        
+    public function rejectedApplicationsForLast8Month()
+    {
+        return 0;
+    }
+    public function rejectedApplicationsForLastMonth()
+    {
+        return 0;
+    }
+    public function rejectedApplicationsForLastWeek()
+    {
+        return 0;
+    }
+    public function interviwedApplicationsForLast8Month()
+    {
+        return 0;
+    }
+    public function interviwedApplicationsForLastMonth()
+    {
+        return 3;
+    }
+    public function interviwedApplicationsForLastWeek()
+    {
+        return 0;
     }
 }
