@@ -112,3 +112,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('getMyInfo', [AuthController::class, 'updateMyInfo']);
    
 });
+Route::get('/updates', function () {
+   $output = shell_exec('cd ../ && git pull && php artisan migrate --force');
+   echo "<pre>$output</pre>";;
+});
