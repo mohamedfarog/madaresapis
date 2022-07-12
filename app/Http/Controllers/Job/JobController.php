@@ -34,6 +34,8 @@ class JobController extends Controller
          'job_level_id' => 'required',
          'title' => 'required',
          'advertise_area' => 'required',
+         'job_description' => 'required',
+         'job_vacancy' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -50,6 +52,7 @@ class JobController extends Controller
       $job->job_type_id = $request->job_type_id;
       $job->job_level_id = $request->job_level_id;
       $job->title = $request->title;
+      $job->job_description = $request->job_description;
       $job->advertise_area = $request->advertise_area;
       $job->job_vacancy = $request->job_vacancy;
       $job->save();
