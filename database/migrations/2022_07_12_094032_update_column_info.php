@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,8 @@ class UpdateColumnInfo extends Migration
             $table->text('job_benefits')->nullable()->change();
             $table->text('job_experience')->nullable()->change();
             $table->boolean('status')->default(true)->change();
+            $table->date('expected_start_date')->default(Carbon::now())->change();
+            $table->date('job_deadline')->default(Carbon::now())->change();
         });
     }
 

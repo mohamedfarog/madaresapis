@@ -58,15 +58,11 @@ class JobController extends Controller
       if (isset($request->expected_start_date)) {
 
          $job->expected_start_date = $request->expected_start_date;
-      } else {
-         $job->expected_start_date = Carbon::now();
-      }
+      } 
       if (isset($request->job_deadline)) {
 
          $job->job_deadline = $request->job_deadline;
-      } else {
-         $job->job_deadline = Carbon::now();
-      }
+      }  
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
