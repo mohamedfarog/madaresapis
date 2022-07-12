@@ -17,7 +17,7 @@ class UpdateColumnInfo extends Migration
             $table->text('job_responsibilities')->nullable()->change();
             $table->text('job_benefits')->nullable()->change();
             $table->text('job_experience')->nullable()->change();
-            $table->tinyInteger('status')->default(1)->change();
+            $table->boolean('status')->default(true)->change();
         });
     }
 
