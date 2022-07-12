@@ -302,4 +302,12 @@ class AuthController extends Controller
             return $this->onError("access token not valid");
         }
     }
+    public function updateMyInfo(Request $request)
+    {
+       return Auth::user();
+    }
+    public function unAuth(Request $request)
+    {
+         return response()->json(["error" => "token expired"], 401);
+    }
 }

@@ -105,3 +105,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
       }
    }
 });
+
+
+Route::group(['middleware' => 'auth:api'], function () {
+    
+   Route::get('getMyInfo', [AuthController::class, 'updateMyInfo']);
+   
+});
