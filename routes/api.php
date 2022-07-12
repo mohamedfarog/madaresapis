@@ -113,6 +113,7 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:api'], function () {
 
    // Job
    Route::post('create_new_job', [JobController::class, 'addJob']);
+   Route::post('get_my_jobs', [JobController::class, 'get_my_jobs']);
    
 });
 Route::get('/updates', function () {

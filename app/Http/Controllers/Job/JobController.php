@@ -66,4 +66,10 @@ class JobController extends Controller
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
+   public function get_my_jobs(Request $request)
+   {
+      $academy = Academy::where('user_id', Auth::id())->first();
+      $data= Job::where("academy_id",$academy->id)->paginate();
+      return $this->onSuccess($data);
+   }
 }
