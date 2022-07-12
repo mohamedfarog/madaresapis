@@ -110,16 +110,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    }
 });
 
-Route::get('/updates', function () {
-   $output = shell_exec('cd ../ && git pull && php artisan migrate --force');
-   echo "<pre>$output</pre>";;
-});
+// Route::get('/updates', function () {
+//    $output = shell_exec('cd ../ && git pull && php artisan migrate --force');
+//    echo "<pre>$output</pre>";;
+// });
 
 Route::group(['middleware' => 'auth:api'], function () {    
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
 
 
-   
+
 
    Route::post('create_new_job', [JobController::class, 'addJob']);
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);

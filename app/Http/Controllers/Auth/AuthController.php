@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
+use Carbon\Carbon;
 use Exception;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -103,7 +104,7 @@ class AuthController extends Controller
         //Request is validated
         //Creat token
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials,['exp' => Carbon::now()->addDays(7)->timestamp])) {
                 return $this->onError(
                     'Login credentials are invalid.',
                 );
@@ -146,7 +147,7 @@ class AuthController extends Controller
                     $gUser->google_id = $user->id;
                     $gUser->email_verified = 1;
                     $gUser->save();
-                    $token = JWTAuth::fromUser($gUser);
+                    $token = JWTAuth::fromUser($gUser,);
                     return [
 
                         'status' => true,
