@@ -309,13 +309,11 @@ class AuthController extends Controller
             return $this->onError("access token not valid");
         }
     }
-
     public function updateMyInfo(Request $request)
     {
 
         $user = User::find(Auth::id());
-        //    $user = User::find(auth->id);
-
+        //$user = User::find(auth->id);
         //Check password and current password
         if (isset($request->password)) {
             $validator = Validator::make($request->all(), [
@@ -365,7 +363,6 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
-      
             $academy  = Academy::where('user_id', $userId)->first();
             if(!$academy)
             {
