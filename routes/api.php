@@ -107,9 +107,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'v1','middleware' => 'auth:api'], function () {
     
    Route::get('update_my_info', [AuthController::class, 'updateMyInfo']);
+
+   // Job
+   Route::get('create_new_job', [JobController::class, 'addJob']);
    
 });
 Route::get('/updates', function () {

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Job;
 
 use App\Http\Controllers\Controller;
+use App\Models\Academies\Academy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Jobs\Job;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
@@ -27,7 +30,6 @@ class JobController extends Controller
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'academy_id' => 'required',
          'job_type_id' => 'required',
          'job_level_id' => 'required',
          'title' => 'required',
@@ -38,8 +40,14 @@ class JobController extends Controller
       if ($validator->fails()) {
          return response()->json(['error' => $validator->messages()], 400);
       }
+      $user=User::find(Auth::id());
+      $academy = Academy::where('user_id',Auth::id())->first();
+      if(!$academy)
+      {
+         return $this->onError("No Academy Info Found",400);
+      }
       $job = new Job();
-      $job->academy_id = $request->academy_id;
+      $job->academy_id =$academy->id;
       $job->job_type_id = $request->job_type_id;
       $job->job_level_id = $request->job_level_id;
       $job->title = $request->title;
