@@ -17,4 +17,4 @@ use Carbon\Carbon;
 Route::get('/', function () {
     return 'web';
 });
-Route::get('un_auth', [AuthController::class, 'updateMyInfo'])->name('login');
+Route::get('un_auth', [AuthController::class, 'unAuth'])->name('login');
