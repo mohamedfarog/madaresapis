@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\Teachers\Teacher;
+use App\Models\Academies\Academy;
+
 class AuthController extends Controller
 {
     public function test()
@@ -96,8 +100,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
         }
-         //Request is validated
-         //Creat token
+        //Request is validated
+        //Creat token
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->onError(
@@ -144,7 +148,7 @@ class AuthController extends Controller
                     $gUser->save();
                     $token = JWTAuth::fromUser($gUser);
                     return [
-                        
+
                         'status' => true,
                         'token' => $token,
                         'user' => $gUser,
@@ -305,68 +309,71 @@ class AuthController extends Controller
         }
     }
 
-    public function updateMyInfo(Request $request) 
+    public function updateMyInfo(Request $request)
     {
-       
-    //   $user = User::find(Auth::user());
-       $user = User::find($request->id);
 
-       //Check password and current password
+        $user = User::find(Auth::id());
+        //    $user = User::find(auth->id);
 
-       $validator = Validator::make($request->all(), [
-        'password' => 'required',
-        'current_password' => 'required',
-    ]);
-    if ($validator->fails()) {
-        return $this->onError($validator->errors()->all());
-        
-    }
+        //Check password and current password
+        if (isset($request->password)) {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required',
+                'current_password' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
 
+            if (!Hash::check($request->current_password, $user->password)) {
+                return $this->onError(
+                    'invalid currrent password',
+                );
+            }
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
+        $userId = Auth::id();
+
+        if ($user->user_type == 256) {
   
-if (Hash::check($request->password, $user->password)) { 
-    $user->fill([
-     'password' => Hash::make($request->new_password)
-     ])->save();
- 
-
-
-    // return $this->onSuccess('success', 'Password changed');
-
-} else {
-    return $this->onError('error', 'Password does not match');
-
-}
-
-
-       if($user->user_type==256)
-       {
-        //Teacher
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
-        }
-        return $this->onSuccess('teacher');
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+            ]);
         
-       
-    
-        
-
-       }
-       if($user->user_type==255)
-       {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
+          
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
+            $teacher = Teacher::where('user_id', $userId)->first();
+            if(!$teacher)
+            {
+                return $this->onError("No teacher found",400);
+            }
+            $teacher->first_name = $request->first_name;
+            $teacher->last_name =   $request->last_name;
+            $teacher->save();
+            return $this->onSuccess($teacher);
         }
-          return $this->onSuccess('teacher');
-
-       }
-
+        if ($user->user_type == 255) {
+            
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
+      
+            $academy  = Academy::where('user_id', $userId)->first();
+            if(!$academy)
+            {
+                return $this->onError("No academy found",400);
+            }
+            $academy->name = $request->name;
+            $academy->save();
+            return $this->onSuccess($academy);
+        }
     }
     public function unAuth(Request $request)
     {

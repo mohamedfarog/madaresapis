@@ -413,8 +413,6 @@ class RegisterController extends Controller
         $setType->user_type = null;
         $setType->save();
     }
-
-    
 }
 
 
