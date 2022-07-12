@@ -14,7 +14,7 @@ class UpdateColumn extends Migration
     public function up()
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->unsignedBigInteger('gender')->nullable();
+            $table->unsignedBigInteger('gender')->nullable()->change();
         });
     }
 
