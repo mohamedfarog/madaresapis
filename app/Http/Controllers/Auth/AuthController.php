@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
+use Carbon\Carbon;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -140,7 +141,7 @@ class AuthController extends Controller
                     $gUser->google_id = $user->id;
                     $gUser->email_verified = 1;
                     $gUser->save();
-                    $token = JWTAuth::fromUser($gUser);
+                    $token = JWTAuth::fromUser($gUser,['exp' => Carbon::now()->addDays(7)->timestamp]);
                     return [
                         
                         'status' => true,
