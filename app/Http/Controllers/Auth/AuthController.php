@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use Exception;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Laravel\Socialite\Facades\Socialite;
@@ -301,5 +303,73 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return $this->onError("access token not valid");
         }
+    }
+
+    public function updateMyInfo(Request $request) 
+    {
+       
+    //   $user = User::find(Auth::user());
+       $user = User::find($request->id);
+
+       //Check password and current password
+
+       $validator = Validator::make($request->all(), [
+        'password' => 'required',
+        'current_password' => 'required',
+    ]);
+    if ($validator->fails()) {
+        return $this->onError($validator->errors()->all());
+        
+    }
+
+  
+if (Hash::check($request->password, $user->password)) { 
+    $user->fill([
+     'password' => Hash::make($request->new_password)
+     ])->save();
+ 
+
+
+    // return $this->onSuccess('success', 'Password changed');
+
+} else {
+    return $this->onError('error', 'Password does not match');
+
+}
+
+
+       if($user->user_type==256)
+       {
+        //Teacher
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+        return $this->onSuccess('teacher');
+        
+       
+    
+        
+
+       }
+       if($user->user_type==255)
+       {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+          return $this->onSuccess('teacher');
+
+       }
+
+    }
+    public function unAuth(Request $request)
+    {
+        return response()->json(["error" => "token expired"], 401);
     }
 }

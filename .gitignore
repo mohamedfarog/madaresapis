@@ -13,4 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+.DS_Store
+database/.DS_Store
 composer.lock

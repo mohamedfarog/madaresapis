@@ -65,6 +65,8 @@ Route::group(
 );
 Route::get('testEmailTemplate', [RegisterController::class, 'testEmail']);
 Route::post('register',  [RegisterController::class, 'register']);
+   Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
+
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('type_to_null', [RegisterController::class, 'setTypeToNull']);
@@ -109,6 +111,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
       }
    }
 });
+
+
+// Route::group(['middleware' => 'auth:api'], function () {
+//    Route::get('update_my_info', [AuthController::class, 'updateMyInfo']);
+   
+// });
 Route::get('/updates', function () {
    $output = shell_exec('cd ../ && git pull && php artisan migrate --force');
    echo "<pre>$output</pre>";;

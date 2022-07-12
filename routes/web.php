@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 /*
@@ -16,3 +17,4 @@ use Carbon\Carbon;
 Route::get('/', function () {
     return 'web';
 });
+Route::get('un_auth', [AuthController::class, 'unAuth'])->name('login');
