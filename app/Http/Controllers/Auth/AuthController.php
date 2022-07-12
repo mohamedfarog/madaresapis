@@ -304,7 +304,28 @@ class AuthController extends Controller
     }
     public function updateMyInfo(Request $request)
     {
-       return Auth::user();
+       $user = User::find(Auth::id());
+       // Check password and current password
+
+
+       
+       if($user->user_type==256)
+       {
+        //Teacher
+
+
+
+        // Validate First Name & Last Name
+        
+        
+
+       }
+       if($user->user_type==255)
+       {
+        //Academy 
+
+       }
+
     }
     public function unAuth(Request $request)
     {

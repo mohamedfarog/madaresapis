@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
     
-   Route::get('getMyInfo', [AuthController::class, 'updateMyInfo']);
+   Route::get('update_my_info', [AuthController::class, 'updateMyInfo']);
    
 });
 Route::get('/updates', function () {
