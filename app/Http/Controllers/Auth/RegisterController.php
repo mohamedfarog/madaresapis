@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -74,18 +76,18 @@ class RegisterController extends Controller
 
         $userId = Auth::id();
         $userType = User::findOrFail($userId);
-        
+
         if ($userType->user_type == '255' || $userType->user_type == '256') {
             return $this->onError("Sorry This User already has a type");
         }
         if ($userType->email_verified == 0) {
             return $this->onError('This User is not verified yet');
         }
-        
+
         $userType->user_type = $request->type;
         $userType->save();
         $token = JWTAuth::fromUser($userType);
-        
+
         if ($userType->user_type  == '255') {
             $academy = new Academy();
             $validator = Validator::make($request->all(), [
@@ -125,7 +127,7 @@ class RegisterController extends Controller
             ]);
 
             if ($validator->fails()) {
-                    return $this->onError($validator->errors()->all());
+                return $this->onError($validator->errors()->all());
             }
 
             if (isset($request->city)) {
@@ -140,25 +142,27 @@ class RegisterController extends Controller
 
             $location->academy_id = $userId;
             $location->save();
-            $academy_levels = [];
+
             if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
+                $academy_levels = [];
                 foreach ($request->academy_levels as $level) {
 
                     array_push($academy_levels, [
                         "academy_id" => $userId,
                         "level_id" => $level
                     ]);
-                    AcademyLevels::insert($academy_levels);
                 }
+                AcademyLevels::insert($academy_levels);
             }
-            $AcademyFiles = [];
+           
+            $validator = Validator::make($request->all(), [
+                'academy_files' => 'required|array'
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
             if (is_array($request->academy_files) || is_object($request->academy_files)) {
-                $validator = Validator::make($request->all(), [
-                    'AcademyFiles' => 'required|array'
-                ]);
-                if ($validator->fails()) {
-                    return $this->onError($validator->errors()->all());
-                }
+                 $AcademyFiles = [];
                 foreach ($request->academy_files as $image) {
                     $academyImages = $this->uploadFile($image, 'academyFiles');
                     array_push($AcademyFiles, [
@@ -180,22 +184,22 @@ class RegisterController extends Controller
             ]);
         }
         if ($request->type == '256') {
-           
-             $validator = Validator::make($request->all(), [
+
+            $validator = Validator::make($request->all(), [
                 //     'gender_id' => 'sometimes|required',
                 //     'contact_number' => 'required',
                 //     'contact_number' => 'required',
                 //     'date_of_birth' => 'required',
                 //     'first_name' => 'required',
                 //     'last_name' => 'required',
-                        'bio' => 'required',
+                'bio' => 'required',
                 //     'willing_to_travel' => 'required',
                 //     'availability_id' => 'required',
                 //     'avatar' => 'required'
-                ]);
-                if ($validator->fails()) {
-                        return $this->onError($validator->errors()->all());
-                }
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
 
@@ -234,14 +238,14 @@ class RegisterController extends Controller
         $location->teacher_id = $userId;
 
         $validator = Validator::make($request->all(), [
-                'country' => 'required',
-                'city' => 'required',
-                'street' => 'required',
-            ]);
-            
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
-            }
+            'country' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
         if (isset($request->city)) {
             $location->city = $request->city;
         }
@@ -251,7 +255,7 @@ class RegisterController extends Controller
 
         if (isset($request->street)) {
             $location->street = $request->street;
-        }  
+        }
         $location->save();
 
         $skills = [];
@@ -265,15 +269,15 @@ class RegisterController extends Controller
             }
             Skills::insert($skills);
         }
-        
+
         $teachDoc =  new TeacherResume();
         $teachDoc->teacher_id = $userId;
         $validator = Validator::make($request->all(), [
-                'curriculum_vitae' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
-            }
+            'curriculum_vitae' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
 
         if (isset($request->curriculum_vitae)) {
             $fileNmae = time() . '_' . $request->curriculum_vitae->getClientOriginalName();
@@ -286,9 +290,9 @@ class RegisterController extends Controller
         $teachDoc->save();
 
         if (is_array($request->experience) || is_object($request->experience)) {
-            
+
             foreach ($request->experience as $texp) {
-                $exp = new TeacherExperience();      
+                $exp = new TeacherExperience();
                 $exp->teacher_id = $userId;
                 $exp->title = $texp['exp_title'];
                 $exp->start_day = $texp['start_day'];
@@ -303,7 +307,7 @@ class RegisterController extends Controller
             foreach ($request->education as $tedu) {
                 $edu = new TeacherEducation();
                 $validator = Validator::make($request->all(), [
-                    'education' => 'required|array',
+                    'education' => 'required|',
                 ]);
                 if ($validator->fails()) {
                     return $this->onError($validator->errors()->all());
@@ -321,8 +325,14 @@ class RegisterController extends Controller
         $available->save();
 
         $TeacherFiles = [];
-        if (is_array($request->TeacherFiles) || is_object($request->TeacherFiles)) {
-            foreach ($request->TeacherFiles as $tFile) {
+        $validator = Validator::make($request->all(), [
+            'teacher_files' => 'required|array'
+        ]);
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+        if (is_array($request->teacher_files) || is_object($request->TeacherFiles)) {
+            foreach ($request->teacher_files as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
                 array_push($TeacherFiles, [
                     "file_url" =>  $teacherfiles,
@@ -363,7 +373,7 @@ class RegisterController extends Controller
         return response()->json([
             'status' => true,
             'user' => $user,
-            'token'=> JWTAuth::fromUser($user),
+            'token' => JWTAuth::fromUser($user),
             'message' => 'Successfully Registered!'
         ]);
     }
