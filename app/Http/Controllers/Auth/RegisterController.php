@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use File;
+use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Storage;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -336,10 +337,11 @@ class RegisterController extends Controller
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
         $this->sendVerificationEmail($request->email, $user->id);
-        $user1 =  User::where('email', $request->email)->get(['id', 'email', 'is_active', 'email_verified'])->first();
+        $user =  User::where('email', $request->email)->get(['id', 'email', 'is_active', 'email_verified'])->first();
         return response()->json([
             'status' => true,
-            'user' => $user1,
+            'user' => $user,
+            'token'=> JWTAuth::fromUser($user),
             'message' => 'Successfully Registered!'
         ]);
     }
