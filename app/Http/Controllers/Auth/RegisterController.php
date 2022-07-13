@@ -152,15 +152,14 @@ class RegisterController extends Controller
                 }
             }
             $AcademyFiles = [];
-            if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)) {
-                foreach ($request->AcademyFiles as $image) {
-                    $validator = Validator::make($request->all(), [
-                        'AcademyFiles' => 'required'
-                    ]);
-        
-                    if ($validator->fails()) {
-                        return $this->onError($validator->errors()->all());
-                    }
+            if (is_array($request->academy_files) || is_object($request->academy_files)) {
+                $validator = Validator::make($request->all(), [
+                    'AcademyFiles' => 'required|array'
+                ]);
+                if ($validator->fails()) {
+                    return $this->onError($validator->errors()->all());
+                }
+                foreach ($request->academy_files as $image) {
                     $academyImages = $this->uploadFile($image, 'academyFiles');
                     array_push($AcademyFiles, [
                         "file_url" =>  $academyImages,
@@ -289,8 +288,7 @@ class RegisterController extends Controller
         if (is_array($request->experience) || is_object($request->experience)) {
             
             foreach ($request->experience as $texp) {
-                $exp = new TeacherExperience();
-           
+                $exp = new TeacherExperience();      
                 $exp->teacher_id = $userId;
                 $exp->title = $texp['exp_title'];
                 $exp->start_day = $texp['start_day'];
@@ -305,7 +303,7 @@ class RegisterController extends Controller
             foreach ($request->education as $tedu) {
                 $edu = new TeacherEducation();
                 $validator = Validator::make($request->all(), [
-                    'education' => 'required',
+                    'education' => 'required|array',
                 ]);
                 if ($validator->fails()) {
                     return $this->onError($validator->errors()->all());
