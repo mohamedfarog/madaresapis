@@ -95,7 +95,6 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'country' => 'required',
                 'city' => 'required',
-                'street' => 'required',
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
