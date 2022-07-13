@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +24,6 @@ class AuthController extends Controller
     {
         return Auth::user();
     }
-
     public function login(Request $request)
     {
         $user = User::with(['usertype'])->where('email', $request->email)->first();
@@ -143,13 +141,11 @@ class AuthController extends Controller
                         $email = $user->name . '@google.com';
                     }
                     $gUser->email = $email;
-
                     $gUser->google_id = $user->id;
                     $gUser->email_verified = 1;
                     $gUser->save();
                     $token = JWTAuth::fromUser($gUser,);
                     return [
-
                         'status' => true,
                         'token' => $token,
                         'user' => $gUser,
@@ -162,14 +158,12 @@ class AuthController extends Controller
             return $e;
         }
     }
-
     function linkedinAuth($accessToken)
     {
         try {
 
             $endpoint = "https://www.linkedin.com/oauth/v2/accessToken";
             $ch = curl_init();
-
             curl_setopt($ch, CURLOPT_URL, $endpoint);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt(
@@ -229,7 +223,6 @@ class AuthController extends Controller
             return $e;
         }
     }
-
     function facebookAuth($accessToken)
     {
         try {
@@ -272,7 +265,6 @@ class AuthController extends Controller
             //return $this->onError("access token not valid exc");
         }
     }
-
     public function socialLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -294,10 +286,9 @@ class AuthController extends Controller
                 $data = $this->linkedinAuth($request->accessToken);
                 break;
         }
-
         return $data;
     }
-
+    
     public function testFace(Request $request)
     {
         try {
@@ -313,8 +304,6 @@ class AuthController extends Controller
     {
 
         $user = User::find(Auth::id());
-        //$user = User::find(auth->id);
-        //Check password and current password
         if (isset($request->password)) {
             $validator = Validator::make($request->all(), [
                 'password' => 'required',

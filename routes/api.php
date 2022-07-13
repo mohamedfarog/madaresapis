@@ -19,7 +19,6 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\Gender;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes

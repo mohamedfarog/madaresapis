@@ -193,7 +193,6 @@ class RegisterController extends Controller
                     //     return $this->onError($validator->errors()->all());
                     // }
                     $teacher->user_id = $userId;
-
                     if (isset($request->gender_id)) {
                         $teacher->gender_id = $request->gender_id;
                     }
