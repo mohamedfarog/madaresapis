@@ -228,7 +228,7 @@ class RegisterController extends Controller
             'street' => 'required',
             'curriculum_vitae' => 'required',
             'education' => 'required|array',
-            'education.edu_title' => 'required|string',
+            'education.*.edu_title' => 'required|string',
         ]);
 
         if ($validator->fails()) {
