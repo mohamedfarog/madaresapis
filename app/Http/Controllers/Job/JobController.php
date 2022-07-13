@@ -36,6 +36,11 @@ class JobController extends Controller
          'advertise_area' => 'required',
          'job_description' => 'required',
          'job_vacancy' => 'required',
+         'job_deadline' => 'required',
+         'job_responsibilities' => 'required',
+         'expected_start_date' => 'required',
+         'status' => 'required',
+         
       ]);
 
       if ($validator->fails()) {
