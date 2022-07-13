@@ -95,6 +95,7 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'country' => 'required',
                 'city' => 'required',
+                'academy_files' => 'required|array'
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
@@ -137,12 +138,7 @@ class RegisterController extends Controller
                 AcademyLevels::insert($academy_levels);
             }
 
-            $validator = Validator::make($request->all(), [
-                'academy_files' => 'required|array'
-            ]);
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
-            }
+          
             if (is_array($request->academy_files) || is_object($request->academy_files)) {
                 $AcademyFiles = [];
                 foreach ($request->academy_files as $image) {
