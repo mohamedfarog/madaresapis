@@ -93,6 +93,9 @@ class RegisterController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'bio' => 'required',
+                'country' => 'required',
+                'city' => 'required',
+                'street' => 'required',
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
@@ -120,15 +123,6 @@ class RegisterController extends Controller
             $academy->save();
             $location = new Locations();
             $academy->user_id = $userId;
-            $validator = Validator::make($request->all(), [
-                'country' => 'required',
-                'city' => 'required',
-                'street' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
-            }
 
             if (isset($request->city)) {
                 $location->city = $request->city;
