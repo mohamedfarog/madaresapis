@@ -68,7 +68,6 @@ Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('type_to_null', [RegisterController::class, 'setTypeToNull']);
-Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
 //Route::post('re_send_verfiy', [ForgotPasswordController::class, 'reSendEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
@@ -116,11 +115,13 @@ Route::get('/updates', function () {
 });
 
 Route::group(['middleware' => 'auth:api'], function () {    
+   // ----------------------USER------------------------------------------
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
+   Route::post('userType', [RegisterController::class, 'UpdateUserType']);
 
 
 
-
+// ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    

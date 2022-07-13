@@ -18,8 +18,8 @@ class CreateTeacherExperiencesTable extends Migration
         Schema::create('teacher_experiences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teacher_id');
-            $table->string('titel', 50);
-            $table->tinyText('place_of_assuarance');
+            $table->string('title', 50);
+            $table->tinyText('place_of_assurance');
             $table->boolean('current_work')->nullable();
             $table->date('start_day');
             $table->date('end_day');

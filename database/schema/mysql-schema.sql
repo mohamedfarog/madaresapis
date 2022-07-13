@@ -777,8 +777,8 @@ DROP TABLE IF EXISTS `teacher_experiences`;
 CREATE TABLE `teacher_experiences` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `teacher_id` bigint(20) unsigned NOT NULL,
-  `titel` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `place_of_assuarance` tinytext COLLATE utf8mb4_unicode_ci,
+  `title` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `place_of_assurance` tinytext COLLATE utf8mb4_unicode_ci,
   `current_work` tinyint(1) DEFAULT NULL,
   `start_day` date DEFAULT NULL,
   `end_day` date DEFAULT NULL,
