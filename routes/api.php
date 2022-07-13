@@ -123,5 +123,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 // ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
+
+   Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
    
 });

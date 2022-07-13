@@ -85,4 +85,9 @@ class JobController extends Controller
       $data= Job::where("academy_id",$academy->id)->paginate();
       return $this->onSuccess($data);
    }
+   public function get_available_jobs(Request $request)
+   {
+      $data= Job::where('status',1)->paginate(20);
+      return $this->onSuccess($data);
+   }
 }
