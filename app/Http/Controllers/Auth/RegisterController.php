@@ -227,6 +227,8 @@ class RegisterController extends Controller
             'city' => 'required',
             'street' => 'required',
             'curriculum_vitae' => 'required',
+            'education' => 'required|array',
+            'education.edu_title' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -292,12 +294,7 @@ class RegisterController extends Controller
 
             foreach ($request->education as $tedu) {
                 $edu = new TeacherEducation();
-                $validator = Validator::make($request->all(), [
-                    'education' => 'required|',
-                ]);
-                if ($validator->fails()) {
-                    return $this->onError($validator->errors()->all());
-                }
+
                 $edu->teacher_id = $userId;
                 $edu->title = $tedu['edu_title'];
                 $edu->start_date = $tedu['start_date'];
