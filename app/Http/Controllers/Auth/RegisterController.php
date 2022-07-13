@@ -78,7 +78,8 @@ class RegisterController extends Controller
         $userType = User::findOrFail($userId);
 
         if ($userType->user_type == '255' || $userType->user_type == '256') {
-            return $this->onError("Sorry This User already has a type");
+            if ($userType->user_type != $request->type)
+                return $this->onError("Sorry This User already has a type");
         }
         if ($userType->email_verified == 0) {
             return $this->onError('This User is not verified yet');
@@ -89,7 +90,6 @@ class RegisterController extends Controller
         $token = JWTAuth::fromUser($userType);
 
         if ($userType->user_type  == '255') {
-            $academy = new Academy();
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'bio' => 'required',
@@ -100,6 +100,8 @@ class RegisterController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
+
+            $academy = new Academy();
             $academy->user_id = $userId;
             if (isset($request->name)) {
                 $academy->name = $request->name;
@@ -121,21 +123,8 @@ class RegisterController extends Controller
                 $academy->size = $request->years_of_teaching;
             }
             $academy->save();
-            $location = new Locations();
-            $academy->user_id = $userId;
 
-            if (isset($request->city)) {
-                $location->city = $request->city;
-            }
-            if (isset($request->country)) {
-                $location->country = $request->country;
-            }
-            if (isset($request->street)) {
-                $location->street = $request->street;
-            }
 
-            $location->academy_id = $userId;
-            $location->save();
 
             if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
                 $academy_levels = [];
@@ -148,7 +137,7 @@ class RegisterController extends Controller
                 }
                 AcademyLevels::insert($academy_levels);
             }
-           
+
             $validator = Validator::make($request->all(), [
                 'academy_files' => 'required|array'
             ]);
@@ -156,7 +145,7 @@ class RegisterController extends Controller
                 return $this->onError($validator->errors()->all());
             }
             if (is_array($request->academy_files) || is_object($request->academy_files)) {
-                 $AcademyFiles = [];
+                $AcademyFiles = [];
                 foreach ($request->academy_files as $image) {
                     $academyImages = $this->uploadFile($image, 'academyFiles');
                     array_push($AcademyFiles, [
@@ -180,12 +169,10 @@ class RegisterController extends Controller
         if ($request->type == '256') {
 
             $validator = Validator::make($request->all(), [
-                //     'gender_id' => 'sometimes|required',
-                //     'contact_number' => 'required',
-                //     'contact_number' => 'required',
-                //     'date_of_birth' => 'required',
-                //     'first_name' => 'required',
-                //     'last_name' => 'required',
+                'country' => 'required',
+                'city' => 'required',
+                'street' => 'required',
+                'curriculum_vitae' => 'required',
                 'bio' => 'required',
                 //     'willing_to_travel' => 'required',
                 //     'availability_id' => 'required',
@@ -229,12 +216,17 @@ class RegisterController extends Controller
             $teacher->save();
         }
         $location = new Locations();
-        $location->teacher_id = $userId;
+        if ($request->type == '256') {
+            $location->teacher_id = $userId;
+        } else {
+            $location->academy_id = $userId;
+        }
 
         $validator = Validator::make($request->all(), [
             'country' => 'required',
             'city' => 'required',
             'street' => 'required',
+            'curriculum_vitae' => 'required',
         ]);
 
         if ($validator->fails()) {
