@@ -225,7 +225,6 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'country' => 'required',
             'city' => 'required',
-            'street' => 'required',
             'curriculum_vitae' => 'required',
             'education' => 'required|array',
             'education.*.edu_title' => 'required|string',
