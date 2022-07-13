@@ -361,8 +361,6 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255| unique:users',
             'password' => 'required|string|min:6|max:50',
         ]);
-
-
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
         }

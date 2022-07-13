@@ -54,7 +54,15 @@ class JobController extends Controller
       $job->job_description = $request->job_description;
       $job->advertise_area = $request->advertise_area;
       $job->job_vacancy = $request->job_vacancy;
-      $job->job_vacancy = $request->job_vacancy;
+      $job->gender = $request->gender;
+      $job->advertise_area = $request->advertise_area;
+      $job->hiring_budget = $request->hiring_budget;
+      $job->job_description = $request->job_description;
+      $job->job_responsibilities = $request->job_responsibilities;
+      $job->job_benefits = $request->job_benefits;
+      $job->job_experience = $request->job_experience;
+      $job->status = $request->status;
+
       if (isset($request->expected_start_date)) {
 
          $job->expected_start_date = $request->expected_start_date;
