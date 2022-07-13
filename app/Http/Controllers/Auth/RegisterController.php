@@ -229,6 +229,7 @@ class RegisterController extends Controller
             'curriculum_vitae' => 'required',
             'education' => 'required|array',
             'education.*.edu_title' => 'required|string',
+            'certficates' => 'required|array'
         ]);
 
         if ($validator->fails()) {
@@ -308,22 +309,17 @@ class RegisterController extends Controller
         $available->save();
 
         $TeacherFiles = [];
-        $validator = Validator::make($request->all(), [
-            'teacher_files' => 'required|array'
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
-        }
-        if (is_array($request->teacher_files) || is_object($request->TeacherFiles)) {
-            foreach ($request->teacher_files as $tFile) {
+  
+        if (is_array($request->certficates) || is_object($request->TeacherFiles)) {
+            foreach ($request->certficates as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
                 array_push($TeacherFiles, [
                     "file_url" =>  $teacherfiles,
                     "teacher_id" =>  $userId
 
                 ]);
-                TeacherFiles::insert($TeacherFiles);
             }
+            TeacherFiles::insert($TeacherFiles);
         }
 
         $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->first();
