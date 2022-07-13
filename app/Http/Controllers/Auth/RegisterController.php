@@ -154,7 +154,6 @@ class RegisterController extends Controller
             $AcademyFiles = [];
             if (is_array($request->AcademyFiles) || is_object($request->AcademyFiles)) {
                 foreach ($request->AcademyFiles as $image) {
-                    $academyImages = $this->uploadFile($image, 'academyFiles');
                     $validator = Validator::make($request->all(), [
                         'AcademyFiles' => 'required'
                     ]);
@@ -162,7 +161,6 @@ class RegisterController extends Controller
                     if ($validator->fails()) {
                         return $this->onError($validator->errors()->all());
                     }
-
                     $academyImages = $this->uploadFile($image, 'academyFiles');
                     array_push($AcademyFiles, [
                         "file_url" =>  $academyImages,
