@@ -171,12 +171,8 @@ class RegisterController extends Controller
             $validator = Validator::make($request->all(), [
                 'country' => 'required',
                 'city' => 'required',
-                'street' => 'required',
                 'curriculum_vitae' => 'required',
-                'bio' => 'required',
-                //     'willing_to_travel' => 'required',
-                //     'availability_id' => 'required',
-                //     'avatar' => 'required'
+                'bio' => 'required', 
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
