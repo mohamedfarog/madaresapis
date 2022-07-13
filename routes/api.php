@@ -18,6 +18,7 @@ use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Models\AcademySize;
 use App\Models\Gender;
 /*
 |--------------------------------------------------------------------------
@@ -129,3 +130,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 // ----------------------PUBLIC API------------------------------------------
 Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
+Route::get('all_academy_sizes',function(){
+   return AcademySize::all();
+});

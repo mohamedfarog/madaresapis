@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -102,7 +103,7 @@ class AuthController extends Controller
         //Request is validated
         //Creat token
         try {
-            if (!$token = JWTAuth::attempt($credentials,['exp' => Carbon::now()->addDays(7)->timestamp])) {
+            if (!$token = JWTAuth::attempt($credentials, ['exp' => Carbon::now()->addDays(7)->timestamp])) {
                 return $this->onError(
                     'Login credentials are invalid.',
                 );
@@ -288,7 +289,7 @@ class AuthController extends Controller
         }
         return $data;
     }
-    
+
     public function testFace(Request $request)
     {
         try {
@@ -324,20 +325,19 @@ class AuthController extends Controller
         $userId = Auth::id();
 
         if ($user->user_type == 256) {
-  
+
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
             ]);
-        
-          
+
+
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
             $teacher = Teacher::where('user_id', $userId)->first();
-            if(!$teacher)
-            {
-                return $this->onError("No teacher found",400);
+            if (!$teacher) {
+                return $this->onError("No teacher found", 400);
             }
             $teacher->first_name = $request->first_name;
             $teacher->last_name =   $request->last_name;
@@ -345,7 +345,7 @@ class AuthController extends Controller
             return $this->onSuccess($teacher);
         }
         if ($user->user_type == 255) {
-            
+
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
             ]);
@@ -353,9 +353,8 @@ class AuthController extends Controller
                 return $this->onError($validator->errors()->all());
             }
             $academy  = Academy::where('user_id', $userId)->first();
-            if(!$academy)
-            {
-                return $this->onError("No academy found",400);
+            if (!$academy) {
+                return $this->onError("No academy found", 400);
             }
             $academy->name = $request->name;
             $academy->save();
