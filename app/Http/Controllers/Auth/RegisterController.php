@@ -91,18 +91,13 @@ class RegisterController extends Controller
         
         if ($userType->user_type  == '255') {
             $academy = new Academy();
-            // $validator = Validator::make($request->all(), [
-            //     'name' => 'required',
-            //     'contact_number' => 'required',
-            //     'bio' => 'required',
-            //     'avatar' => 'required',
-            //     'years_of_teaching' => 'required',
-            //     'size' => 'required',
-            //     'avatar' => 'required'
-            // ]);
-            // if ($validator->fails()) {
-            //     return $this->onError($validator->errors()->all());
-            // }
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'bio' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
             $academy->user_id = $userId;
             if (isset($request->name)) {
                 $academy->name = $request->name;
@@ -145,8 +140,8 @@ class RegisterController extends Controller
                         "academy_id" => $userId,
                         "level_id" => $level
                     ]);
+                    AcademyLevels::insert($academy_levels);
                 }
-                AcademyLevels::insert($academy_levels);
             }
 
             $AcademyFiles = [];
@@ -159,8 +154,8 @@ class RegisterController extends Controller
                         "academy_id" =>  $userId
 
                     ]);
+                    AcademyFile::insert($AcademyFiles);
                 }
-                AcademyFile::insert($AcademyFiles);
             }
 
             $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->first();
@@ -175,21 +170,21 @@ class RegisterController extends Controller
         }
         if ($request->type == '256') {
            
-            // $validator = Validator::make($request->all(), [
+             $validator = Validator::make($request->all(), [
                 //     'gender_id' => 'sometimes|required',
                 //     'contact_number' => 'required',
                 //     'contact_number' => 'required',
                 //     'date_of_birth' => 'required',
                 //     'first_name' => 'required',
                 //     'last_name' => 'required',
-                //     'bio' => 'required',
+                    'bio' => 'required',
                 //     'willing_to_travel' => 'required',
                 //     'availability_id' => 'required',
                 //     'avatar' => 'required'
-                // ]);
-                // if ($validator->fails()) {
-                    //     return $this->onError($validator->errors()->all());
-                    // }
+                ]);
+                if ($validator->fails()) {
+                        return $this->onError($validator->errors()->all());
+                }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
 
