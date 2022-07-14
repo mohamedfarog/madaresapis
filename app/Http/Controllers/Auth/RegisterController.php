@@ -95,6 +95,8 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'country' => 'required',
                 'city' => 'required',
+                'years_of_teaching_id' => 'required',
+                'academy_size_id' => 'required',
                 'academy_files' => 'required|array'
             ]);
             if ($validator->fails()) {
@@ -116,16 +118,13 @@ class RegisterController extends Controller
                 $icon = $this->uploadFile($file, 'avatars');
                 $academy->avatar = $icon;
             }
-            if (isset($request->years_of_teaching)) {
-                $academy->years_of_teaching = $request->years_of_teaching;
+            if (isset($request->years_of_teaching_id)) {
+                $academy->years_of_teaching_id = $request->years_of_teaching_id;
             }
-            if (isset($request->size)) {
-                $academy->size = $request->years_of_teaching;
+            if (isset($request->academy_size_id)) {
+                $academy->academy_size_id = $request->academy_size_id;
             }
             $academy->save();
-
-
-
             if (is_array($request->academy_levels) || is_object($request->academy_levels)) {
                 $academy_levels = [];
                 foreach ($request->academy_levels as $level) {

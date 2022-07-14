@@ -17,7 +17,7 @@ use phpDocumentor\Reflection\Location;
 class Academy extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'name','contact_number','bio', 'avatar' ];
+    protected $fillable = ['user_id', 'name','contact_number','bio', 'avatar', 'academy_size_id', 'years_of_teaching_id'];
     protected $guarded = ['id'];
     protected $hidden = ['updated_at'];
 
