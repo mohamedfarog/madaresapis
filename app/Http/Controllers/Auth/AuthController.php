@@ -365,4 +365,22 @@ class AuthController extends Controller
     {
         return response()->json(["error" => "token expired"], 401);
     }
+    public function my_info(Request $request)
+    {
+        $data=[];
+        $user = User::find(Auth::id());
+        //Teacher
+        if($user->type == '256')
+        {
+            
+        }
+        else if($user->type == '256')
+        {
+            
+        }
+        //Teacher
+
+        $data['user']=$user;
+        return $this->onSuccess($data);
+    }
 }

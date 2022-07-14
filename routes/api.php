@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
+   Route::get('my_info', [AuthController::class, 'my_info']);
 
 
 
