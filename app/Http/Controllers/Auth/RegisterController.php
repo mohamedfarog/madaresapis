@@ -95,7 +95,6 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'country' => 'required',
                 'city' => 'required',
-                'years_of_teaching_id' => 'required',
             
             ]);
             if ($validator->fails()) {
