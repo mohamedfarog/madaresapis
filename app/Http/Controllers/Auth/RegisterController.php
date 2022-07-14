@@ -168,10 +168,10 @@ class RegisterController extends Controller
                 'education' => 'required|array',
                 'education.*.edu_title' => 'required|string',
                 'experiance' => 'required|array',
-                'education.*.start_day' => 'required|date|before:tomorrow',
-                'education.*.end_day' => 'required|date|after:education.*.start_day',
-                'education.*.exp_title' => 'required|string',
-                'education.*.place_of_assuarance' => 'required|string',
+                'experiance.*.start_day' => 'required|date|before:tomorrow',
+                'experiance.*.end_day' => 'required|date|after:experiance.*.start_day',
+                'experiance.*.exp_title' => 'required|string',
+                'experiance.*.place_of_assuarance' => 'required|string',
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
