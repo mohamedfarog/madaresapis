@@ -96,8 +96,7 @@ class RegisterController extends Controller
                 'country' => 'required',
                 'city' => 'required',
                 'years_of_teaching_id' => 'required',
-                'academy_size_id' => 'required',
-                'academy_files' => 'required|array'
+            
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());

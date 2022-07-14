@@ -14,8 +14,8 @@ class AddIdsToAcademiesTable extends Migration
     public function up()
     {
         Schema::table('academies', function (Blueprint $table) {
-            $table->foreignId('academy_size_id');
-            $table->foreignId('years_of_teaching_id');
+            $table->foreignId('academy_size_id')->nullable();
+            $table->foreignId('years_of_teaching_id')->nullable();
             
         });
     }
@@ -28,7 +28,8 @@ class AddIdsToAcademiesTable extends Migration
     public function down()
     {
         Schema::table('academies', function (Blueprint $table) {
-            //
+            $table->dropColumn('academy_size_id');
+            $table->dropColumn('years_of_teaching_id');
         });
     }
 }
