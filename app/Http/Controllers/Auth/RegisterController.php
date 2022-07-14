@@ -172,6 +172,8 @@ class RegisterController extends Controller
                 'experiance.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
                 'experiance.*.exp_title' => 'required|string',
                 'experiance.*.place_of_assuarance' => 'required|string',
+            ],[],[
+                "experiance.*.start_day"=>"Starting date"
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
