@@ -165,6 +165,13 @@ class RegisterController extends Controller
                 'city' => 'required',
                 'curriculum_vitae' => 'required',
                 'bio' => 'required', 
+                'education' => 'required|array',
+                'education.*.edu_title' => 'required|string',
+                'experiance' => 'required|array',
+                'education.*.start_day' => 'required|date|before:tomorrow',
+                'education.*.end_day' => 'required|date|after:education.*.start_day',
+                'education.*.exp_title' => 'required|string',
+                'education.*.place_of_assuarance' => 'required|string',
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
@@ -209,19 +216,7 @@ class RegisterController extends Controller
         } else {
             $location->academy_id = $userId;
         }
-
-        $validator = Validator::make($request->all(), [
-            'country' => 'required',
-            'city' => 'required',
-            'curriculum_vitae' => 'required',
-            'education' => 'required|array',
-            'education.*.edu_title' => 'required|string',
-            // 'certficates' => 'required|array'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
-        }
+ 
         if (isset($request->city)) {
             $location->city = $request->city;
         }
