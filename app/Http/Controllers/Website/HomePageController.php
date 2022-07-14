@@ -153,12 +153,17 @@ public function userSkills(Request $request)
         }
      
     }
+    
     public function testJwt()
     {
         return $this->user;
     }
+
+    public function testingHtttpRequest(Request $request){
+       
+        return $request;
+        
+    }
+
 }
-
-
-
 
