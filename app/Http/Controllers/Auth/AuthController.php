@@ -372,11 +372,11 @@ class AuthController extends Controller
         //Teacher
         if($user->type == '256')
         {
-            
+            $data['teacherData']= Teacher::where('user_id',$user->id)->with(['teacherLocations','teacherSkills','resumes','experiences','teacherFiles','education','teacherAvailabity'])->first();
         }
         else if($user->type == '256')
         {
-            
+            $data['academyData'] = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $user->id)->first();
         }
         //Teacher
 

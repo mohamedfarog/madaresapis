@@ -95,11 +95,30 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'country' => 'required',
                 'city' => 'required',
-            
+
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
+            $location = new Locations();
+            if ($request->type == '256') {
+                $location->teacher_id = $userId;
+            } else {
+                $location->academy_id = $userId;
+            }
+
+            if (isset($request->city)) {
+                $location->city = $request->city;
+            }
+            if (isset($request->country)) {
+                $location->country = $request->country;
+            }
+
+            if (isset($request->street)) {
+                $location->street = $request->street;
+            }
+            $location->save();
+
 
             $academy = new Academy();
             $academy->user_id = $userId;
@@ -135,7 +154,7 @@ class RegisterController extends Controller
                 AcademyLevels::insert($academy_levels);
             }
 
-          
+
             if (is_array($request->academy_files) || is_object($request->academy_files)) {
                 $AcademyFiles = [];
                 foreach ($request->academy_files as $image) {
@@ -164,7 +183,7 @@ class RegisterController extends Controller
                 'country' => 'required',
                 'city' => 'required',
                 'curriculum_vitae' => 'required',
-                'bio' => 'required', 
+                'bio' => 'required',
                 'education' => 'required|array',
                 'education.*.edu_title' => 'required|string',
                 'experiance' => 'required|array',
@@ -172,12 +191,12 @@ class RegisterController extends Controller
                 'experiance.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
                 'experiance.*.exp_title' => 'required|string',
                 'experiance.*.place_of_assuarance' => 'required|string',
-            ],[],[
-                "education.*.edu_title"=>"certification name",
-                "experiance.*.start_day"=>"work started date",
-                "experiance.*.end_day"=>"work finished date",
-                "experiance.*.exp_title"=>"experience position",
-                "experiance.*.place_of_assuarance"=>"academy name",
+            ], [], [
+                "education.*.edu_title" => "certification name",
+                "experiance.*.start_day" => "work started date",
+                "experiance.*.end_day" => "work finished date",
+                "experiance.*.exp_title" => "experience position",
+                "experiance.*.place_of_assuarance" => "academy name",
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
@@ -222,7 +241,7 @@ class RegisterController extends Controller
         } else {
             $location->academy_id = $userId;
         }
- 
+
         if (isset($request->city)) {
             $location->city = $request->city;
         }
@@ -249,12 +268,6 @@ class RegisterController extends Controller
 
         $teachDoc =  new TeacherResume();
         $teachDoc->teacher_id = $userId;
-        $validator = Validator::make($request->all(), [
-            'curriculum_vitae' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
-        }
 
         if (isset($request->curriculum_vitae)) {
             $fileNmae = time() . '_' . $request->curriculum_vitae->getClientOriginalName();
@@ -297,7 +310,7 @@ class RegisterController extends Controller
         $available->save();
 
         $TeacherFiles = [];
-  
+
         if (is_array($request->certficates) || is_object($request->TeacherFiles)) {
             foreach ($request->certficates as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
