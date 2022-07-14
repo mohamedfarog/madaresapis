@@ -216,7 +216,7 @@ class RegisterController extends Controller
             'curriculum_vitae' => 'required',
             'education' => 'required|array',
             'education.*.edu_title' => 'required|string',
-            'certficates' => 'required|array'
+            // 'certficates' => 'required|array'
         ]);
 
         if ($validator->fails()) {
