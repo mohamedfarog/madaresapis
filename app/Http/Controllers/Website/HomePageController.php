@@ -161,7 +161,7 @@ public function userSkills(Request $request)
 
     public function testingHtttpRequest(Request $request){
        
-     return  $this->onSuccess( $request);
+     return  $this->onSuccess( "Hello, This is g++ response");
         
     }
 
