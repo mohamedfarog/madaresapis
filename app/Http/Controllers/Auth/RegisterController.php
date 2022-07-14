@@ -169,7 +169,7 @@ class RegisterController extends Controller
                 'education.*.edu_title' => 'required|string',
                 'experiance' => 'required|array',
                 'experiance.*.start_day' => 'required|date|before:tomorrow',
-                'experiance.*.end_day' => 'required|date|_or_equal:experiance.*.start_day',
+                'experiance.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
                 'experiance.*.exp_title' => 'required|string',
                 'experiance.*.place_of_assuarance' => 'required|string',
             ]);
