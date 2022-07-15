@@ -90,4 +90,26 @@ class JobController extends Controller
       $data = Job::where('status', 1)->paginate(20);
       return $this->onSuccess($data);
    }
+   public function searchJobPost(Request $request )
+   {
+      $validator = Validator::make($request->all(), [
+         'title' => 'required',
+         'country' => 'required',
+         'state' => 'required',
+      ], []);
+
+      if ($validator->fails()) {
+         return $this->onError($validator->errors()->all());
+     }
+      $academy = Academy::where('user_id', Auth::id())->first();
+      if(!$academy)
+      {
+         return $this->onError(["No Academy Found"]);
+      }
+      $job = Job::where('academy_id',$academy->id)->first();
+      return $this->onSuccess([
+         'job'=>$job,
+         'academy'=>$academy
+      ]);
+   }
 }
