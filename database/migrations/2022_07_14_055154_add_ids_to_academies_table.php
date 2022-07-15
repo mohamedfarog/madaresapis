@@ -19,7 +19,6 @@ class AddIdsToAcademiesTable extends Migration
             
         });
     }
-
     /**
      * Reverse the migrations.
      *

@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -27,6 +28,7 @@ class JobController extends Controller
       return $this->onSuccess($job);
    }
 
+
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
@@ -42,7 +44,7 @@ class JobController extends Controller
          'job_deadline' => 'required|date',
          'job_responsibilities' => 'required',
          'expected_start_date' => 'required|date',
-         'status' => 'required',
+
       ], []);
 
       if ($validator->fails()) {
@@ -72,7 +74,7 @@ class JobController extends Controller
       $job->job_responsibilities = $request->job_responsibilities;
       $job->job_benefits = $request->job_benefits;
       $job->job_experience = $request->job_experience;
-      $job->status = $request->status;
+      $job->status = 0;
 
       if (isset($request->expected_start_date)) {
 
@@ -116,14 +118,81 @@ class JobController extends Controller
          return $this->onError(["No Academy Found"]);
       }
       $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title);
-      if(isset($request->language))
-      {
-         $job=$job->where('language',$request->language);
+      if (isset($request->language)) {
+         $job = $job->where('language', $request->language);
       }
-      $job =$job->first();
+      $job = $job->first();
       return $this->onSuccess([
          'job' => $job,
          'academy' => $academy
       ]);
+   }
+
+   public function updateStatus(Request $request)
+   {
+      $validator = Validator::make($request->all(), [
+         'id' => 'required',
+         'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
+      ], [], [
+         "id" => "Job ID"
+      ]);
+
+      if ($validator->fails()) {
+         return $this->onError($validator->errors()->all());
+      }
+      $jobStatus = Job::find($request->id);
+      if (!$jobStatus) {
+         return $this->onError(["No Job Found"]);
+      }
+      if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
+         return $this->onError(["Action not allowed"]);
+      }
+      switch ($request->status) {
+         case 'pause':
+
+            if ($jobStatus->status == 1) {
+               $jobStatus = $this->pauseAJob($jobStatus);
+            } else {
+               return $this->onError(["Action not allowed"]);
+            }
+            break;
+         case 'active':
+            if ($jobStatus->status == 2) {
+               $jobStatus = $this->activeAJob($jobStatus);
+            } else {
+               return $this->onError(["Action not allowed"]);
+            }
+            break;
+         case 'finish':
+            if ($jobStatus->status == 2 || $jobStatus->status == 1) {
+               $jobStatus = $this->finishAJob($jobStatus);
+            } else {
+               return $this->onError(["Action not allowed"]);
+            }
+            break;
+
+         default:
+            return $this->onError(["Action not allowed"]);
+            break;
+         }
+       return $this->onSuccess( $jobStatus );
+   }
+   public function pauseAJob(Job $job): Job
+   {
+      $job->status = 2;
+      $job->save();
+      return $job;
+   }
+   public function activeAJob(Job $job): Job
+   {
+      $job->status = 1;
+      $job->save();
+      return $job;
+   }
+   public function finishAJob(Job $job): Job
+   {
+      $job->status = 5;
+      $job->save();
+      return $job;
    }
 }

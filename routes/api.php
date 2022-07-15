@@ -32,6 +32,7 @@ use App\Models\Gender;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
@@ -50,9 +51,9 @@ Route::group(['prefix' => 'job_level'], function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
- // Route::get('/', function () {
- //return response()->json('Madars-Backend'); 
- //})->name('login');
+// Route::get('/', function () {
+//return response()->json('Madars-Backend'); 
+//})->name('login');
 Route::group(['prefix' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class, 'refresh']);
@@ -81,9 +82,9 @@ Route::get('rejected_applications', [AcademyController::class, 'AllRejectedAppli
 Route::get('interviwed_applications', [AcademyController::class, 'AllInterviwedApplications']);
 
 Route::group(['prefix' => 'website'], function () {
-Route::group(['middleware' => 'auth:sanctum'], function () {
-//Route::post('/login', [AuthController::class, 'login']);
-});
+   Route::group(['middleware' => 'auth:sanctum'], function () {
+      //Route::post('/login', [AuthController::class, 'login']);
+   });
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
@@ -118,27 +119,27 @@ Route::get('/updates', function () {
    echo "<pre>$output</pre>";;
 });
 
-Route::group(['middleware' => 'auth:api'], function () {    
+Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
-   
-   
-   Route::post('years_of_teaching',[AcademyController::class, 'academyYearsOfTeaching']);
-   Route::post('academy_size',[AcademyController::class, 'academySize']);
+
+
+   Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
+   Route::post('academy_size', [AcademyController::class, 'academySize']);
 
 
 
-// ----------------------JOB------------------------------------------
+   // ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
-
+   Route::post('update_job_status', [JobController::class, 'updateStatus']);
 });
 
 // ----------------------PUBLIC API------------------------------------------
 Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
-Route::get('all_academy_sizes',function(){
+Route::get('all_academy_sizes', function () {
    return AcademySize::all();
 });
