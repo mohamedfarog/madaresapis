@@ -34,7 +34,7 @@ class JobController extends Controller
          'job_level_id' => 'required',
          'title' => 'required',
          'advertise_area' => 'required',
-         'gender' => 'required',
+         'gender_id' => 'required',
          'job_description' => 'required',
          'job_vacancy' => 'required',
          'job_deadline' => 'required',
