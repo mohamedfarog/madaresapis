@@ -153,8 +153,6 @@ class RegisterController extends Controller
                 }
                 AcademyLevels::insert($academy_levels);
             }
-
-
             if (is_array($request->academy_files) || is_object($request->academy_files)) {
                 $AcademyFiles = [];
                 foreach ($request->academy_files as $image) {

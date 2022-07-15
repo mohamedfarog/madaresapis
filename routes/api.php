@@ -17,9 +17,11 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Website\AcademyController;
+use App\Http\Controllers\Website\YearsOfTeachingController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\AcademySize;
 use App\Models\Gender;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -121,6 +123,10 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
+   
+   
+   Route::post('years_of_teaching',[AcademyController::class, 'academyYearsOfTeaching']);
+   Route::post('academy_size',[AcademyController::class, 'academySize']);
 
 
 

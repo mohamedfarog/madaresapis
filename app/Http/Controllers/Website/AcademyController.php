@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Models\Academies\Academy;
+use App\Models\YearOfTeaching;
+use App\Models\AcademySize;
 use Illuminate\Http\Request;
 
 class AcademyController extends Controller
@@ -50,4 +52,24 @@ public function AllInterviwedApplications()
         $data['last_week'] = $academy->interviwedApplicationsForLastWeek(); 
         return $this->onSuccess($data);
 }
+public function academyYearsOfTeaching(Request $request){
+        if($request->lang == 1){
+                return YearOfTeaching::all('id', 'title_ar');
+
+        }
+        else{
+                return YearOfTeaching::all('id', 'title_en');
+        }
+}
+
+public function academySize(Request $request){
+        if($request->lang == 1){
+                return AcademySize::all('id', 'title_ar');
+
+        }
+        else{
+                return AcademySize::all('id', 'title_en');
+        }
+}
+
 }
