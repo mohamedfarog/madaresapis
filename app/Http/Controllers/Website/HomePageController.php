@@ -107,40 +107,28 @@ public function homePageBanner(Request $request)
 public function userSkills(Request $request)
 {
         if($request->lang == 1){
-                $skill = Skill::all('id', 'en_skill_name');
-                return $this->onSuccess($skill);
-
-        }
-        elseif($request->lang == 2){
                 $skill = Skill::all('id', 'ar_skill_name');
                 return $this->onSuccess($skill);
 
-
         }
+     
         else{
-                return response()->json([
-                        'massage' => 'please select languge',
-                        'status' => false
-                ]);
+                $skill = Skill::all('id', 'en_skill_name');
+                return $this->onSuccess($skill);
         }
      
     }
+
     public function AvailableApplicant(Request $request)
     {
         if($request->lang == 1){
-                $availabe = Available::all('id', 'en_text');
+                $availabe = Available::all('id', 'ar_text');
                 return $this->onSuccess($availabe);
 
         }
-        elseif($request->lang == 2){
-                $availabe = Available::all('id', 'ar_text');
-                return $this->onSuccess($availabe);
-        }
         else{
-                return response()->json([
-                        'massage' => 'please select languge',
-                        'status' => false
-                ]);
+                $availabe = Available::all('id', 'en_text');
+                return $this->onSuccess($availabe);
         }
      
     }
