@@ -124,14 +124,12 @@ public function userSkills(Request $request)
         if($request->lang == 1){
                 $availabe = Available::all('id', 'ar_text');
                 return $this->onSuccess($availabe);
-
         }
         else{
                 $availabe = Available::all('id', 'en_text');
                 return $this->onSuccess($availabe);
         }
-     
-    }
+}
     
     public function testJwt()
     {
@@ -139,8 +137,8 @@ public function userSkills(Request $request)
     }
 
     public function testingHtttpRequest(Request $request){
-       
-     return  $this->onSuccess( "Hello, This is g++ response");
+       return $request;
+     return  $this->onSuccess($request);
         
     }
 
