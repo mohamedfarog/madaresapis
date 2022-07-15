@@ -24,21 +24,14 @@ class AboutController extends Controller
         $data['total_accepted ']= $about->totalAccepted();
 
 if($request->lang == 1){
-    $data['comments'] = About::all(['id','en_title','en_name', 'en_body'])->append('');
-    return $this->onSuccess($data);
-}
-
-if($request->lang == 2){
     $data['comments'] = About::all(['id','ar_title','ar_name', 'ar_body'])->append('');
     return $this->onSuccess($data);
-
-
 }
+
 else{
-    return response()->json([
-        'massage' => 'please select languge',
-        'status' => false
-]);
+    $data['comments'] = About::all(['id','en_title','en_name', 'en_body'])->append('');
+    return $this->onSuccess($data);
+
 }
 }
 }

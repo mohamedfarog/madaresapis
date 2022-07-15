@@ -54,21 +54,21 @@ public function AllInterviwedApplications()
 }
 public function academyYearsOfTeaching(Request $request){
         if($request->lang == 1){
-                return YearOfTeaching::all('id', 'title_ar');
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_ar'));  
 
         }
         else{
-                return YearOfTeaching::all('id', 'title_en');
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'));
         }
 }
 
 public function academySize(Request $request){
         if($request->lang == 1){
-                return AcademySize::all('id', 'title_ar');
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_ar'));
 
         }
         else{
-                return AcademySize::all('id', 'title_en');
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'));
         }
 }
 

@@ -46,19 +46,13 @@ class HomePageController extends Controller
     public function getArticaleInfo(Request $request): JsonResponse
     {
         if($request->lang == 1){
-                $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
+                $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
                 return $this->onSuccess($articleInfo);
         
         }
-        elseif($request->lang == 2){
-                $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
-                return $this->onSuccess($articleInfo);
-        }
         else{
-                return response()->json([
-                        'massage' => 'please select languge',
-                        'status' => false
-                ]);
+                $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
+                return $this->onSuccess($articleInfo);
         }
 
           
@@ -76,22 +70,17 @@ class HomePageController extends Controller
     {
 
         if($request->lang == '1'){
-                $jobLevel = JobLevel::all('id', 'title', 'avater');
-                return $this->onSuccess($jobLevel);
-        }
-        if($request->lang == '2'){
                 $jobLevel = JobLevel::all('id', 'ar_title', 'avater');
                 return $this->onSuccess($jobLevel);
         }
-        return response()->json([
-                'massage' => 'please select languge',
-                'status' => false
-        ]);
-      
-     
-    }
-    public function getFaqInfo()
-    {
+        else{
+                $jobLevel = JobLevel::all('id', 'title', 'avater');
+                return $this->onSuccess($jobLevel);
+        }
+} 
+
+  public function getFaqInfo()
+  {
         $faq = QuestionedAnswers::all('id', 'title', 'body');
         return $this->onSuccess($faq);
 }
@@ -101,18 +90,20 @@ public function AvailableJobs()
         ->append(['totaljobs', 'vacancies'])->toArray();
         return $this->onSuccess($jobs);
 }
+
 public function homePageBanner(Request $request)
 {
         if($request->lang == 1){
-                $banner = HomeBanner::all('id', 'avatar', 'text');
+                $banner = HomeBanner::all('id', 'avatar', 'ar_text');
                 return $this->onSuccess($banner);
 
         }
-        elseif($request->lang == 2){
-                $banner = HomeBanner::all('id', 'avatar', 'ar_text');
+        else{
+                $banner = HomeBanner::all('id', 'avatar', 'text');
                 return $this->onSuccess($banner);
         }
 }
+
 public function userSkills(Request $request)
 {
         if($request->lang == 1){
