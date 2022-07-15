@@ -376,7 +376,9 @@ class AuthController extends Controller
         }
         else if($user->user_type == '255')
         {
-            $data['academyData'] = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $user->id)->first();
+            $data['academyData'] = Academy::with(['AcademyLevels'=>function($q){
+                return $q->with('level');
+            }, 'academyLocations', 'academyFiles'])->where('user_id', $user->id)->first();
         }
         //Teacher
 
