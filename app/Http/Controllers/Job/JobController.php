@@ -46,8 +46,11 @@ class JobController extends Controller
 
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
-     }
+      }
       $user = User::find(Auth::id());
+      if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+         return $this->onError("Account is not verified", 400);
+      }
       $academy = Academy::where('user_id', Auth::id())->first();
       if (!$academy) {
          return $this->onError("No Academy Info Found", 400);
@@ -89,7 +92,7 @@ class JobController extends Controller
       $data = Job::where('status', 1)->paginate(20);
       return $this->onSuccess($data);
    }
-   public function searchJobPost(Request $request )
+   public function searchJobPost(Request $request)
    {
       $validator = Validator::make($request->all(), [
          'title' => 'required',
@@ -99,16 +102,19 @@ class JobController extends Controller
 
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
-     }
+      }
+      $user = User::find(Auth::id());
+      if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+         return $this->onError("Account is not verified", 400);
+      }
       $academy = Academy::where('user_id', Auth::id())->first();
-      if(!$academy)
-      {
+      if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $job = Job::where('academy_id',$academy->id)->first();
+      $job = Job::where('academy_id', $academy->id)->first();
       return $this->onSuccess([
-         'job'=>$job,
-         'academy'=>$academy
+         'job' => $job,
+         'academy' => $academy
       ]);
    }
 }
