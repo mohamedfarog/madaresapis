@@ -33,7 +33,8 @@ class JobController extends Controller
          'job_type_id' => 'required',
          'job_level_id' => 'required',
          'title' => 'required',
-         'advertise_area' => 'required',
+         'country' => 'required',
+         'state' => 'required',
          'gender_id' => 'required',
          'job_description' => 'required',
          'job_vacancy' => 'required',
@@ -57,10 +58,8 @@ class JobController extends Controller
       $job->job_level_id = $request->job_level_id;
       $job->title = $request->title;
       $job->job_description = $request->job_description;
-      $job->advertise_area = $request->advertise_area;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
-      $job->advertise_area = $request->advertise_area;
       $job->hiring_budget = $request->hiring_budget;
       $job->job_description = $request->job_description;
       $job->job_responsibilities = $request->job_responsibilities;
