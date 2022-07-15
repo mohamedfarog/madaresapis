@@ -14,6 +14,6 @@ class AcademyLevels extends Model
     protected $hidden = ['created_at', 'updated_at'];
     public function level()
     {
-        $this->belongsTo(JobLevel::class);
+       return $this->belongsTo(JobLevel::class);
     }
 }
