@@ -61,6 +61,9 @@ class JobController extends Controller
       $job->job_type_id = $request->job_type_id;
       $job->job_level_id = $request->job_level_id;
       $job->title = $request->title;
+      $job->language = $request->language;
+      $job->state = $request->state;
+      $job->country = $request->country;
       $job->job_description = $request->job_description;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
@@ -99,7 +102,7 @@ class JobController extends Controller
          'title' => 'required',
          'country' => 'required',
          'state' => 'required',
-      ], []);
+      ]);
 
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
@@ -112,7 +115,12 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $job = Job::where('academy_id', $academy->id)->first();
+      $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title);
+      if(isset($request->language))
+      {
+         $job=$job->where('language',$request->language);
+      }
+      $job =$job->first();
       return $this->onSuccess([
          'job' => $job,
          'academy' => $academy
