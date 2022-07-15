@@ -41,11 +41,11 @@ class JobController extends Controller
          'job_responsibilities' => 'required',
          'expected_start_date' => 'required',
          'status' => 'required',
-      ]);
+      ], []);
 
       if ($validator->fails()) {
-         return response()->json(['error' => $validator->messages()], 400);
-      }
+         return $this->onError($validator->errors()->all());
+     }
       $user = User::find(Auth::id());
       $academy = Academy::where('user_id', Auth::id())->first();
       if (!$academy) {
@@ -71,23 +71,23 @@ class JobController extends Controller
       if (isset($request->expected_start_date)) {
 
          $job->expected_start_date = $request->expected_start_date;
-      } 
+      }
       if (isset($request->job_deadline)) {
 
          $job->job_deadline = $request->job_deadline;
-      }  
+      }
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      $data= Job::where("academy_id",$academy->id)->paginate();
+      $data = Job::where("academy_id", $academy->id)->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
    {
-      $data= Job::where('status',1)->paginate(20);
+      $data = Job::where('status', 1)->paginate(20);
       return $this->onSuccess($data);
    }
 }
