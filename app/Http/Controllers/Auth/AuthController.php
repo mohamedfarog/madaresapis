@@ -18,6 +18,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Teachers\Teacher;
 use App\Models\Academies\Academy;
+use App\Models\Locations;
 
 class AuthController extends Controller
 {
@@ -303,6 +304,13 @@ class AuthController extends Controller
     }
     public function updateMyInfo(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'country' => 'required',
+            'city' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
 
         $user = User::find(Auth::id());
         if (isset($request->password)) {
@@ -335,6 +343,15 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
+            $location=Locations::where('teacher_id', $userId)->first();
+            if($location)
+            {
+                $location=new Locations();
+            }
+            $location->country=$request->country;
+            $location->city=$request->city;
+            $location->street=$request->street;
+            $location->save();
             $teacher = Teacher::where('user_id', $userId)->first();
             if (!$teacher) {
                 return $this->onError("No teacher found", 400);
@@ -352,6 +369,15 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
+            $location=Locations::where('academy_id', $userId)->first();
+            if($location)
+            {
+                $location=new Locations();
+            }
+            $location->country=$request->country;
+            $location->city=$request->city;
+            $location->street=$request->street;
+            $location->save();
             $academy  = Academy::where('user_id', $userId)->first();
             if (!$academy) {
                 return $this->onError("No academy found", 400);
