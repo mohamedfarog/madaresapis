@@ -27,8 +27,6 @@ class JobController extends Controller
       $job = Job::all('id', 'title', 'academy_id', 'job_type_id', 'advertise_area', 'hiring_budget', 'job_level_id', 'job_vacancy', 'job_description', 'expected_start_date', 'job_deadline', 'job_responsibilities', 'job_benefits', 'job_experience', 'job_experience')->load('academy');
       return $this->onSuccess($job);
    }
-
-
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
@@ -154,7 +152,6 @@ class JobController extends Controller
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
-      
       if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
          return $this->onError(["Action not allowed"]);
       }
@@ -186,24 +183,24 @@ class JobController extends Controller
             return $this->onError(["Action not allowed"]);
             break;
          }
-       return $this->onSuccess( $jobStatus );
-   }
-   public function pauseAJob(Job $job): Job
-   {
-      $job->status = 2;
-      $job->save();
-      return $job;
-   }
-   public function activeAJob(Job $job): Job
-   {
-      $job->status = 1;
-      $job->save();
-      return $job;
-   }
-   public function finishAJob(Job $job): Job
-   {
-      $job->status = 5;
-      $job->save();
-      return $job;
-   }
+         return $this->onSuccess( $jobStatus );
+      }
+      public function pauseAJob(Job $job): Job
+      {
+         $job->status = 2;
+         $job->save();
+         return $job;
+      }
+      public function activeAJob(Job $job): Job
+      {
+         $job->status = 1;
+         $job->save();
+         return $job;
+      }
+      public function finishAJob(Job $job): Job
+      {
+         $job->status = 5;
+         $job->save();
+         return $job;
+      }
 }

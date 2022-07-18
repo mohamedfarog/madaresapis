@@ -15,6 +15,7 @@ class JobLevel extends Model
     protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
 
+    
     public function jobs(): BelongsToMany
     {
         return $this->belongsToMany(Job::class);
@@ -24,12 +25,8 @@ class JobLevel extends Model
         return $this->belongsToMany(Teacher::class);
     }
 
-
     public function getTitleAttribute($value): String
     {
         return ucfirst($value);
     }
-    
-
-
 }

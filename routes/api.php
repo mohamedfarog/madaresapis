@@ -125,11 +125,8 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
 
-
    Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
    Route::post('academy_size', [AcademyController::class, 'academySize']);
-
-
 
    // ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);

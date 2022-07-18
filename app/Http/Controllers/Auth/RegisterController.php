@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -35,7 +33,6 @@ use Illuminate\Support\Facades\Storage;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 class RegisterController extends Controller
 {
     public function reSendVerificationSendEmail(Request $request)
@@ -119,7 +116,6 @@ class RegisterController extends Controller
             }
             $location->save();
 
-
             $academy = new Academy();
             $academy->user_id = $userId;
             if (isset($request->name)) {
@@ -165,7 +161,6 @@ class RegisterController extends Controller
                     AcademyFile::insert($AcademyFiles);
                 }
             }
-
             $academyData = Academy::with(['AcademyLevels', 'academyLocations', 'academyFiles'])->where('user_id', $userId)->first();
             return response()->json([
                 'status' => true,
@@ -176,7 +171,6 @@ class RegisterController extends Controller
             ]);
         }
         if ($request->type == '256') {
-
             $validator = Validator::make($request->all(), [
                 'country' => 'required',
                 'city' => 'required',
@@ -239,21 +233,17 @@ class RegisterController extends Controller
         } else {
             $location->academy_id = $userId;
         }
-
         if (isset($request->city)) {
             $location->city = $request->city;
         }
         if (isset($request->country)) {
             $location->country = $request->country;
         }
-
         if (isset($request->street)) {
             $location->street = $request->street;
         }
         $location->save();
-
         $skills = [];
-
         if (is_array($request->skills) || is_object($request->skills)) {
             foreach ($request->skills as $skill) {
                 array_push($skills, [
@@ -263,7 +253,6 @@ class RegisterController extends Controller
             }
             Skills::insert($skills);
         }
-
         $teachDoc =  new TeacherResume();
         $teachDoc->teacher_id = $userId;
 
@@ -289,12 +278,9 @@ class RegisterController extends Controller
                 $exp->save();
             }
         }
-
         if (is_array($request->education) || is_object($request->education)) {
-
             foreach ($request->education as $tedu) {
                 $edu = new TeacherEducation();
-
                 $edu->teacher_id = $userId;
                 $edu->title = $tedu['edu_title'];
                 $edu->start_date = $tedu['start_date'];
@@ -306,9 +292,7 @@ class RegisterController extends Controller
         $available = new Availability();
         $available->teacher_id = $userId;
         $available->save();
-
         $TeacherFiles = [];
-
         if (is_array($request->certficates) || is_object($request->TeacherFiles)) {
             foreach ($request->certficates as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
