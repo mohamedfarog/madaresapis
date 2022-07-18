@@ -34,13 +34,14 @@ class JobController extends Controller
       $validator = Validator::make($request->all(), [
          'job_subject_id' => 'required', 
          'title' => 'required',
+         'gender' => 'required|numeric',
          'country' => 'required|string',
          'state' => 'required|string',
          'language' => 'nullable|numeric',
-         'gender' => 'required|numeric',
          'desc' => 'required',
          'job_vacancy' => 'required',
          'close_date' => 'required|date',
+         'post_date' => 'required|date',
 
       ], []);
 
@@ -57,8 +58,7 @@ class JobController extends Controller
       }
       $job = new Job();
       $job->academy_id = $academy->id;
-      $job->job_type_id = $request->job_subject_id;
-      $job->job_level_id = $request->job_level_id;
+      $job->job_subject_id = $request->job_subject_id;
       $job->title = $request->title;
       $job->language = $request->language;
       $job->state = $request->state;
