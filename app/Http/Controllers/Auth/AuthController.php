@@ -344,7 +344,7 @@ class AuthController extends Controller
                 return $this->onError($validator->errors()->all());
             }
             $location = Locations::where('teacher_id', $userId)->first();
-            if ($location) {
+            if (!$location) {
                 $location = new Locations();
                 $location->teacher_id = $userId;
             }
@@ -370,7 +370,7 @@ class AuthController extends Controller
                 return $this->onError($validator->errors()->all());
             }
             $location = Locations::where('academy_id', $userId)->first();
-            if ($location) {
+            if (!$location) {
                 $location = new Locations();
                 $location->academy_id = $userId;
             }
