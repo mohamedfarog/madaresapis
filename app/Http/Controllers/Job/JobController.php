@@ -32,8 +32,7 @@ class JobController extends Controller
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'job_subject_id' => 'required',
-         'job_level_id' => 'required',
+         'job_subject_id' => 'required', 
          'title' => 'required',
          'country' => 'required|string',
          'state' => 'required|string',
