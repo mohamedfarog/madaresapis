@@ -66,6 +66,7 @@ class JobController extends Controller
       $job->desc = $request->desc;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
+      $job->edu_level_id = $request->edu_level_id;
       $job->comunication_email = $request->comunication_email;
       $job->min_exp_id = $request->min_exp_id;
       $job->salary_rate_id = $request->salary_rate_id;
