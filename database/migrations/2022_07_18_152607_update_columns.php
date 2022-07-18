@@ -34,7 +34,7 @@ class UpdateColumns extends Migration
             $table->double('salary_from')->nullable();
             $table->double('salary_to')->nullable();
             $table->foreignId('salary_rate_id')->nullable();
-            $table->email('comunication_email')->nullable();
+            $table->string('comunication_email')->nullable();
             $table->text('custom_questions')->nullable();
             
             $table->timestamps();
