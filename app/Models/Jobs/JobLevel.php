@@ -24,9 +24,12 @@ class JobLevel extends Model
         return $this->belongsToMany(Teacher::class);
     }
 
+
     public function getTitleAttribute($value): String
     {
         return ucfirst($value);
     }
+    
+
 
 }
