@@ -304,12 +304,14 @@ class AuthController extends Controller
     }
     public function updateMyInfo(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'country' => 'required',
-            'city' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
+        if (isset($request->country) || isset($request->city)) {
+            $validator = Validator::make($request->all(), [
+                'country' => 'required',
+                'city' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return $this->onError($validator->errors()->all());
+            }
         }
 
         $user = User::find(Auth::id());
@@ -333,57 +335,60 @@ class AuthController extends Controller
         $userId = Auth::id();
 
         if ($user->user_type == 256) {
+            if (isset($request->first_name) || isset($request->last_name)) {
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                ]);
 
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
-            ]);
 
-
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
+                if ($validator->fails()) {
+                    return $this->onError($validator->errors()->all());
+                }
             }
-            $location = Locations::where('teacher_id', $userId)->first();
-            if (!$location) {
-                $location = new Locations();
-                $location->teacher_id = $userId;
+            if (isset($request->country) && isset($request->city)) {
+                $location = Locations::where('teacher_id', $userId)->first();
+                if (!$location) {
+                    $location = new Locations();
+                    $location->teacher_id = $userId;
+                }
+                $location->country = $request->country;
+                $location->city = $request->city;
+                $location->street = $request->street;
+                $location->save();
             }
-            $location->country = $request->country;
-            $location->city = $request->city;
-            $location->street = $request->street;
-            $location->save();
             $teacher = Teacher::where('user_id', $userId)->first();
-            if (!$teacher) {
-                return $this->onError("No teacher found", 400);
+            if (isset($request->first_name) && isset($request->last_name)) {
+                if (!$teacher) {
+                    return $this->onError("No teacher found", 400);
+                }
+                $teacher->first_name = $request->first_name;
+                $teacher->last_name =   $request->last_name;
+                $teacher->save();
             }
-            $teacher->first_name = $request->first_name;
-            $teacher->last_name =   $request->last_name;
-            $teacher->save();
             return $this->onSuccess($teacher);
         }
         if ($user->user_type == 255) {
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return $this->onError($validator->errors()->all());
+            if (isset($request->country) && isset($request->city)) {
+                $location = Locations::where('academy_id', $userId)->first();
+                if (!$location) {
+                    $location = new Locations();
+                    $location->academy_id = $userId;
+                }
+                $location->country = $request->country;
+                $location->city = $request->city;
+                $location->street = $request->street;
+                $location->save();
             }
-            $location = Locations::where('academy_id', $userId)->first();
-            if (!$location) {
-                $location = new Locations();
-                $location->academy_id = $userId;
-            }
-            $location->country = $request->country;
-            $location->city = $request->city;
-            $location->street = $request->street;
-            $location->save();
             $academy  = Academy::where('user_id', $userId)->first();
-            if (!$academy) {
-                return $this->onError("No academy found", 400);
+            if (isset($request->name)) {
+                if (!$academy) {
+                    return $this->onError("No academy found", 400);
+                }
+                $academy->name = $request->name;
+                $academy->save();
             }
-            $academy->name = $request->name;
-            $academy->save();
             return $this->onSuccess($academy);
         }
     }
