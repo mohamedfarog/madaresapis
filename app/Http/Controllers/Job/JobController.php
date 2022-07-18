@@ -32,7 +32,7 @@ class JobController extends Controller
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'job_subject_id' => 'required', 
+         'job_subject_id' => 'required',
          'title' => 'required',
          'gender' => 'required|numeric',
          'country' => 'required|string',
@@ -63,14 +63,25 @@ class JobController extends Controller
       $job->language = $request->language;
       $job->state = $request->state;
       $job->country = $request->country;
-      $job->job_description = $request->desc;
+      $job->desc = $request->desc;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
-      $job->hiring_budget = $request->hiring_budget;
-      $job->job_experience = $request->job_experience;
+      $job->comunication_email = $request->comunication_email;
+      $job->min_exp_id = $request->min_exp_id;
+      $job->salary_rate_id = $request->salary_rate_id;
+      $job->salary_from = $request->salary_from;
+      if (isset($request->salary_to)) {
+         $job->salary_to = $request->salary_to;
+      }
+      
+      $job->post_date = $request->post_date;
+      $job->close_date = $request->close_date;
       $job->status = 0;
+      
+      if (isset($request->custom_questions)) {
+         $job->custom_questions = implode(",",$request->custom_questions);
+      }
 
-   
       if (isset($request->close_date)) {
 
          $job->job_deadline = $request->close_date;
@@ -121,7 +132,7 @@ class JobController extends Controller
 
    public function updateStatus(Request $request)
    {
-      
+
       $validator = Validator::make($request->all(), [
          'id' => 'required',
          'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
@@ -141,11 +152,11 @@ class JobController extends Controller
          return $this->onError(["No Academy Found"]);
       }
 
-      $jobStatus = Job::where('id',$request->id)->where('academy_id',$academy->id)->first();
+      $jobStatus = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
-      
+
       if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
          return $this->onError(["Action not allowed"]);
       }
@@ -176,8 +187,8 @@ class JobController extends Controller
          default:
             return $this->onError(["Action not allowed"]);
             break;
-         }
-       return $this->onSuccess( $jobStatus );
+      }
+      return $this->onSuccess($jobStatus);
    }
    public function pauseAJob(Job $job): Job
    {
