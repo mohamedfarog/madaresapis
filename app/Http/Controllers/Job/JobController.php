@@ -38,7 +38,7 @@ class JobController extends Controller
          'country' => 'required|string',
          'state' => 'required|string',
          'language' => 'nullable|numeric',
-         'gender_id' => 'required|numeric',
+         'gender' => 'required|numeric',
          'job_description' => 'required',
          'job_vacancy' => 'required',
          'job_deadline' => 'required|date',
