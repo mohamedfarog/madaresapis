@@ -42,8 +42,6 @@ class JobController extends Controller
          'desc' => 'required',
          'job_vacancy' => 'required',
          'close_date' => 'required|date',
-         'job_responsibilities' => 'required',
-         'expected_start_date' => 'required|date',
 
       ], []);
 
@@ -60,7 +58,7 @@ class JobController extends Controller
       }
       $job = new Job();
       $job->academy_id = $academy->id;
-      $job->job_type_id = $request->job_type_id;
+      $job->job_type_id = $request->job_subject_id;
       $job->job_level_id = $request->job_level_id;
       $job->title = $request->title;
       $job->language = $request->language;
@@ -70,15 +68,10 @@ class JobController extends Controller
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
       $job->hiring_budget = $request->hiring_budget;
-      $job->job_responsibilities = $request->job_responsibilities;
-      $job->job_benefits = $request->job_benefits;
       $job->job_experience = $request->job_experience;
       $job->status = 0;
 
-      if (isset($request->expected_start_date)) {
-
-         $job->expected_start_date = $request->expected_start_date;
-      }
+   
       if (isset($request->close_date)) {
 
          $job->job_deadline = $request->close_date;
