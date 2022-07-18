@@ -82,10 +82,7 @@ class JobController extends Controller
          $job->custom_questions = implode(",",$request->custom_questions);
       }
 
-      if (isset($request->close_date)) {
-
-         $job->job_deadline = $request->close_date;
-      }
+    
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
