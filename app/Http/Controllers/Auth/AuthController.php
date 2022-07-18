@@ -343,14 +343,14 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
-            $location=Locations::where('teacher_id', $userId)->first();
-            if($location)
-            {
-                $location=new Locations();
+            $location = Locations::where('teacher_id', $userId)->first();
+            if ($location) {
+                $location = new Locations();
+                $location->teacher_id = $userId;
             }
-            $location->country=$request->country;
-            $location->city=$request->city;
-            $location->street=$request->street;
+            $location->country = $request->country;
+            $location->city = $request->city;
+            $location->street = $request->street;
             $location->save();
             $teacher = Teacher::where('user_id', $userId)->first();
             if (!$teacher) {
@@ -369,14 +369,14 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
-            $location=Locations::where('academy_id', $userId)->first();
-            if($location)
-            {
-                $location=new Locations();
+            $location = Locations::where('academy_id', $userId)->first();
+            if ($location) {
+                $location = new Locations();
+                $location->academy_id = $userId;
             }
-            $location->country=$request->country;
-            $location->city=$request->city;
-            $location->street=$request->street;
+            $location->country = $request->country;
+            $location->city = $request->city;
+            $location->street = $request->street;
             $location->save();
             $academy  = Academy::where('user_id', $userId)->first();
             if (!$academy) {
@@ -393,22 +393,19 @@ class AuthController extends Controller
     }
     public function my_info(Request $request)
     {
-        $data=[];
+        $data = [];
         $user = User::find(Auth::id());
         //Teacher
-        if($user->user_type == '256')
-        {
-            $data['teacherData']= Teacher::where('user_id',$user->id)->with(['teacherLocations','teacherSkills','resumes','experiences','teacherFiles','education','teacherAvailabity'])->first();
-        }
-        else if($user->user_type == '255')
-        {
-            $data['academyData'] = Academy::with(['AcademyLevels'=>function($q){
+        if ($user->user_type == '256') {
+            $data['teacherData'] = Teacher::where('user_id', $user->id)->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity'])->first();
+        } else if ($user->user_type == '255') {
+            $data['academyData'] = Academy::with(['AcademyLevels' => function ($q) {
                 return $q->with('level');
             }, 'academyLocations', 'academyFiles'])->where('user_id', $user->id)->first();
         }
         //Teacher
 
-        $data['user']=$user;
+        $data['user'] = $user;
         return $this->onSuccess($data);
     }
 }
