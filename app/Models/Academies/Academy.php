@@ -47,9 +47,9 @@ class Academy extends Model
     public function getAvatarAttribute($value){
         return "http://api.madaresweb.mvp-apps.ae".$value;
     }   
-    public function academyLocations(): HasMany
+    public function academyLocations(): hasOne
     {
-        return $this->hasMany(Locations::class, 'academy_id', 'user_id');
+        return $this->hasOne(Locations::class, 'academy_id', 'user_id');
     }
 
     public function academyLevels(): HasMany
