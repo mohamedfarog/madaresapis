@@ -39,9 +39,9 @@ class JobController extends Controller
          'state' => 'required|string',
          'language' => 'nullable|numeric',
          'gender' => 'required|numeric',
-         'job_description' => 'required',
+         'desc' => 'required',
          'job_vacancy' => 'required',
-         'job_deadline' => 'required|date',
+         'close_date' => 'required|date',
          'job_responsibilities' => 'required',
          'expected_start_date' => 'required|date',
 
@@ -66,11 +66,10 @@ class JobController extends Controller
       $job->language = $request->language;
       $job->state = $request->state;
       $job->country = $request->country;
-      $job->job_description = $request->job_description;
+      $job->job_description = $request->desc;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
       $job->hiring_budget = $request->hiring_budget;
-      $job->job_description = $request->job_description;
       $job->job_responsibilities = $request->job_responsibilities;
       $job->job_benefits = $request->job_benefits;
       $job->job_experience = $request->job_experience;
@@ -80,9 +79,9 @@ class JobController extends Controller
 
          $job->expected_start_date = $request->expected_start_date;
       }
-      if (isset($request->job_deadline)) {
+      if (isset($request->close_date)) {
 
-         $job->job_deadline = $request->job_deadline;
+         $job->job_deadline = $request->close_date;
       }
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
