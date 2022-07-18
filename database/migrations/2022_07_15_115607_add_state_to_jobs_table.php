@@ -20,7 +20,6 @@ class AddStateToJobsTable extends Migration
             $table->tinyInteger('language')->nullable();
         });
     }
-
     /**
      * Reverse the migrations.
      *

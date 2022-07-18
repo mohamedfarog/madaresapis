@@ -154,6 +154,7 @@ class JobController extends Controller
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
+      
       if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
          return $this->onError(["Action not allowed"]);
       }
