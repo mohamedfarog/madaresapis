@@ -100,7 +100,7 @@ class JobController extends Controller
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      $data = Job::with(['applications', 'received', 'reviewed', 'contacting', 'rejected'])->where("academy_id",1)->whereNull('deleted_at')->paginate();
+      $data = Job::with(['applications', 'received', 'reviewed', 'contacting', 'rejected'])->where("academy_id",$academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
