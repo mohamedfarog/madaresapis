@@ -19,11 +19,11 @@ class Job extends Model
 
     use HasFactory;
     protected $guarded = ['id'];
-    protected $hidden = ['created_at' , 'updated_at', 'deleted_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function academy(): BelongsTo
-    {  
-      return $this->belongsTo(Academy::class);
+    {
+        return $this->belongsTo(Academy::class);
     }
     public function gender(): HasOne
     {
@@ -47,26 +47,25 @@ class Job extends Model
     }
     public function received(): HasMany
     {
-        return $this->HasMany(JobActApply::class,'status', 0);
-    
-}
+        return $this->HasMany(JobActApply::class);
+    }
     public function reviewed(): HasMany
     {
-        return $this->HasMany(JobActApply::class,'status', 1)->count();
+        return $this->HasMany(JobActApply::class);
     }
     public function contacting(): HasMany
     {
-        return $this->HasMany(JobActApply::class,'status', 2)->count();
+        return $this->HasMany(JobActApply::class);
     }
     public function rejected(): HasMany
     {
 
-        return $this->HasMany(JobActApply::class,'status', 3)->count();
+        return $this->HasMany(JobActApply::class);
     }
-    
+
     public function getAcademiesInfoAttribute()
     {
-        $academy = Academy::select('en_name','avatar', 'ar_name')->where('id', $this->id)->get();
+        $academy = Academy::select('en_name', 'avatar', 'ar_name')->where('id', $this->id)->get();
         return $academy;
     }
 }
