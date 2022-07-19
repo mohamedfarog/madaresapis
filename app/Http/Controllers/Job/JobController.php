@@ -261,7 +261,6 @@ class JobController extends Controller
          return $this->onError('Job Not Found');
 
       }
-   
       $DeleteJob->deleted_at = date("Y-m-d H:i:s", strtotime('now'));
       $DeleteJob->save();
       return $this->onSuccess($DeleteJob);
