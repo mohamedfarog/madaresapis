@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Website;
-
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
 use App\Models\Jobs\JobLevel;
@@ -9,6 +7,7 @@ use App\Models\Jobs\Job;
 use App\Models\Jobs\JobType;
 use App\Models\Skills;
 use App\Models\Skill;
+use App\Models\Test;
 use App\Models\Available;
 use Illuminate\Http\JsonResponse;
 use App\Models\Website\HomeBanner;
@@ -136,8 +135,14 @@ public function userSkills(Request $request)
     }
 
     public function testingHtttpRequest(Request $request){
-       return $request;
-     return  $this->onSuccess($request);
+        return $request->age;
+        $test  = new Test();
+        $test->name = $request->name;
+        $test->age = $request->age;
+        $test->occupation = $request->occ;
+        $test->save();
+        return $test;
+        return  $this->onSuccess($request);
         
     }
 

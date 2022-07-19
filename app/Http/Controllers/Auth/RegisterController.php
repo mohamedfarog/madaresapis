@@ -81,7 +81,6 @@ class RegisterController extends Controller
         if ($userType->email_verified == 0) {
             return $this->onError('This User is not verified yet');
         }
-
         $userType->user_type = $request->type;
         $userType->save();
         $token = JWTAuth::fromUser($userType);
@@ -110,12 +109,10 @@ class RegisterController extends Controller
             if (isset($request->country)) {
                 $location->country = $request->country;
             }
-
             if (isset($request->street)) {
                 $location->street = $request->street;
             }
             $location->save();
-
             $academy = new Academy();
             $academy->user_id = $userId;
             if (isset($request->name)) {
@@ -195,7 +192,6 @@ class RegisterController extends Controller
             }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
-
             if (isset($request->gender_id)) {
                 $teacher->gender_id = $request->gender_id;
             }
