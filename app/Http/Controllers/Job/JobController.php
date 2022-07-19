@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Job;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
@@ -251,5 +252,18 @@ class JobController extends Controller
          'apply' => $apply
       ]);
    }
-   //add deleted at = timesta
+   public function deleteJob(Request $request){
+     
+      try {
+      $DeleteJob = Job::findOrFail($request->id);
+
+      }catch(ModelNotFoundException $e){
+         return $this->onError('Job Not Found');
+
+      }
+   
+      $DeleteJob->deleted_at = date("Y-m-d H:i:s", strtotime('now'));
+      $DeleteJob->save();
+      return $this->onSuccess($DeleteJob);
+   }
 }

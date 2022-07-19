@@ -137,6 +137,8 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
    Route::post('updateStatus', [JobController::class, 'updateStatus']);
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
+   Route::post('delete_job', [JobController::class, 'deleteJob']);
+
 
 });
 
