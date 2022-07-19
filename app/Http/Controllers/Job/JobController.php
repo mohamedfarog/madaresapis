@@ -195,7 +195,7 @@ class JobController extends Controller
             return $this->onError(["Action not allowed"]);
             break;
       }
-      return $this->onSuccess($jobStatus);
+      return $this->onSuccess($jobStatus,200,"Status updated successfully");
    }
    public function pauseAJob(Job $job): Job
    {
@@ -277,6 +277,6 @@ class JobController extends Controller
 
       $deleteJob->deleted_at = Carbon::now();
       $deleteJob->save();
-      return $this->onSuccess($deleteJob);
+      return $this->onSuccess($deleteJob,2,"Job deleted successfully");
    }
 }
