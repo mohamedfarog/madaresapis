@@ -145,7 +145,7 @@
                     <div class="green-bg"></div>
                     <div  class="login_form">
                         <div class='regular_login'>
-                            <label id="progressBar">Subject</label>
+                            <label id="progressBar">{{$subject}}</label>
                             <label id="progressBar">body</label>
                         </div>
                     </div>
