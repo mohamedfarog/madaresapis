@@ -255,6 +255,15 @@ class JobController extends Controller
    }
    public function deleteJob(Request $request)
    {
+      $validator = Validator::make($request->all(), [
+         'id' => 'required',
+      ], [], [
+         "id" => "Job ID"
+      ]);
+
+      if ($validator->fails()) {
+         return $this->onError($validator->errors()->all());
+      }
       $academy = Academy::where('user_id', Auth::id())->first();
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
