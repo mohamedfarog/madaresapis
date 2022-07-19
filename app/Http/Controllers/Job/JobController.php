@@ -246,6 +246,7 @@ class JobController extends Controller
       $apply->job_id = $jobStatus->id;
       $apply->apply_date = Carbon::now();
       $apply->status = 0;
+      $apply->remark = "Some Remake";
       $apply->save();
 
       return $this->onSuccess([
