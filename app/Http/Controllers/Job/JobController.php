@@ -276,6 +276,6 @@ class JobController extends Controller
 
       $deleteJob->deleted_at = Carbon::now();
       $deleteJob->save();
-      return $this->onSuccess($deleteJob);
+      return $this->onSuccess($deleteJob,2,"Job deleted successfully");
    }
 }
