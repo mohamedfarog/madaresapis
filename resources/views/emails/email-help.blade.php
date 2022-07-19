@@ -144,8 +144,8 @@
                     <div class="green-bg"></div>
                     <div  class="login_form">
                         <div class='regular_login'>
-                            <label id="progressBar">{{subject}}</label>
-                            <label id="progressBar">{{body}}</label>
+                            <label id="progressBar">{{$subject}}</label>
+                            <label id="progressBar">body</label>
                         </div>
                     </div>
                 </div>
