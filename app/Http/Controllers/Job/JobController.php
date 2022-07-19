@@ -97,13 +97,13 @@ class JobController extends Controller
       $academy = Academy::where('user_id', Auth::id())->first();
       
       //add q whwere deleted_at is not null
-      $data = Job::where("academy_id", $academy->id)->paginate();
+      $data = Job::where("academy_id", $academy->id && "deleted_at" !=null)->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
    {
         //add q whwere deleted_at is not null
-      $data = Job::where('status', 1)->paginate(20);
+      $data = Job::where('status', 1 && "deleted_at"!=null)->paginate(20);
       return $this->onSuccess($data);
    }
    public function searchJobPost(Request $request)
