@@ -139,7 +139,7 @@
       <img src={{ asset('emails/authBC.png') }} alt='login_img' class='login_img'/>
       <div class='login_card_wrapper'>
             <h1 class="page-title">Help Me</h1>
-            <h4>Sender Name</h4>
+            <h4>{{$email}}</h4>
             <div class='card overflow-hidden'>
                 <div class="card-body innerCardBody">
                     <div class="green-bg"></div>

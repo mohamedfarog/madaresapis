@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class HelpAcknowledgement extends Mailable
 {
     use Queueable, SerializesModels;
-
+    protected $data=[];
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($info)
     {
-        //
+        $this->data=$info;
     }
 
     /**
@@ -28,6 +28,6 @@ class HelpAcknowledgement extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email-help');
+        return $this->view('emails.email-help',$this->data);
     }
 }
