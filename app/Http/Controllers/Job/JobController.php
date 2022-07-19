@@ -55,6 +55,13 @@ class JobController extends Controller
          return $this->onError("No Academy Info Found", 400);
       }
       $job = new Job();
+      if(isset($request->id)){
+         $job = Job::where('id',$request->id)->where('academy_id',$academy->id)->first();
+         if(!$job)
+         {
+            return $this->onError('No Job found');
+         }
+      }
       $job->academy_id = $academy->id;
       $job->job_subject_id = $request->job_subject_id;
       $job->title = $request->title;
