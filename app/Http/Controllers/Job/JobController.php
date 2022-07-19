@@ -194,7 +194,7 @@ class JobController extends Controller
             return $this->onError(["Action not allowed"]);
             break;
       }
-      return $this->onSuccess($jobStatus);
+      return $this->onSuccess($jobStatus,200,"Status updated successfully");
    }
    public function pauseAJob(Job $job): Job
    {
