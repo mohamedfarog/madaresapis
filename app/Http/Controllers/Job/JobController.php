@@ -7,6 +7,7 @@ use App\Models\Academies\Academy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Jobs\Job;
+use App\Models\Jobs\JobActApply;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -55,10 +56,9 @@ class JobController extends Controller
          return $this->onError("No Academy Info Found", 400);
       }
       $job = new Job();
-      if(isset($request->id)){
-         $job = Job::where('id',$request->id)->where('academy_id',$academy->id)->first();
-         if(!$job)
-         {
+      if (isset($request->id)) {
+         $job = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
+         if (!$job) {
             return $this->onError('No Job found');
          }
       }
@@ -95,14 +95,14 @@ class JobController extends Controller
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      
+
       //add q whwere deleted_at is not null
       $data = Job::where("academy_id", $academy->id)->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
    {
-        //add q whwere deleted_at is not null
+      //add q whwere deleted_at is not null
       $data = Job::where('status', 1)->paginate(20);
       return $this->onSuccess($data);
    }
@@ -211,5 +211,42 @@ class JobController extends Controller
       $job->status = 5;
       $job->save();
       return $job;
+   }
+   public function applyForJob(Request $request)
+   {
+      $validator = Validator::make($request->all(), [
+         'id' => 'required',
+      ], [], [
+         "id" => "Job ID"
+      ]);
+
+      if ($validator->fails()) {
+         return $this->onError($validator->errors()->all());
+      }
+      $user = User::find(Auth::id());
+
+      $jobStatus = Job::where('id', $request->id)->first();
+      if (!$jobStatus) {
+         return $this->onError(["No Job Found"]);
+      }
+      if ($jobStatus->status != 1) {
+         return $this->onError(["This Job is currently not active"]);
+      }
+      $apply = JobActApply::where('teacher_id', $user->id)->where('job_id', $jobStatus->id)->first();
+      if ($apply) {
+         return $this->onError(["You already have applied for this job"]);
+      }
+      $apply = new JobActApply();
+      $apply->teacher_id=$user->id;
+      $apply->job_id=$jobStatus->id;
+      $apply->apply_date=Carbon::now();
+      $apply->status=0;
+      $apply->save();
+      
+      return $this->onSuccess([
+         'user' => $user,
+         'job' => $jobStatus,
+         'apply' => $apply
+      ]);
    }
 }
