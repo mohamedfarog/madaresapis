@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Job;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Http\Controllers\Controller;
@@ -97,7 +98,7 @@ class JobController extends Controller
    {
       $academy = Academy::where('user_id', Auth::id())->first();
 
- 
+
       $data = Job::where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
@@ -240,10 +241,10 @@ class JobController extends Controller
          return $this->onError(["You already have applied for this job"]);
       }
       $apply = new JobActApply();
-      $apply->teacher_id=$user->id;
-      $apply->job_id=$jobStatus->id;
-      $apply->apply_date=Carbon::now();
-      $apply->status=0;
+      $apply->teacher_id = $user->id;
+      $apply->job_id = $jobStatus->id;
+      $apply->apply_date = Carbon::now();
+      $apply->status = 0;
       $apply->save();
 
       return $this->onSuccess([
@@ -252,18 +253,18 @@ class JobController extends Controller
          'apply' => $apply
       ]);
    }
-   public function deleteJob(Request $request){
-     
-      try {
-      $DeleteJob = Job::findOrFail($request->id);
-
-      }catch(ModelNotFoundException $e){
-         return $this->onError('Job Not Found');
-
+   public function deleteJob(Request $request)
+   {
+      $academy = Academy::where('user_id', Auth::id())->first();
+      if (!$academy) {
+         return $this->onError(["No Academy Found"]);
       }
-   
-      $DeleteJob->deleted_at = date("Y-m-d H:i:s", strtotime('now'));
-      $DeleteJob->save();
-      return $this->onSuccess($DeleteJob);
+      $deleteJob = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
+      if (!$deleteJob) {
+         return $this->onError(["No Job Found"]);
+      }
+      $deleteJob->deleted_at = Carbon::now();
+      $deleteJob->save();
+      return $this->onSuccess($deleteJob);
    }
 }
