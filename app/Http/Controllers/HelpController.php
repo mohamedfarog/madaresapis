@@ -23,7 +23,7 @@ class HelpController extends Controller
         if ($validator->fails()) {
             return $this->onError($validator->errors()->all());
         }
-        // Mail::to($request->email)->cc(['faisal@mvp-apps.ae'])->send(new HelpAcknowledgement());
+        Mail::to($request->email)->cc(['faisal@mvp-apps.ae'])->send(new HelpAcknowledgement());
         return view('emails/email-help');
         return  $this->onSuccess(['message' => "Request Send Successfully"]);
     }
