@@ -244,6 +244,7 @@ class JobController extends Controller
       $apply = new JobActApply();
       $apply->teacher_id = $user->id;
       $apply->job_id = $jobStatus->id;
+      $apply->academy_id = $jobStatus->academy_id;
       $apply->apply_date = Carbon::now();
       $apply->status = 0;
       $apply->save();
