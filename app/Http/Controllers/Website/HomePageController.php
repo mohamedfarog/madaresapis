@@ -145,6 +145,5 @@ public function userSkills(Request $request)
         return  $this->onSuccess($request);
         
     }
-
 }
 
