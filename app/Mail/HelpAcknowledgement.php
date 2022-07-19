@@ -28,6 +28,6 @@ class HelpAcknowledgement extends Mailable
      */
     public function build()
     {
-        return $this->view('email-help.name');
+        return $this->view('email-help');
     }
 }
