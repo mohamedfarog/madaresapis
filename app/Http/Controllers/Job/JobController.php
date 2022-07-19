@@ -224,7 +224,9 @@ class JobController extends Controller
          return $this->onError($validator->errors()->all());
       }
       $user = User::find(Auth::id());
-
+      if ($user->user_type == 256) {
+         return $this->onError(["Only teacher can apply for this job"]);
+      }
       $jobStatus = Job::where('id', $request->id)->first();
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
