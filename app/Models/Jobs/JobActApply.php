@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobActApply extends Model
 {
+    protected $table = 'job_act_apply';
     use HasFactory;
     
 }

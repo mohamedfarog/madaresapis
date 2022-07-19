@@ -133,7 +133,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
    // ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);
-   Route::get('ssstatus', [JobController::class, 'get_status'])->first();
+
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
    Route::post('updateStatus', [JobController::class, 'updateStatus']);

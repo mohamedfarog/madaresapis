@@ -47,8 +47,9 @@ class Job extends Model
     }
     public function received(): HasMany
     {
-        return $this->HasMany(JobActApply::class,'status', 0)->count();
-    }
+        return $this->HasMany(JobActApply::class,'status', 0);
+    
+}
     public function reviewed(): HasMany
     {
         return $this->HasMany(JobActApply::class,'status', 1)->count();
