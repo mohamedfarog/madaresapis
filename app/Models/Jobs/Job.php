@@ -45,22 +45,22 @@ class Job extends Model
     {
         return $this->HasMany(JobActApply::class);
     }
-    public function received(): HasMany
+    public function awaiting(): HasMany
     {
-        return $this->HasMany(JobActApply::class);
+        return $this->HasMany(JobActApply::class)->where('status',0);
     }
     public function reviewed(): HasMany
     {
-        return $this->HasMany(JobActApply::class);
+        return $this->HasMany(JobActApply::class)->where('status',1);
     }
     public function contacting(): HasMany
     {
-        return $this->HasMany(JobActApply::class);
+        return $this->HasMany(JobActApply::class)->where('status',2);
     }
     public function rejected(): HasMany
     {
 
-        return $this->HasMany(JobActApply::class);
+        return $this->HasMany(JobActApply::class)->where('status',3);
     }
 
     public function getAcademiesInfoAttribute()
