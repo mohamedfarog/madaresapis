@@ -141,8 +141,6 @@
 
 <body>
     <div class="login_page">
-
-       
         <img src={{ asset('emails/authBC.png') }} alt='login_img' class='login_img'/>
         <div class='login_card_wrapper'>
             <h1 class="page-title">Email Verfication</h1>

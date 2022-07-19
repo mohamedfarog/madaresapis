@@ -119,7 +119,6 @@ class AuthController extends Controller
             'user' => Auth::user(),
         ]);
     }
-
     function googleAuth($accessToken)
     {
         try {

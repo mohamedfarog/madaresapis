@@ -72,16 +72,16 @@ class JobController extends Controller
       if (isset($request->salary_to)) {
          $job->salary_to = $request->salary_to;
       }
-      
+
       $job->post_date = $request->post_date;
       $job->close_date = $request->close_date;
       $job->status = 0;
-      
+
       if (isset($request->custom_questions)) {
-         $job->custom_questions = implode(",",$request->custom_questions);
+         $job->custom_questions = implode(",", $request->custom_questions);
       }
 
-    
+
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
@@ -152,10 +152,6 @@ class JobController extends Controller
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
-<<<<<<< HEAD
-=======
-
->>>>>>> a658a2a6d56c306884386fef4830e2af3152bbad
       if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
          return $this->onError(["Action not allowed"]);
       }
@@ -186,29 +182,6 @@ class JobController extends Controller
          default:
             return $this->onError(["Action not allowed"]);
             break;
-<<<<<<< HEAD
-         }
-         return $this->onSuccess( $jobStatus );
-      }
-      public function pauseAJob(Job $job): Job
-      {
-         $job->status = 2;
-         $job->save();
-         return $job;
-      }
-      public function activeAJob(Job $job): Job
-      {
-         $job->status = 1;
-         $job->save();
-         return $job;
-      }
-      public function finishAJob(Job $job): Job
-      {
-         $job->status = 5;
-         $job->save();
-         return $job;
-      }
-=======
       }
       return $this->onSuccess($jobStatus);
    }
@@ -230,5 +203,4 @@ class JobController extends Controller
       $job->save();
       return $job;
    }
->>>>>>> a658a2a6d56c306884386fef4830e2af3152bbad
 }
