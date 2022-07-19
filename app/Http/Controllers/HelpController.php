@@ -25,6 +25,6 @@ class HelpController extends Controller
         }
         Mail::to($request->email)->cc(['faisal@mvp-apps.ae'])->send(new HelpAcknowledgement());
         // return view('emails/email-help');
-        return  $this->onSuccess(['message' => view('emails/email-help')]);
+        return  $this->onSuccess(['message' => 'emails/email-help']);
     }
 }
