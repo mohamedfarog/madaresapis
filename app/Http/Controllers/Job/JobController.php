@@ -88,11 +88,14 @@ class JobController extends Controller
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
+      
+      //add q whwere deleted_at is not null
       $data = Job::where("academy_id", $academy->id)->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
    {
+        //add q whwere deleted_at is not null
       $data = Job::where('status', 1)->paginate(20);
       return $this->onSuccess($data);
    }
@@ -128,7 +131,6 @@ class JobController extends Controller
 
    public function updateStatus(Request $request)
    {
-
       $validator = Validator::make($request->all(), [
          'id' => 'required',
          'status' => ['required', Rule::in(['pause', 'active', 'finish']),],

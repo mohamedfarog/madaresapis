@@ -89,8 +89,7 @@
             align-items: center;
             min-height: 200px;
             width:100%
-
-        }
+            }
         .regular_login h3 {
             color: gray;
             text-align: center;
@@ -139,14 +138,14 @@
       <img src={{ asset('emails/authBC.png') }} alt='login_img' class='login_img'/>
       <div class='login_card_wrapper'>
             <h1 class="page-title">Help Me</h1>
-            <h4>Sender Name</h4>
+            <h4>{{email}}</h4>
             <div class='card overflow-hidden'>
                 <div class="card-body innerCardBody">
                     <div class="green-bg"></div>
                     <div  class="login_form">
                         <div class='regular_login'>
-                            <label id="progressBar">Subject</label>
-                            <label id="progressBar">body</label>
+                            <label id="progressBar">{{subject}}</label>
+                            <label id="progressBar">{{body}}</label>
                         </div>
                     </div>
                 </div>
