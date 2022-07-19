@@ -57,7 +57,7 @@ class JobController extends Controller
       }
       $job = new Job();
       if (isset($request->id)) {
-         $job = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
+         $job = Job::where('id', $request->id)->whereNull('deleted_at')->where('academy_id', $academy->id)->first();
          if (!$job) {
             return $this->onError('No Job found');
          }
@@ -96,14 +96,14 @@ class JobController extends Controller
    {
       $academy = Academy::where('user_id', Auth::id())->first();
 
-      //add q whwere deleted_at is not null
-      $data = Job::where("academy_id", $academy->id)->whereNotNull("deleted_at")->paginate();
+ 
+      $data = Job::where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
    {
-        //add q whwere deleted_at is not null
-      $data = Job::where('status', 1)->whereNotNull("deleted_at")->paginate(20);
+
+      $data = Job::where('status', 1)->whereNull("deleted_at")->paginate(20);
       return $this->onSuccess($data);
    }
    public function searchJobPost(Request $request)
@@ -125,7 +125,7 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title);
+      $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title)->whereNull('deleted_at');
       if (isset($request->language)) {
          $job = $job->where('language', $request->language);
       }
@@ -157,7 +157,7 @@ class JobController extends Controller
          return $this->onError(["No Academy Found"]);
       }
 
-      $jobStatus = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
+      $jobStatus = Job::where('id', $request->id)->whereNull('deleted_at')->where('academy_id', $academy->id)->first();
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
@@ -227,7 +227,7 @@ class JobController extends Controller
       if ($user->user_type == 256) {
          return $this->onError(["Only teacher can apply for this job"]);
       }
-      $jobStatus = Job::where('id', $request->id)->first();
+      $jobStatus = Job::where('id', $request->id)->whereNull('deleted_at')->first();
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
@@ -251,4 +251,5 @@ class JobController extends Controller
          'apply' => $apply
       ]);
    }
+   //add deleted at = timesta
 }
