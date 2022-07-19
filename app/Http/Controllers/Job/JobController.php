@@ -30,18 +30,16 @@ class JobController extends Controller
    public function addJob(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'job_type_id' => 'required',
-         'job_level_id' => 'required',
+         'job_subject_id' => 'required',
          'title' => 'required',
+         'gender' => 'required|numeric',
          'country' => 'required|string',
          'state' => 'required|string',
          'language' => 'nullable|numeric',
-         'gender_id' => 'required|numeric',
-         'job_description' => 'required',
+         'desc' => 'required',
          'job_vacancy' => 'required',
-         'job_deadline' => 'required|date',
-         'job_responsibilities' => 'required',
-         'expected_start_date' => 'required|date',
+         'close_date' => 'required|date',
+         'post_date' => 'required|date',
 
       ], []);
 
@@ -58,30 +56,32 @@ class JobController extends Controller
       }
       $job = new Job();
       $job->academy_id = $academy->id;
-      $job->job_type_id = $request->job_type_id;
-      $job->job_level_id = $request->job_level_id;
+      $job->job_subject_id = $request->job_subject_id;
       $job->title = $request->title;
       $job->language = $request->language;
       $job->state = $request->state;
       $job->country = $request->country;
-      $job->job_description = $request->job_description;
+      $job->desc = $request->desc;
       $job->job_vacancy = $request->job_vacancy;
       $job->gender = $request->gender;
-      $job->hiring_budget = $request->hiring_budget;
-      $job->job_description = $request->job_description;
-      $job->job_responsibilities = $request->job_responsibilities;
-      $job->job_benefits = $request->job_benefits;
-      $job->job_experience = $request->job_experience;
+      $job->edu_level_id = $request->edu_level_id;
+      $job->comunication_email = $request->comunication_email;
+      $job->min_exp_id = $request->min_exp_id;
+      $job->salary_rate_id = $request->salary_rate_id;
+      $job->salary_from = $request->salary_from;
+      if (isset($request->salary_to)) {
+         $job->salary_to = $request->salary_to;
+      }
+      
+      $job->post_date = $request->post_date;
+      $job->close_date = $request->close_date;
       $job->status = 0;
-
-      if (isset($request->expected_start_date)) {
-
-         $job->expected_start_date = $request->expected_start_date;
+      
+      if (isset($request->custom_questions)) {
+         $job->custom_questions = implode(",",$request->custom_questions);
       }
-      if (isset($request->job_deadline)) {
 
-         $job->job_deadline = $request->job_deadline;
-      }
+    
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
@@ -128,7 +128,7 @@ class JobController extends Controller
 
    public function updateStatus(Request $request)
    {
-      
+
       $validator = Validator::make($request->all(), [
          'id' => 'required',
          'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
@@ -148,10 +148,14 @@ class JobController extends Controller
          return $this->onError(["No Academy Found"]);
       }
 
-      $jobStatus = Job::where('id',$request->id)->where('academy_id',$academy->id)->first();
+      $jobStatus = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
       if (!$jobStatus) {
          return $this->onError(["No Job Found"]);
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a658a2a6d56c306884386fef4830e2af3152bbad
       if ($jobStatus->status == 0 || $jobStatus->status == 3 || $jobStatus->status == 4 || $jobStatus->status == 5) {
          return $this->onError(["Action not allowed"]);
       }
@@ -182,6 +186,7 @@ class JobController extends Controller
          default:
             return $this->onError(["Action not allowed"]);
             break;
+<<<<<<< HEAD
          }
          return $this->onSuccess( $jobStatus );
       }
@@ -203,4 +208,27 @@ class JobController extends Controller
          $job->save();
          return $job;
       }
+=======
+      }
+      return $this->onSuccess($jobStatus);
+   }
+   public function pauseAJob(Job $job): Job
+   {
+      $job->status = 2;
+      $job->save();
+      return $job;
+   }
+   public function activeAJob(Job $job): Job
+   {
+      $job->status = 1;
+      $job->save();
+      return $job;
+   }
+   public function finishAJob(Job $job): Job
+   {
+      $job->status = 5;
+      $job->save();
+      return $job;
+   }
+>>>>>>> a658a2a6d56c306884386fef4830e2af3152bbad
 }

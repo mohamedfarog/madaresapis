@@ -16,6 +16,7 @@ use App\Http\Controllers\Website\SubjectsControlle;
 use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\Website\YearsOfTeachingController;
 use App\Http\Controllers\ResetPasswordController;
@@ -124,6 +125,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
+   Route::post('send_help_request', [HelpController::class, 'sendHelpRequest']);
 
 
    Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
@@ -134,6 +136,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
    Route::post('updateStatus', [JobController::class, 'updateStatus']);
+
 });
 
 // ----------------------PUBLIC API------------------------------------------
