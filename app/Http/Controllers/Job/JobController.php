@@ -94,12 +94,13 @@ class JobController extends Controller
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
+   public function get_status(Request $request){
+
+   }
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-
-
-      $data = Job::where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
+      $data = Job::with(['applications', 'received', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)

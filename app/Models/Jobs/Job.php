@@ -9,7 +9,10 @@ use App\Models\Academies\Academy;
 use App\Models\Jobs\JobType;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\JobAppSetting;
+use App\Models\Jobs\JobActApply;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Job extends Model
 {
@@ -26,7 +29,6 @@ class Job extends Model
     {
         return $this->hasOne(Gender::class);
     }
-
     public function type(): HasOne
     {
         return $this->hasOne(JobType::class);
@@ -39,6 +41,28 @@ class Job extends Model
     {
         return $this->hasOne(JobAppSetting::class);
     }
+    public function applications(): HasMany
+    {
+        return $this->HasMany(JobActApply::class);
+    }
+    public function received(): HasMany
+    {
+        return $this->HasMany(JobActApply::class,'status', 0)->count();
+    }
+    public function reviewed(): HasMany
+    {
+        return $this->HasMany(JobActApply::class,'status', 1)->count();
+    }
+    public function contacting(): HasMany
+    {
+        return $this->HasMany(JobActApply::class,'status', 2)->count();
+    }
+    public function rejected(): HasMany
+    {
+
+        return $this->HasMany(JobActApply::class,'status', 3)->count();
+    }
+    
     public function getAcademiesInfoAttribute()
     {
         $academy = Academy::select('en_name','avatar', 'ar_name')->where('id', $this->id)->get();
