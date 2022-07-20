@@ -18,7 +18,7 @@ class JobActApply extends Model
     }
     public function jobs(): BelongsTo
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(Job::class,"job_id",'id');
     }
     
 }
