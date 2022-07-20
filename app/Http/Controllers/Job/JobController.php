@@ -27,7 +27,7 @@ class JobController extends Controller
    public function getJobsInfo()
    {
 
-      $job = Job::where('status',1)->whereNull('deleted_at')->get()->load('academy');
+      $job = Job::where('status', 1)->whereNull('deleted_at')->get()->load('academy');
       return $this->onSuccess($job);
    }
    public function addJob(Request $request)
@@ -89,14 +89,14 @@ class JobController extends Controller
          $job->custom_questions = implode(",", $request->custom_questions);
       }
       $job->save();
-      $jobData = Job::with(['academy', 'level', 'type','subjects'])->where('id',$job->id)->first();
+      $jobData = Job::with(['academy', 'level', 'type', 'subjects'])->where('id', $job->id)->first();
       return $this->onSuccess($jobData);
    }
 
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      $data = Job::with(['academy', 'level', 'type','subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
+      $data = Job::with(['academy', 'level', 'type', 'subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
@@ -136,7 +136,7 @@ class JobController extends Controller
       if (isset($request->job_subject_id)) {
          $job = $job->where('job_subject_id', $request->job_subject_id);
       }
-      $job = $job->with(['academy', 'level', 'type','subjects'])->first();
+      $job = $job->with(['academy', 'level', 'type', 'subjects'])->first();
       return $this->onSuccess([
          'job' => $job,
          'academy' => $academy
@@ -146,7 +146,7 @@ class JobController extends Controller
    public function getAllApplications(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'status' => ['nullable', Rule::in([0,1, 2, 3, 4]),],
+         'status' => ['nullable', Rule::in([0, 1, 2, 3, 4]),],
       ]);
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
@@ -309,7 +309,7 @@ class JobController extends Controller
          'user' => $user,
          'job' => $jobStatus,
          'apply' => $apply
-      ]);
+      ], 200, "Applied Successfully");
    }
    public function deleteJob(Request $request)
    {

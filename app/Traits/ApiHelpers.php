@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait ApiHelpers
 {
-    protected function onSuccess($data = [], $status = 200, $message = null)
+    protected function onSuccess($data = [], $status = 200, $message = 'Success')
     {
         return response()->json([
             'status' => true,
