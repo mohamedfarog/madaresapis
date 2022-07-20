@@ -135,6 +135,12 @@ class JobController extends Controller
       if (isset($request->title)) {
          $job = $job->where('title', $request->title);
       }
+      if (isset($request->edu_level_id)) {
+         $job = $job->where('edu_level_id', $request->edu_level_id);
+      }
+      if (isset($request->job_subject_id)) {
+         $job = $job->where('job_subject_id', $request->job_subject_id);
+      }
       $job = $job->first();
       return $this->onSuccess([
          'job' => $job,
