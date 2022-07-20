@@ -89,14 +89,14 @@ class JobController extends Controller
          $job->custom_questions = implode(",", $request->custom_questions);
       }
       $job->save();
-      $jobData = $job::with(['academy', 'level', 'type', 'setting'])->first;
+      $jobData = Job::with(['academy', 'level', 'type','subjects'])->where('id',$job->id)->first();
       return $this->onSuccess($jobData);
    }
 
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      $data = Job::with(['academy', 'level', 'type', 'setting'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
+      $data = Job::with(['academy', 'level', 'type','subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
@@ -136,7 +136,7 @@ class JobController extends Controller
       if (isset($request->job_subject_id)) {
          $job = $job->where('job_subject_id', $request->job_subject_id);
       }
-      $job = $job::with(['academy', 'level', 'type', 'setting'])->first();
+      $job = Job::with(['academy', 'level', 'type','subjects'])->where('id',$job->id)->first();
       return $this->onSuccess([
          'job' => $job,
          'academy' => $academy
@@ -326,15 +326,13 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $deleteJob = Job::where('id', $request->id)->where('academy_id', $academy->id)->first();
+      $deleteJob = Job::where('id', $request->id)->where('academy_id', $academy->id)->with(['academy', 'level', 'type', 'setting'])->first();
       if (!$deleteJob) {
          return $this->onError(["No Job Found"]);
       }
-
-
       $deleteJob->deleted_at = Carbon::now();
       $deleteJob->save();
-      return $this->onSuccess($deleteJob::with(['academy', 'level', 'type', 'setting']), 200, "Job deleted successfully");
+      return $this->onSuccess($deleteJob, 200, "Job deleted successfully");
    }
    public function activateAJob(Request $request)
    {
