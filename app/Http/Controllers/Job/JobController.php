@@ -27,7 +27,7 @@ class JobController extends Controller
    public function getJobsInfo()
    {
 
-      $job = Job::all()->load('academy');
+      $job = Job::where('status',1)->whereNull('deleted_at')->all()->load('academy');
       return $this->onSuccess($job);
    }
    public function addJob(Request $request)
