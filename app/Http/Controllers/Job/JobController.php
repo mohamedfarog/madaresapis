@@ -289,4 +289,8 @@ class JobController extends Controller
       $deleteJob->save();
       return $this->onSuccess($deleteJob,200,"Job deleted successfully");
    }
+   public function activateAJob(Request $request)
+   {
+      return Job::where('id',$request->id)->update('status',1);
+   }
 }
