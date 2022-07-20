@@ -142,7 +142,7 @@ class JobController extends Controller
       ]);
    }
   
-   public function getAllApplications(Request $request)
+   public function getAllApplications()
    {
       $Job = Job::where('academy_id', Auth::id())->first();
       $jobApp = JobActApply::with(['academy'])->where('academy_id',$Job->id)->first();

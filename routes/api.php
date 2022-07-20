@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth:api'], function () {
       // ---------------------- APPLICATION------------------------------------------
 
    Route::post('application_status', [JobController::class, 'applicationStatus']);
-   Route::post('get_applications ', [JobController::class, 'getAllApplications']);
+   Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });
 
 // ----------------------PUBLIC API------------------------------------------
