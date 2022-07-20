@@ -128,9 +128,18 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title)->whereNull('deleted_at');
+      $job = Job::where('academy_id', $academy->id)->where('country', $request->country)->where('state', $request->state)->whereNull('deleted_at');
       if (isset($request->language)) {
          $job = $job->where('language', $request->language);
+      }
+      if (isset($request->title)) {
+         $job = $job->where('title', $request->title);
+      }
+      if (isset($request->edu_level_id)) {
+         $job = $job->where('edu_level_id', $request->edu_level_id);
+      }
+      if (isset($request->job_subject_id)) {
+         $job = $job->where('job_subject_id', $request->job_subject_id);
       }
       $job = $job->first();
       return $this->onSuccess([
@@ -366,6 +375,10 @@ class JobController extends Controller
 
       $deleteJob->deleted_at = Carbon::now();
       $deleteJob->save();
-      return $this->onSuccess($deleteJob,2,"Job deleted successfully");
+      return $this->onSuccess($deleteJob,200,"Job deleted successfully");
+   }
+   public function activateAJob(Request $request)
+   {
+      return Job::where('id',$request->id)->update(['status'=>1]);
    }
 }
