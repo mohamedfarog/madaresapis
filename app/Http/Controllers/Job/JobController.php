@@ -136,7 +136,7 @@ class JobController extends Controller
       if (isset($request->job_subject_id)) {
          $job = $job->where('job_subject_id', $request->job_subject_id);
       }
-      $job = Job::with(['academy', 'level', 'type','subjects'])->where('id',$job->id)->first();
+      $job = $job->with(['academy', 'level', 'type','subjects'])->first();
       return $this->onSuccess([
          'job' => $job,
          'academy' => $academy
