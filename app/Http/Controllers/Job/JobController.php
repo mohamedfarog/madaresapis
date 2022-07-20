@@ -92,13 +92,13 @@ class JobController extends Controller
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
-   public function get_status(Request $request){
-
+   public function get_status(Request $request)
+   {
    }
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
-      $data = Job::withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id",$academy->id)->whereNull('deleted_at')->paginate();
+      $data = Job::withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
    }
    public function get_available_jobs(Request $request)
@@ -146,39 +146,16 @@ class JobController extends Controller
       ]);
    }
 
-   public function getAllApplications(Request $request){
-      $application = JobActApply::where('academy_id', 1)->paginate($request->pages_number);
+   public function getAllApplications(Request $request)
+   {
+      $application = JobActApply::where('academy_id', 1)->paginate();
       return $this->onSuccess($application);
    }
-   
-   public function fromAwaitingToReviwed(JobActApply $jobActApply): JobActApply
+   public function applicationStatus(Request $request)
    {
-      $jobActApply->status = 1;
-      $jobActApply->save();
-      return $jobActApply;
-   }
-   public function fromReviwedToContact(JobActApply $jobActApply): JobActApply
-   {
-      $jobActApply->status = 2;
-      $jobActApply->save();
-      return $jobActApply;
-   }
-   public function fromContactToReject(JobActApply $jobActApply): JobActApply
-   {
-      $jobActApply->status = 3;
-      $jobActApply->save();
-      return $jobActApply;
-   }
-   public function fromContactTohired(JobActApply $jobActApply): JobActApply
-   {
-      $jobActApply->status = 4;
-      $jobActApply->save();
-      return $jobActApply;
-   }
-   public function applicationStatus(Request $request){
       $validator = Validator::make($request->all(), [
          'id' => 'required',
-         'status' => ['required', Rule::in([0, 1, 2, 3, 4]),],
+         'status' => ['required', Rule::in([1, 2, 3, 4]),],
       ], [], [
          "id" => "Apply ID"
       ]);
@@ -195,55 +172,23 @@ class JobController extends Controller
       }
       //add academy id = Auth::id
       $applyStatus = JobActApply::where('id', $request->id)->where('academy_id', 1)->first();
-      if(!$applyStatus){
+      if (!$applyStatus) {
          return $this->onError(["No Application Found"]);
+      } 
+      $applyStatus->status = $request->status;
+      $applyStatus->save();
 
-      }
-      switch($request->status){
-         case 0:
-            if ($applyStatus->status == 0) {
-               $applyStatus = $this->fromAwaitingToReviwed($applyStatus);
-            } else {
-               return $this->onError(["Action not allowed"]);
-            }
-            break;
-            case 1:
-               if ($applyStatus->status == 1) {
-                  $applyStatus = $this->fromReviwedToContact($applyStatus);
-               } else {
-                  return $this->onError(["Action not allowed"]);
-               }
-               break; 
-               case 2:
-               if ($applyStatus->status == 2) {
-                  $applyStatus = $this->fromContactToReject($applyStatus);
-               } else {
-                  return $this->onError(["Action not allowed"]);
-               }
-               break;
-               case 3:
-                  if ($applyStatus->status == 3) {
-                     $applyStatus = $this->fromContactTohired($applyStatus);
-                  } else {
-                     return $this->onError(["Action not allowed"]);
-                  }
-                  break;
-                  default:
-                  return $this->onError(["Action not allowed"]);
-                  break;
-               }
-               return $this->onSuccess($applyStatus,200,"Status updated successfully");
+      return $this->onSuccess($applyStatus, 200, "Status updated successfully");
+   }
+   public function updateStatus(Request $request)
+   {
+      $validator = Validator::make($request->all(), [
+         'id' => 'required',
+         'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
+      ], [], [
+         "id" => "Job ID"
+      ]);
 
-            }
-            public function updateStatus(Request $request)
-            {
-               $validator = Validator::make($request->all(), [
-                  'id' => 'required',
-                  'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
-               ], [], [
-                  "id" => "Job ID"
-               ]);
-     
 
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
@@ -292,7 +237,7 @@ class JobController extends Controller
             return $this->onError(["Action not allowed"]);
             break;
       }
-      return $this->onSuccess($jobStatus,200,"Status updated successfully");
+      return $this->onSuccess($jobStatus, 200, "Status updated successfully");
    }
    public function pauseAJob(Job $job): Job
    {
@@ -375,10 +320,10 @@ class JobController extends Controller
 
       $deleteJob->deleted_at = Carbon::now();
       $deleteJob->save();
-      return $this->onSuccess($deleteJob,200,"Job deleted successfully");
+      return $this->onSuccess($deleteJob, 200, "Job deleted successfully");
    }
    public function activateAJob(Request $request)
    {
-      return Job::where('id',$request->id)->update(['status'=>1]);
+      return Job::where('id', $request->id)->update(['status' => 1]);
    }
 }
