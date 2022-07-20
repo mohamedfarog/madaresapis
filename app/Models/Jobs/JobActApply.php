@@ -2,6 +2,7 @@
 
 namespace App\Models\Jobs;
 use App\Models\Academies\Academy;
+use App\Models\Jobs\Job;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,7 @@ class JobActApply extends Model
     }
     public function jobs(): BelongsTo
     {
-        return $this->belongsTo(Jobs::class);
+        return $this->belongsTo(Job::class,"job_id",'id');
     }
     
 }
