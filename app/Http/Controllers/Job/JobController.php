@@ -128,9 +128,12 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $job = Job::where('academy_id', $academy->id)->where('country', $academy->country)->where('state', $academy->state)->where('title', $academy->title)->whereNull('deleted_at');
+      $job = Job::where('academy_id', $academy->id)->where('country', $request->country)->where('state', $request->state)->whereNull('deleted_at');
       if (isset($request->language)) {
          $job = $job->where('language', $request->language);
+      }
+      if (isset($request->title)) {
+         $job = $job->where('title', $request->title);
       }
       $job = $job->first();
       return $this->onSuccess([
