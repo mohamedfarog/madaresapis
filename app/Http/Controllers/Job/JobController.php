@@ -291,6 +291,6 @@ class JobController extends Controller
    }
    public function activateAJob(Request $request)
    {
-      return Job::where('id',$request->id)->update('status',1);
+      return Job::where('id',$request->id)->update(['status'=>1]);
    }
 }
