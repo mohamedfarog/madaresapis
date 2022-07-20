@@ -11,11 +11,8 @@ use App\Models\Jobs\CommunicateMethod;
 class JobAppSetting extends Model
 {
     use HasFactory;
-
-
     protected $guarded = ['id'];
     protected $hidden = ['created_at' , 'updated_at'];
-
 
     public function communicate(): HasOne
     {

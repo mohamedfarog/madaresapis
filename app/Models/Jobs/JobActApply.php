@@ -10,7 +10,6 @@ class JobActApply extends Model
     protected $table = 'job_act_apply';
     use HasFactory;
     
-
     public function academy(): BelongsTo
     {
         return $this->belongsTo(Academy::class);
