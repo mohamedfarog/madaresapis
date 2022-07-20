@@ -145,7 +145,7 @@ class JobController extends Controller
    public function getAllApplications(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'status' => ['nullable', Rule::in([1, 2, 3, 4]),],
+         'status' => ['nullable', Rule::in([0,1, 2, 3, 4]),],
       ]);
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
