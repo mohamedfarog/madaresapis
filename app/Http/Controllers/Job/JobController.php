@@ -81,20 +81,17 @@ class JobController extends Controller
       if (isset($request->salary_to)) {
          $job->salary_to = $request->salary_to;
       }
-
       $job->post_date = $request->post_date;
       $job->close_date = $request->close_date;
       $job->status = 0;
-
+      
       if (isset($request->custom_questions)) {
          $job->custom_questions = implode(",", $request->custom_questions);
       }
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
-   public function get_status(Request $request)
-   {
-   }
+
    public function get_my_jobs(Request $request)
    {
       $academy = Academy::where('user_id', Auth::id())->first();
@@ -103,7 +100,6 @@ class JobController extends Controller
    }
    public function get_available_jobs(Request $request)
    {
-
       $data = Job::where('status', 1)->whereNull("deleted_at")->paginate(20);
       return $this->onSuccess($data);
    }
@@ -145,12 +141,38 @@ class JobController extends Controller
          'academy' => $academy
       ]);
    }
-
+  
    public function getAllApplications(Request $request)
    {
-      $application = JobActApply::where('academy_id', 1)->paginate();
-      return $this->onSuccess($application);
+      $Job = Job::where('academy_id', Auth::id())->first();
+      $jobApp = JobActApply::with(['academy'])->where('academy_id',$Job->id)->first();
+      switch($jobApp->status){
+         case 1:
+            if($jobApp->status == 1){
+            return JobActApply::with(['academy'])->where('status', 1)->paginate();
+            }
+            break;
+         case 2 : 
+            if($jobApp->status == 2);
+            return JobActApply::with(['academy'])->where('status', 2)->paginate();
+         break;
+         case 3 :
+            if($jobApp->status = 3){
+               return JobActApply::with(['academy'])->where('status', 3)->paginate();
+            }
+         break;
+
+         case 3 :
+            if($jobApp->status = 4){
+               return JobActApply::with(['academy'])->where('status', 3)->paginate();
+            }
+         break;
+         default:
+         return JobActApply::with(['academy'])->where('academy_id',$Job->id)->paginate();
+         break;
+      }
    }
+
    public function applicationStatus(Request $request)
    {
       $validator = Validator::make($request->all(), [
@@ -159,6 +181,7 @@ class JobController extends Controller
       ], [], [
          "id" => "Apply ID"
       ]);
+
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
       }
@@ -170,8 +193,8 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      //add academy id = Auth::id
-      $applyStatus = JobActApply::where('id', $request->id)->where('academy_id', 1)->first();
+
+      $applyStatus = JobActApply::where('id', $request->id)->where('academy_id', Auth::id())->first();
       if (!$applyStatus) {
          return $this->onError(["No Application Found"]);
       } 
@@ -188,8 +211,6 @@ class JobController extends Controller
       ], [], [
          "id" => "Job ID"
       ]);
-
-
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
       }

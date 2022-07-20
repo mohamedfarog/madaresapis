@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models\Jobs;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +9,6 @@ use App\Models\Jobs\JobType;
 use App\Models\Jobs\JobLevel;
 use App\Models\Jobs\JobAppSetting;
 use App\Models\Jobs\JobActApply;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

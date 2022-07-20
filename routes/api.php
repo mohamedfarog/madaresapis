@@ -144,7 +144,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
    Route::post('application_status', [JobController::class, 'applicationStatus']);
    Route::post('get_applications ', [JobController::class, 'getAllApplications']);
-
 });
 
 // ----------------------PUBLIC API------------------------------------------
@@ -152,5 +151,4 @@ Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
 Route::get('all_academy_sizes', function () {
    return AcademySize::all();
 });
-
 Route::get('activate_job', [JobController::class, 'activateAJob']);
