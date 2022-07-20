@@ -89,8 +89,6 @@ class JobController extends Controller
       if (isset($request->custom_questions)) {
          $job->custom_questions = implode(",", $request->custom_questions);
       }
-
-
       $job->save();
       return $this->onSuccess($job, 200, "job added successfully!");
    }
@@ -147,6 +145,11 @@ class JobController extends Controller
          'academy' => $academy
       ]);
    }
+
+   public function getAllApplications(Request $request){
+      $application = JobActApply::where('academy_id', 1)->paginate($request->pages_number);
+      return $this->onSuccess($application);
+   }
    
    public function fromAwaitingToReviwed(JobActApply $jobActApply): JobActApply
    {
@@ -196,9 +199,6 @@ class JobController extends Controller
          return $this->onError(["No Application Found"]);
 
       }
-      // if ($applyStatus->status == 0) {
-      //    return $this->onError(["Action not allowed"]);
-      // }
       switch($request->status){
          case 0:
             if ($applyStatus->status == 0) {
