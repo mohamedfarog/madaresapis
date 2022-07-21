@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models\Jobs;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
@@ -11,11 +13,12 @@ use App\Models\Jobs\Job;
 class JobLevel extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','title', 'avater', 'ar_title'];
+    protected $fillable = ['id', 'title', 'avater', 'ar_title'];
     protected $guarded = ['id'];
-    protected $hidden = ['created_at' , 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
-    
+    protected $appends = ['title'];
+
     public function jobs(): BelongsToMany
     {
         return $this->belongsToMany(Job::class);
@@ -25,8 +28,8 @@ class JobLevel extends Model
         return $this->belongsToMany(Teacher::class);
     }
 
-    public function getTitleAttribute($value): String
+    public function getTitleAttribute(): String
     {
-        return ucfirst($value);
+        return ucfirst($this->title);
     }
 }
