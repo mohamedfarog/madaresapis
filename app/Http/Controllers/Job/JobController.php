@@ -12,6 +12,7 @@ use App\Models\Jobs\Job;
 use App\Models\Jobs\JobActApply;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -95,6 +96,9 @@ class JobController extends Controller
 
    public function get_my_jobs(Request $request)
    {
+      if(isset($request->lng)&&$request->lng==1){
+         App::setLocale('ar');
+      }
       $academy = Academy::where('user_id', Auth::id())->first();
       $data = Job::with(['academy', 'level', 'type', 'subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
