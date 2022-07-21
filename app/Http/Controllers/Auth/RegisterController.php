@@ -391,10 +391,10 @@ class RegisterController extends Controller
         }])->paginate();
         return $this->onSuccess($user);
     }
-    public function teacher_info(Request $request)
+    public function teacher_info(Request $request,$id)
     {
         // With Teacher, Country / City / Experience / Gender /Current Position
-        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->where('id', $request->id)->with(['teacher' => function ($q) {
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->where('id', $id)->with(['teacher' => function ($q) {
             return $q->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity']);
         }])->first();
         return $this->onSuccess($user);
