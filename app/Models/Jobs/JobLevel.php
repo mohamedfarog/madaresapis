@@ -31,7 +31,6 @@ class JobLevel extends Model
     {
         if(App::isLocale('en'))
         {
-            
             return ucfirst($this->title);
         }
         return ucfirst($this->ar_title);
