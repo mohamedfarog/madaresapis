@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -33,6 +35,7 @@ use Illuminate\Support\Facades\Storage;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
 class RegisterController extends Controller
 {
     public function reSendVerificationSendEmail(Request $request)
@@ -379,5 +382,11 @@ class RegisterController extends Controller
         $setType = User::where('email', $request->email)->first();
         $setType->user_type = null;
         $setType->save();
+    }
+    public function search_teachers(Request $request)
+    {
+        // With Teacher, Country / City / Experience / Gender /Current Position
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->paginate();
+        return $this->onSuccess($user);
     }
 }
