@@ -29,7 +29,7 @@ class JobController extends Controller
    {
 
       $userId = Auth::id();
-      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on'])->leftJoin('job_act_apply', function ($join) use ($userId) {
+      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on','job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
       })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy');
       return $this->onSuccess($job);
