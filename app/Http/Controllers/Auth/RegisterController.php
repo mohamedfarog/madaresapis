@@ -386,7 +386,13 @@ class RegisterController extends Controller
     public function search_teachers(Request $request)
     {
         // With Teacher, Country / City / Experience / Gender /Current Position
-        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->paginate();
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->with(['teacher'])->paginate();
+        return $this->onSuccess($user);
+    }
+    public function teacher_info(Request $request)
+    {
+        // With Teacher, Country / City / Experience / Gender /Current Position
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->where('id',$request->id)->with(['teacher'])->first();
         return $this->onSuccess($user);
     }
 }
