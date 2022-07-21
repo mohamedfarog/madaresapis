@@ -12,6 +12,7 @@ use App\Models\Jobs\Job;
 use App\Models\Jobs\JobActApply;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -98,6 +99,7 @@ class JobController extends Controller
 
    public function get_my_jobs(Request $request)
    {
+      
       $academy = Academy::where('user_id', Auth::id())->first();
       $data = Job::with(['academy', 'level', 'type', 'subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
@@ -165,7 +167,7 @@ class JobController extends Controller
       $jobApply = $jobApply->paginate();
       return  $this->onSuccess($jobApply, 200, "success");
    }
-
+   
    public function applicationStatus(Request $request)
    {
       $validator = Validator::make($request->all(), [

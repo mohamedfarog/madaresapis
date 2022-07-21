@@ -21,16 +21,12 @@ class JobType extends Model
         return $this->belongsToMany(Job::class);
     }
 
-
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(Teacher::class);
     }
-
-
     public function getTitleAttribute($value): String
     {
         return ucfirst($value);
     }
-
 }
