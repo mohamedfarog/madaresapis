@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Mail\SendStatusUpdate;
 use App\Mail\AppMail;
+use App\Models\Teachers\Teacher;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -198,7 +199,12 @@ class JobController extends Controller
       }
       $applyStatus->status = $request->status;
       $applyStatus->save();
-      Mail::to($user->email)->send(new SendStatusUpdate($request->all()));
+      $teacher = Teacher::find($applyStatus->teacher_id);
+      if ($teacher) {
+         $teacherUser = User::find($teacher->user_id);
+
+         Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
+      }
 
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
