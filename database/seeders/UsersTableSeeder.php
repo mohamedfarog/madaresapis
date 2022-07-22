@@ -19,10 +19,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         // User::truncate();
         // DB::table('role_user')->truncate();
 
-       
+
 
         // $adminTest =  User::create([
         //     'name'  =>'Ahmed Admin Role',
@@ -39,38 +41,38 @@ class UsersTableSeeder extends Seeder
         //     'email' => 'academy@madars.com',
         //     'password' => Hash::make('password')]);
 
-     
+
 
         // $adminRole = Role::where('name','admin')->first();
         // $teacherRole = Role::where('name','teacher')->first();
         // $academyRole = Role::where('name','academy')->first();
-      
+
         // $adminTest->roles()->attach($adminRole);
         // $teacherTest->roles()->attach($teacherRole);
         // $academyTest->roles()->attach($academyRole);
 
 
         // $teachers = User::factory(10)->create()->each(function ($user) use ($teacherRole) {
-         
+
         //    $user->roles()->attach($teacherRole);
-            
+
         //    $teacher = Teacher::factory(1)->make();
 
         //    $user->teachers()->saveMany($teacher);
-          
-           
+
+
         // });
 
         // $academies = User::factory(10)->create()->each(function ($user) use ($academyRole) {
-         
+
         //    $user->roles()->attach($academyRole);
-            
+
         //    $Academy = Academy::factory(1)->make();
 
         //    $user->academies()->saveMany($Academy);
-          
-           
+
+
         // });
-      
+
     }
 }
