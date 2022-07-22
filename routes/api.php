@@ -132,6 +132,8 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
    Route::post('send_help_request', [HelpController::class, 'sendHelpRequest']);
+   Route::get('search_teachers', [RegisterController::class, 'search_teachers']);
+   Route::get('teacher_info/{id}', [RegisterController::class, 'teacher_info']);
 
    Route::get('testAnalytics', [AnalyticsController::class, 'getApplicationStats']);
 
@@ -146,6 +148,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('updateStatus', [JobController::class, 'updateStatus']);
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
    Route::post('delete_job', [JobController::class, 'deleteJob']);
+   Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
    // ---------------------- APPLICATION------------------------------------------
 
