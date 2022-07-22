@@ -27,11 +27,13 @@ class AnalyticsController extends Controller
 
         $userType = User::findOrFail($userId);
         $academyId = Academy::where('user_id', $userId)->first()->id;
-        // return $academyId;
+        //return $academyId;
 
-        $dataArray = [];
-        switch ($request->datesType) {
-            case 'daily':
+        $dailyStats = [];
+        $weeklyStats = [];
+        $monthlyStats = [];
+
+            //Daily
                 for ($i = 7; $i > 0; $i--) {
                     $today = Carbon::now();
                     $date = $today->subDays($i);
@@ -41,11 +43,11 @@ class AnalyticsController extends Controller
                     $applicationsContacted = $jobs->where('status', 3)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
                     $dayName = $date->format('l');
-                    array_push($dataArray, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'day' => $dayName]);
+                    array_push($dailyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'day' => $dayName]);
                 }
 
 
-            case 'weekly':
+
                 for ($i =4; $i > 0; $i--) {
                     $weekAhead= $i+1;
                     $fromDate = Carbon::now()->subWeeks($i);
@@ -56,10 +58,8 @@ class AnalyticsController extends Controller
                     $applicationsContacted = $jobs->where('status', 3)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
 
-                    array_push($dataArray, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
+                    array_push($weeklyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
-
-            case 'monthly':
                 for ($i =8; $i > 0; $i--) {
                     $weekAhead= $i+1;
                     $fromDate = Carbon::now()->subMonths($i);
@@ -69,9 +69,14 @@ class AnalyticsController extends Controller
                     $applicationsPending = $jobs->where('status', 1)->count();
                     $applicationsContacted = $jobs->where('status', 3)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
-                    array_push($dataArray, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
+                    array_push($monthlyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
-        }
-        return $this->onSuccess($dataArray);
+              
+
+
+
+        
+
+        return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats]);
     }
 }

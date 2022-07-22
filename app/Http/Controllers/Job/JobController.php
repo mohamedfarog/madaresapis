@@ -205,6 +205,7 @@ class JobController extends Controller
       $teacherUser = User::where('id', $teacher->id);
       Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
 
+      
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
    public function updateStatus(Request $request)
