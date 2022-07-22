@@ -19,6 +19,7 @@ class Job extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $hidden = [ 'updated_at', 'deleted_at'];
+    protected $appends=['job_status'];
 
     public function academy(): BelongsTo
     {
@@ -74,5 +75,34 @@ class Job extends Model
     {
         $academy = Academy::select('en_name', 'avatar', 'ar_name')->where('id', $this->id)->get();
         return $academy;
+    }
+    public function getJobStatusAttribute()
+    {
+
+
+
+            switch ($this->status) {
+                case 0:
+                    return 'Awaiting';
+                    break;
+                case 1:
+                    return 'Reviewed';
+                    break;
+                case 2:
+                    return 'Contacting';
+                    break;
+                case 3:
+                    return 'Rejected';
+                    break;
+                case 4:
+                    return 'Hired';
+                    break;
+                default:
+                     return 'Awaiting';
+                     break;
+            
+
+            
+        }
     }
 }
