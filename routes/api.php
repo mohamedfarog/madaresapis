@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -32,9 +34,15 @@ use App\Models\Gender;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+//Test API's
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
+
+
+
 Route::group(['prefix' => 'job_type'], function () {
    Route::post('create',  [JobTypeController::class, 'create']);
    Route::get('get',  [JobTypeController::class, 'get']);
@@ -72,7 +80,6 @@ Route::post('login', [AuthController::class, 'loginV2']);
 Route::post('socialLogin', [AuthController::class, 'socialLogin']);
 Route::post('type_to_null', [RegisterController::class, 'setTypeToNull']);
 Route::post('forget_password', [ForgotPasswordController::class, 'postEmail']);
-//Route::post('re_send_verfiy', [ForgotPasswordController::class, 'reSendEmail']);
 Route::post('reset_password', [ResetPasswordController::class, 'updatePassword']);
 Route::post('re_send_verfiy', [RegisterController::class, 'reSendVerificationSendEmail']);
 Route::post('check_verification', [RegisterController::class, 'returnEmailVerifyed']);
@@ -127,7 +134,10 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
    Route::post('send_help_request', [HelpController::class, 'sendHelpRequest']);
+   Route::get('search_teachers', [RegisterController::class, 'search_teachers']);
+   Route::get('teacher_info/{id}', [RegisterController::class, 'teacher_info']);
 
+   Route::get('testAnalytics', [AnalyticsController::class, 'getApplicationStats']);
 
    Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
    Route::post('academy_size', [AcademyController::class, 'academySize']);
@@ -138,6 +148,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
    Route::post('updateStatus', [JobController::class, 'updateStatus']);
+
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
    Route::post('delete_job', [JobController::class, 'deleteJob']);
    Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);

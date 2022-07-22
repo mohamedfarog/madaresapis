@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Academies\Academy;
 use App\Models\Jobs\JobType;
 use App\Models\Jobs\JobLevel;
-use App\Models\Jobs\JobAppSetting;
+// use App\Models\Jobs\JobAppSetting;
 use App\Models\Jobs\JobActApply;
 use App\Models\Website\subjects;
 use Illuminate\Database\Eloquent\Model;
@@ -36,10 +36,10 @@ class Job extends Model
     {
         return $this->hasOne(JobLevel::class,'id',"edu_level_id");
     }
-    public function setting(): HasOne
-    {
-        return $this->hasOne(JobAppSetting::class);
-    }
+    // public function setting(): HasOne
+    // {
+    //     return $this->hasOne(JobAppSetting::class);
+    // }
     public function subjects(): HasOne
     {
         return $this->hasOne(subjects::class,'id','job_subject_id');

@@ -7,24 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AppMail extends Mailable
+class SendStatusUpdate extends Mailable
 {
     use Queueable, SerializesModels;
-    public $code;
+    protected $data=[];
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    
-    public function __construct($code, $details)
+    public function __construct($info)
     {
-        //
-        $details = [
-            'title' => 'Mail from ItSolutionStuff.com',
-            'body' => 'This is for testing email using smtp'
-        ];
-        $this->code = env("BASE_URL", "") . "/api/verifyEmail/" . $code;
+        $this->data=$info;
     }
 
     /**
@@ -34,6 +28,6 @@ class AppMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.verifyEmail')->subject("Verify your Email");
+        return $this->view('emails.notifications',$this->data);
     }
 }

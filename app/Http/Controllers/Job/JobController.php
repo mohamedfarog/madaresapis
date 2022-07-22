@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Job;
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +10,9 @@ use App\Models\Jobs\Job;
 use App\Models\Jobs\JobActApply;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Mail\SendStatusUpdate;
+use App\Mail\AppMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -25,13 +26,14 @@ class JobController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
+
    public function getJobsInfo()
    {
 
       $userId = Auth::id();
-      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on'])->leftJoin('job_act_apply', function ($join) use ($userId) {
+      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on','job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
-      })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy');
+      })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy','level', 'type', 'subjects');
       return $this->onSuccess($job);
    }
    public function addJob(Request $request)
@@ -99,7 +101,6 @@ class JobController extends Controller
 
    public function get_my_jobs(Request $request)
    {
-      
       $academy = Academy::where('user_id', Auth::id())->first();
       $data = Job::with(['academy', 'level', 'type', 'subjects'])->withCount(['applications', 'awaiting', 'reviewed', 'contacting', 'rejected'])->where("academy_id", $academy->id)->whereNull('deleted_at')->paginate();
       return $this->onSuccess($data);
@@ -202,6 +203,9 @@ class JobController extends Controller
    {
       $validator = Validator::make($request->all(), [
          'id' => 'required',
+         'first_name' => 'required',
+         "email" => "required|email",
+         "subject" => "required",
          'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
       ], [], [
          "id" => "Job ID"
@@ -253,27 +257,31 @@ class JobController extends Controller
             return $this->onError(["Action not allowed"]);
             break;
       }
+      if ($validator->fails()) {
+         return $this->onError($validator->errors()->all());
+     }
+     Mail::to($request->email)->send(new SendStatusUpdate($request->all()));
       return $this->onSuccess($jobStatus, 200, "Status updated successfully");
    }
    public function pauseAJob(Job $job): Job
    {
       $job->status = 2;
       $job->save();
-      $jobData =  $job::with(['academy', 'level', 'type', 'setting'])->first();
+      $jobData =  $job::with(['academy', 'level', 'type'])->first();
       return $jobData;
    }
    public function activeAJob(Job $job): Job
    {
       $job->status = 1;
       $job->save();
-      $jobData =  $job::with(['academy', 'level', 'type', 'setting'])->first();
+      $jobData =  $job::with(['academy', 'level', 'type'])->first();
       return $jobData;
    }
    public function finishAJob(Job $job): Job
    {
       $job->status = 5;
       $job->save();
-      $jobData =  $job::with(['academy', 'level', 'type', 'setting'])->first();
+      $jobData =  $job::with(['academy', 'level', 'type'])->first();
       return $jobData;
    }
    public function applyForJob(Request $request)
@@ -331,7 +339,7 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $deleteJob = Job::where('id', $request->id)->where('academy_id', $academy->id)->with(['academy', 'level', 'type', 'setting'])->first();
+      $deleteJob = Job::where('id', $request->id)->where('academy_id', $academy->id)->with(['academy', 'level', 'type'])->first();
       if (!$deleteJob) {
          return $this->onError(["No Job Found"]);
       }

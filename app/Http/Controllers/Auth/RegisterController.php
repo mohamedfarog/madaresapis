@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -33,8 +35,12 @@ use Illuminate\Support\Facades\Storage;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+
 class RegisterController extends Controller
 {
+
+  
     public function reSendVerificationSendEmail(Request $request)
     {
         $user = User::where('email',  $request->email)->first();
@@ -379,5 +385,21 @@ class RegisterController extends Controller
         $setType = User::where('email', $request->email)->first();
         $setType->user_type = null;
         $setType->save();
+    }
+    public function search_teachers(Request $request)
+    {
+        // With Teacher, Country / City / Experience / Gender /Current Position
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->with(['teacher' => function ($q) {
+            return $q->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity']);
+        }])->paginate();
+        return $this->onSuccess($user);
+    }
+    public function teacher_info(Request $request,$id)
+    {
+        // With Teacher, Country / City / Experience / Gender /Current Position
+        $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->where('id', $id)->with(['teacher' => function ($q) {
+            return $q->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity']);
+        }])->first();
+        return $this->onSuccess($user);
     }
 }
