@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Job;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
@@ -31,9 +32,9 @@ class JobController extends Controller
    {
 
       $userId = Auth::id();
-      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on','job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
+      $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on', 'job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
-      })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy','level', 'type', 'subjects');
+      })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy', 'level', 'type', 'subjects');
       return $this->onSuccess($job);
    }
    public function addJob(Request $request)
@@ -168,7 +169,7 @@ class JobController extends Controller
       $jobApply = $jobApply->paginate();
       return  $this->onSuccess($jobApply, 200, "success");
    }
-   
+
    public function applicationStatus(Request $request)
    {
       $validator = Validator::make($request->all(), [
@@ -197,6 +198,7 @@ class JobController extends Controller
       }
       $applyStatus->status = $request->status;
       $applyStatus->save();
+      Mail::to($user->email)->send(new SendStatusUpdate($request->all()));
 
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
@@ -257,9 +259,7 @@ class JobController extends Controller
       }
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
-     }
-     Mail::to($user->email)->send(new SendStatusUpdate($request->all()));
-      return $this->onSuccess($jobStatus, 200, "Status updated successfully");
+      }
    }
    public function pauseAJob(Job $job): Job
    {
