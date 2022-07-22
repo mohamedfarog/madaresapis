@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -33,7 +32,6 @@ use App\Models\Gender;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
@@ -67,6 +65,7 @@ Route::group(
       Route::get('/job/store', [JobController::class, 'store']);
    }
 );
+
 Route::get('testEmailTemplate', [RegisterController::class, 'testEmail']);
 Route::post('register',  [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'loginV2']);
@@ -81,11 +80,11 @@ Route::get('dash_header_count', [AcademyController::class, 'getAcademyHeadercoun
 Route::get('received_applications', [AcademyController::class, 'AllRecivedApplications']);
 Route::get('rejected_applications', [AcademyController::class, 'AllRejectedApplications']);
 Route::get('interviwed_applications', [AcademyController::class, 'AllInterviwedApplications']);
-
 Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
       //Route::post('/login', [AuthController::class, 'login']);
    });
+
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
@@ -100,6 +99,8 @@ Route::group(['prefix' => 'website'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('testyy', [HomePageController::class, 'testingHtttpRequest']);
+   Route::post('get_job_type',[HomePageController::class, 'getJobType']);
+
 
    Route::post('available', [HomePageController::class, 'AvailableApplicant']);
    if (now()->diffInMinutes(session('lastActivityTime')) >= (120)) {
@@ -141,7 +142,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('delete_job', [JobController::class, 'deleteJob']);
    Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
-      // ---------------------- APPLICATION------------------------------------------
+   // ---------------------- APPLICATION------------------------------------------
 
    Route::post('change_application_status', [JobController::class, 'applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);

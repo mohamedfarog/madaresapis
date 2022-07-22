@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 use App\Models\Website\Articles;
 use App\Models\Website\QuestionedAnswers;
 use App\Models\Website\subjects;
+use App\Models\Website\JobsType;
 use Illuminate\Support\Js;
+
 use JWTAuth;
 
 class HomePageController extends Controller
@@ -53,10 +55,16 @@ class HomePageController extends Controller
                 $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
                 return $this->onSuccess($articleInfo);
         }
+}
 
-          
-    
-    }
+public function getJobType(Request $request){
+        if($request->lang == '1'){
+               return $this->onSuccess($jobsType = JobsType::all('id', 'type_ar_name')); 
+        }
+        else{
+             return $this->onSuccess($jobsType = JobsType::all('id', 'type_en_name'));
+}
+}
     
     public function getSubjectsTitle(): JsonResponse
     {
