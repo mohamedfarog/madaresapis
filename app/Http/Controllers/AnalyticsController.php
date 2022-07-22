@@ -32,6 +32,7 @@ class AnalyticsController extends Controller
         $dailyStats = [];
         $weeklyStats = [];
         $monthlyStats = [];
+        $applicationReceived [];
 
             //Daily
                 for ($i = 7; $i > 0; $i--) {
@@ -75,7 +76,7 @@ class AnalyticsController extends Controller
 
 
 
-        
+
 
         return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats]);
     }
