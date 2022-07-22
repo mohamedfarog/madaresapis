@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+use function GuzzleHttp\Promise\all;
+
 class AnalyticsController extends Controller
 {
     public function getApplicationStats(Request $request)
@@ -33,7 +35,6 @@ class AnalyticsController extends Controller
         $weeklyStats = [];
         $monthlyStats = [];
         $applicationReceived = [];
-
             //Daily
                 for ($i = 7; $i > 0; $i--) {
                     $today = Carbon::now();
@@ -46,9 +47,6 @@ class AnalyticsController extends Controller
                     $dayName = $date->format('l');
                     array_push($dailyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'day' => $dayName]);
                 }
-
-
-
                 for ($i =4; $i > 0; $i--) {
                     $weekAhead= $i+1;
                     $fromDate = Carbon::now()->subWeeks($i);
@@ -72,12 +70,7 @@ class AnalyticsController extends Controller
                     $applicationsRejected = $jobs->where('status', 4)->count();
                     array_push($monthlyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
-              
-
-
-
-
-
-        return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats]);
+                $receivedApplication = JobActApply::where('academy_id', $academyId)->count();
+               return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats, 'all_application'=>$receivedApplication]);
     }
 }
