@@ -32,7 +32,7 @@ class AnalyticsController extends Controller
         $dailyStats = [];
         $weeklyStats = [];
         $monthlyStats = [];
-        $applicationReceived [];
+        $applicationReceived = [];
 
             //Daily
                 for ($i = 7; $i > 0; $i--) {
