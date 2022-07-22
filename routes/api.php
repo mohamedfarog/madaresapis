@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -34,9 +35,14 @@ use App\Models\Gender;
 |
 */
 
+
+//Test API's
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
 Route::get('verifyEmail/{token}', [RegisterController::class, 'verifyEmail']);
+
+
+
 Route::group(['prefix' => 'job_type'], function () {
    Route::post('create',  [JobTypeController::class, 'create']);
    Route::get('get',  [JobTypeController::class, 'get']);
@@ -127,6 +133,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('my_info', [AuthController::class, 'my_info']);
    Route::post('send_help_request', [HelpController::class, 'sendHelpRequest']);
 
+   Route::get('testAnalytics', [AnalyticsController::class, 'getApplicationStats']);
 
    Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
    Route::post('academy_size', [AcademyController::class, 'academySize']);
@@ -140,7 +147,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
    Route::post('delete_job', [JobController::class, 'deleteJob']);
 
-      // ---------------------- APPLICATION------------------------------------------
+   // ---------------------- APPLICATION------------------------------------------
 
    Route::post('change_application_status', [JobController::class, 'applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
