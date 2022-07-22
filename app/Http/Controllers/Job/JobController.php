@@ -182,6 +182,7 @@ class JobController extends Controller
          return $this->onError($validator->errors()->all());
       }
       $user = User::find(Auth::id());
+      return $user->email;
       if ($user->is_active != 1 || $user->email_verified_at == NULL) {
          return $this->onError("Account is not verified", 400);
       }
@@ -203,9 +204,6 @@ class JobController extends Controller
    {
       $validator = Validator::make($request->all(), [
          'id' => 'required',
-         'first_name' => 'required',
-         "email" => "required|email",
-         "subject" => "required",
          'status' => ['required', Rule::in(['pause', 'active', 'finish']),],
       ], [], [
          "id" => "Job ID"
@@ -260,7 +258,7 @@ class JobController extends Controller
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
      }
-     Mail::to($request->email)->send(new SendStatusUpdate($request->all()));
+     Mail::to($user->email)->send(new SendStatusUpdate($request->all()));
       return $this->onSuccess($jobStatus, 200, "Status updated successfully");
    }
    public function pauseAJob(Job $job): Job

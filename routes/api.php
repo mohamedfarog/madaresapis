@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,8 +33,6 @@ use App\Models\Gender;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
 //Test API's
 Route::post('testFace', [AuthController::class, 'testFace']);
 Route::post('testVerifyEmail', [RegisterController::class, 'testVerifyEmail']);
