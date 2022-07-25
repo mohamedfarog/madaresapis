@@ -408,7 +408,7 @@ class RegisterController extends Controller
         // With Teacher, Country / City / Experience / Gender /Current Position
         $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->with(['teacher' => function ($q) {
             return $q->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity']);
-        }])->paginate();
+        }])->whereHas('teacher')->paginate();
         return $this->onSuccess($user);
     }
     public function teacher_info(Request $request, $id)
