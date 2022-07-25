@@ -43,6 +43,7 @@ class RegisterController extends Controller
 
     public function reSendVerificationSendEmail(Request $request)
     {
+
         $user = User::where('email',  $request->email)->first();
         if ($user->email_verified == 1) {
             return $this->onError('This User is already verified');
