@@ -198,7 +198,7 @@ class JobController extends Controller
    {
       $validator = Validator::make($request->all(), [
          'id' => 'required',
-         'status' => ['required', Rule::in([1, 2, 3, 4]),],
+         'status' => ['required', Rule::in([0, 1, 2, 3, 4, 5, 6, 7, 8]),],
       ], [], [
          "id" => "Apply ID"
       ]);
@@ -229,7 +229,6 @@ class JobController extends Controller
 
       $teacherUser = User::where('id', $teacher->id);
       Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
-      
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
 

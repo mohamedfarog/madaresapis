@@ -16,8 +16,7 @@ use function GuzzleHttp\Promise\all;
 class AnalyticsController extends Controller
 {
     public function getApplicationStats(Request $request)
-    {
-        
+    {  
         $userId = Auth::id();
         $userType = User::findOrFail($userId);
         $academyId = Academy::where('user_id', $userId)->first()->id;
@@ -30,7 +29,7 @@ class AnalyticsController extends Controller
                     $jobs = JobActApply::where('academy_id', $academyId)->whereDate('created_at', $date);
                     $applicationsReceived = $jobs->count();
                     $applicationsPending = $jobs->where('status', 1)->count();
-                    $applicationsContacted = $jobs->where('status', 3)->count();
+                    $applicationsViewed = $jobs->where('status', 2)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
                     $dayName = $date->format('l');
                     array_push($dailyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'day' => $dayName]);
@@ -42,7 +41,7 @@ class AnalyticsController extends Controller
                     $jobs = JobActApply::where('academy_id', $academyId)->whereBetween('created_at', [$fromDate,$toDate]);
                     $applicationsReceived = $jobs->count();
                     $applicationsPending = $jobs->where('status', 1)->count();
-                    $applicationsContacted = $jobs->where('status', 3)->count();
+                    $applicationsContacted = $jobs->where('status', 2)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
 
                     array_push($weeklyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
@@ -54,7 +53,7 @@ class AnalyticsController extends Controller
                     $jobs = JobActApply::where('academy_id', $academyId)->whereBetween('created_at', [$fromDate,$toDate]);
                     $applicationsReceived = $jobs->count();
                     $applicationsPending = $jobs->where('status', 1)->count();
-                    $applicationsContacted = $jobs->where('status', 3)->count();
+                    $applicationsContacted = $jobs->where('status', 2)->count();
                     $applicationsRejected = $jobs->where('status', 4)->count();
                     array_push($monthlyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
