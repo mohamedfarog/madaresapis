@@ -143,7 +143,7 @@
                     <div class="green-bg"></div>
                     <div  class="login_form">
                         <div class='regular_login'>
-                            <label id="progressBar">Dear Candidate your application has been {{$status}}</label> 
+                            <label id="progressBar">Dear Candidate The status of your application is {{$status}}</label> 
                         </div>
                     </div>
                 </div>

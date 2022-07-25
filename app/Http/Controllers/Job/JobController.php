@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+use function PHPUnit\Framework\returnSelf;
+
 class JobController extends Controller
 {
    /**
@@ -53,6 +55,7 @@ class JobController extends Controller
       Mail::to($myEmail)->send(new SendStatusUpdate($request->all()));
       return view('emails.notifications', $data);
    }
+
 
    public function getJobsInfo()
    {
@@ -196,8 +199,9 @@ class JobController extends Controller
       return  $this->onSuccess($jobApply, 200, "success");
    }
 
-   public function applicationStatus(Request $request)
+   public function update_applicationStatus(Request $request)
    {
+
       $validator = Validator::make($request->all(), [
          'id' => 'required',
          'status' => ['required', Rule::in([0, 1, 2, 3, 4, 5, 6, 7, 8]),],
@@ -227,12 +231,63 @@ class JobController extends Controller
       if (!$teacher) {
          return $this->onError('No Teacher Found');
       }
-      $status = $request->status;
+      switch($request->status){
+         case 0:
+            if($request->status == 0){
+               $request->status = 'applied';
+               break;
+            }
+            case 1:
+            if($request->status == 1){
+               $request->status = 'pending';
+               break;
+            }
+            case 2:
+            if($request->status == 2){
+               $request->status = 'viewed';
+               break;
+            }
+            case 3: 
+            if($request->status == 3){
+               $request->status = 'shortlisted';            
+               break;
+            }
+            case 4:
+            if($request->status == 4){
+               $request->status = 'rejected';
+               break;
+            } 
+            case 5:
+            if($request->status == 5){
+               $request->status = 'contacted';
+               break;
+            }
+            case 6:
+            if($request->status == 6){
+               $request->status = 'interviewed';
+               break;
+            }
+            case 7:
+            if ($request->status == 7){
+               $request->status = 'on_holed';
+               break;
+            }
+            case 8:
+            if($request->status == 8){
+               $request->status = 'accepted';
+               break;
+            }
+            default:
+            return $this->onError('Not allowed action');
+            break;
+         }
 
-      $teacherUser = User::where('id', $teacher->id);
-      Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
-      return $this->onSuccess($applyStatus, 200, "Status updated successfully");
-   }
+            $data = ['status'=> $request->status, 'id'=>$request->id];
+         
+            $teacherUser = User::where('id', $teacher->id);
+            Mail::to($teacherUser->email)->send(new SendStatusUpdate($data));
+            return $this->onSuccess($applyStatus, 200, "Status updated successfully");
+         }
 
 
    public function updateStatus(Request $request)
@@ -361,7 +416,6 @@ class JobController extends Controller
       ], [], [
          "id" => "Job ID"
       ]);
-
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
       }
@@ -381,4 +435,5 @@ class JobController extends Controller
    {
       return Job::where('id', $request->id)->update(['status' => 1]);
    }
+
 }
