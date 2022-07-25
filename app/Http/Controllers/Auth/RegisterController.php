@@ -43,6 +43,9 @@ class RegisterController extends Controller
 
     public function reSendVerificationSendEmail(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email'],
+        ]);
 
         $user = User::where('email',  $request->email)->first();
         if ($user->email_verified == 1) {
