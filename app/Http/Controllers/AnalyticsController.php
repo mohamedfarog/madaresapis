@@ -58,7 +58,8 @@ class AnalyticsController extends Controller
                     $applicationsRejected = $jobs->where('status', 4)->count();
                     array_push($monthlyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
-                $receivedApplication = JobActApply::where('academy_id', $academyId)->count();
+                $all_application = JobActApply::where('academy_id', $academyId)->count();
+                $applied = JobActApply::where('academy_id', $academyId)->where('status', 0)->count(); 
                 $panndingApplications = JobActApply::where('academy_id', $academyId)->where('status', 1)->count();  
                 $viewedApplications = JobActApply::where('academy_id', $academyId)->where('status', 2)->count();
                 $shortListed = JobActApply::where('academy_id', $academyId)->where('status', 3)->count();
@@ -67,6 +68,6 @@ class AnalyticsController extends Controller
                 $interviewdApplication = JobActApply::where('academy_id', $academyId)->where('status', 6)->count();
                 $on_holed = JobActApply::where('academy_id', $academyId)->where('status', 7)->count();
                 $accepted = JobActApply::where('academy_id', $academyId)->where('status', 8)->count();
-                return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats, 'all_application'=>$receivedApplication, 'pending'=>$panndingApplications, 'viewed'=>$viewedApplications, 'shortListed'=>$shortListed, 'rejected'=> $rejectedApplications,'contacted'=>$contactedApplication, 'interviewed'=>$interviewdApplication, 'on_hold'=>$on_holed, 'accepted'=>$accepted]);
+                return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats, 'applied'=>$applied, 'all_application'=>$all_application, 'pending'=>$panndingApplications, 'viewed'=>$viewedApplications, 'shortListed'=>$shortListed, 'rejected'=> $rejectedApplications,'contacted'=>$contactedApplication, 'interviewed'=>$interviewdApplication, 'on_hold'=>$on_holed, 'accepted'=>$accepted]);
             }
         }
