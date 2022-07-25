@@ -22,7 +22,7 @@ class JobActApply extends Model
     {
         return $this->belongsTo(Job::class, "job_id", 'id');
     }
-    public function teachers(): BelongsTo
+    public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class, "teacher_id", 'id');
     }
