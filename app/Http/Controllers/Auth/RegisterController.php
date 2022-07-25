@@ -48,7 +48,11 @@ class RegisterController extends Controller
             return $this->onError('This User is already verified');
         } else {
             $vCode = Str::random(30);
-            Mail::to($request->email)->send(new AppMail($vCode));
+            $details = [
+                'title' => 'Verified Email',
+                'body' => 'Email Verification Body'
+            ];
+            Mail::to($request->email)->send(new AppMail($vCode, $details));
             $user->verify_email_token = $vCode;
             $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
             $user->save();
@@ -58,7 +62,11 @@ class RegisterController extends Controller
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
-        Mail::to($email)->send(new AppMail($vCode));
+        $details = [
+            'title' => 'Verified Email',
+            'body' => 'Email Verification Body'
+        ];
+        Mail::to($email)->send(new AppMail($vCode, $details));
         $user = User::find($userId);
         $user->verify_email_token = $vCode;
         $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
