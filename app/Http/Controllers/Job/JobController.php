@@ -29,9 +29,33 @@ class JobController extends Controller
     * @return \Illuminate\Http\Response
     */
 
+    public function testHtml(Request $request){
+
+      switch($request->status){
+         case 1: 
+            if ($request->status == 1 ){
+               $request->status = 'Received';
+               break;
+            } 
+         case 2:
+            if($request->status== 2){
+               $request->status = 'Viewed';
+               break;
+            }
+         case 3:
+            if ($request->status ==3){
+               $request->status = 'Contacted';
+            }
+           
+      }
+      $myEmail = 'dg12@gmail.com';
+      $data = ['status' =>$request->status];
+      Mail::to($myEmail)->send(new SendStatusUpdate($request->all()));
+      return view('emails.notifications', $data);
+    }
+
    public function getJobsInfo()
    {
-
       $userId = Auth::id();
       $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on', 'job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
@@ -191,7 +215,6 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-
       $applyStatus = JobActApply::where('id', $request->id)->where('academy_id', Auth::id())->first();
       if (!$applyStatus) {
          return $this->onError(["No Application Found"]);
@@ -202,12 +225,15 @@ class JobController extends Controller
       if (!$teacher) {
          return $this->onError('No Teacher Found');
       }
+      $status = $request->status;
+
       $teacherUser = User::where('id', $teacher->id);
       Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
-
       
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
+
+
    public function updateStatus(Request $request)
    {
       $validator = Validator::make($request->all(), [

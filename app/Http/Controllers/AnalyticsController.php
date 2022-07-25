@@ -16,26 +16,14 @@ use function GuzzleHttp\Promise\all;
 class AnalyticsController extends Controller
 {
     public function getApplicationStats(Request $request)
-    {   
-        $validator = Validator::make($request->all(), [
-            'datesType' => 'required',
-
-        ]);
-        if ($validator->fails()) {
-            return $this->onError($validator->errors()->all());
-        }
+    {
+        
         $userId = Auth::id();
-
-
         $userType = User::findOrFail($userId);
         $academyId = Academy::where('user_id', $userId)->first()->id;
-        //return $academyId;
-
         $dailyStats = [];
         $weeklyStats = [];
         $monthlyStats = [];
-        $applicationReceived = [];
-            //Daily
                 for ($i = 7; $i > 0; $i--) {
                     $today = Carbon::now();
                     $date = $today->subDays($i);
@@ -71,6 +59,10 @@ class AnalyticsController extends Controller
                     array_push($monthlyStats, ['received_applications' => $applicationsReceived, 'rejected_applications' => $applicationsRejected, 'pending_applications' => $applicationsPending, 'from_day' => $fromDate, 'to_day'=>$toDate]);
                 }
                 $receivedApplication = JobActApply::where('academy_id', $academyId)->count();
-               return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats, 'all_application'=>$receivedApplication]);
-    }
-}
+                $panndingApplications = JobActApply::where('academy_id', $academyId)->where('status', 1)->count();
+                $ViewedApplications = JobActApply::where('academy_id', $academyId)->where('status', 2)->count();
+                $contactedApplication = JobActApply::where('academy_id', $academyId)->where('status', 3)->count();
+                $hiredApplications = JobActApply::where('academy_id', $academyId)->where('status', 4)->count();
+                return $this->onSuccess(['daily'=>$dailyStats,'monthly'=>$monthlyStats,'weekly'=>$weeklyStats, 'all_application'=>$receivedApplication, 'Pending'=>$panndingApplications, 'Viewed'=>$ViewedApplications, 'Contacted'=>$contactedApplication, 'Hired'=>$hiredApplications]);
+            }
+        }

@@ -19,7 +19,8 @@ class AcademyController extends Controller
         $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
         return $this->onSuccess($academy);
 }
-   public function getAcademyHeadercount(){
+
+public function getAcademyHeadercount(){
         $academy = new Academy();
         $data['profile_views'] = $academy->profileViews();
         $data['unread_messages'] = $academy->unReadMessages();
@@ -68,8 +69,7 @@ public function academySize(Request $request){
 
         }
         else{
-                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'));
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'))
         }
 }
-
 }
