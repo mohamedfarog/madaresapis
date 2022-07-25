@@ -40,15 +40,23 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class RegisterController extends Controller
 {
 
-  
+
     public function reSendVerificationSendEmail(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email'],
+        ]);
+
         $user = User::where('email',  $request->email)->first();
         if ($user->email_verified == 1) {
             return $this->onError('This User is already verified');
         } else {
             $vCode = Str::random(30);
-            Mail::to($request->email)->send(new AppMail($vCode));
+            $details = [
+                'title' => 'Verified Email',
+                'body' => 'Email Verification Body'
+            ];
+            Mail::to($request->email)->send(new AppMail($vCode, $details));
             $user->verify_email_token = $vCode;
             $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
             $user->save();
@@ -58,7 +66,11 @@ class RegisterController extends Controller
     function sendVerificationEmail($email, $userId)
     {
         $vCode = Str::random(30);
-        Mail::to($email)->send(new AppMail($vCode));
+        $details = [
+            'title' => 'Verified Email',
+            'body' => 'Email Verification Body'
+        ];
+        Mail::to($email)->send(new AppMail($vCode, $details));
         $user = User::find($userId);
         $user->verify_email_token = $vCode;
         $user->verify_email_token_created_at = Carbon::now()->toDateTimeString();
@@ -176,29 +188,34 @@ class RegisterController extends Controller
             $validator = Validator::make($request->all(), [
                 'country' => 'required',
                 'city' => 'required',
+                'gender_id' => '',
                 'curriculum_vitae' => 'required',
                 'bio' => 'required',
                 'education' => 'required|array',
                 'education.*.edu_title' => 'required|string',
-                'experiance' => 'required|array',
-                'experiance.*.start_day' => 'required|date|before:tomorrow',
-                'experiance.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
-                'experiance.*.exp_title' => 'required|string',
-                'experiance.*.place_of_assuarance' => 'required|string',
+                'experience' => 'required|array',
+                'experience.*.start_day' => 'required|date|before:tomorrow',
+                'experience.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
+                'experience.*.exp_title' => 'required|string',
+                'experience.*.place_of_assurance' => 'required|string',
             ], [], [
                 "education.*.edu_title" => "certification name",
-                "experiance.*.start_day" => "work started date",
-                "experiance.*.end_day" => "work finished date",
-                "experiance.*.exp_title" => "experience position",
-                "experiance.*.place_of_assuarance" => "academy name",
+                "experience.*.start_day" => "work started date",
+                "experience.*.end_day" => "work finished date",
+                "experience.*.exp_title" => "experience position",
+                "experience.*.place_of_assurance" => "academy name",
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
             }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
+            //Genders table has been deleted
             if (isset($request->gender_id)) {
+
                 $teacher->gender_id = $request->gender_id;
+            } else {
+                $teacher->gender_id = 1;
             }
             if (isset($request->contact_number)) {
                 $teacher->contact_number = $request->contact_number;
@@ -394,7 +411,7 @@ class RegisterController extends Controller
         }])->paginate();
         return $this->onSuccess($user);
     }
-    public function teacher_info(Request $request,$id)
+    public function teacher_info(Request $request, $id)
     {
         // With Teacher, Country / City / Experience / Gender /Current Position
         $user = User::whereNotNull('email_verified_at')->where('user_type', '256')->where('id', $id)->with(['teacher' => function ($q) {

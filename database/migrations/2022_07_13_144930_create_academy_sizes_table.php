@@ -13,6 +13,8 @@ class CreateAcademySizesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('academy_sizes');
+
         Schema::create('academy_sizes', function (Blueprint $table) {
             $table->id();
             $table->text('title_en');

@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -104,7 +105,7 @@ Route::group(['prefix' => 'website'], function () {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('testyy', [HomePageController::class, 'testingHtttpRequest']);
-   Route::post('get_job_type',[HomePageController::class, 'getJobType']);
+   Route::post('get_job_type', [HomePageController::class, 'getJobType']);
 
 
    Route::post('available', [HomePageController::class, 'AvailableApplicant']);
