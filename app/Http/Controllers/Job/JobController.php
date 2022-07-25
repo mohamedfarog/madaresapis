@@ -29,30 +29,30 @@ class JobController extends Controller
     * @return \Illuminate\Http\Response
     */
 
-    public function testHtml(Request $request){
+   public function testHtml(Request $request)
+   {
 
-      switch($request->status){
-         case 1: 
-            if ($request->status == 1 ){
+      switch ($request->status) {
+         case 1:
+            if ($request->status == 1) {
                $request->status = 'Received';
                break;
-            } 
+            }
          case 2:
-            if($request->status== 2){
+            if ($request->status == 2) {
                $request->status = 'Viewed';
                break;
             }
          case 3:
-            if ($request->status ==3){
+            if ($request->status == 3) {
                $request->status = 'Contacted';
             }
-           
       }
       $myEmail = 'dg12@gmail.com';
-      $data = ['status' =>$request->status];
+      $data = ['status' => $request->status];
       Mail::to($myEmail)->send(new SendStatusUpdate($request->all()));
       return view('emails.notifications', $data);
-    }
+   }
 
    public function getJobsInfo()
    {
@@ -188,7 +188,7 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
-      $jobApply = JobActApply::where('academy_id', $academy->id)->with(['academy', 'jobs']);
+      $jobApply = JobActApply::where('academy_id', $academy->id)->with(['academy', 'jobs', 'teachers']);
       if (isset($request->status)) {
          $jobApply = $jobApply->where('status', $request->status);
       }
@@ -209,7 +209,7 @@ class JobController extends Controller
          return $this->onError($validator->errors()->all());
       }
       $user = User::find(Auth::id());
- 
+
       if ($user->is_active != 1 || $user->email_verified_at == NULL) {
          return $this->onError("Account is not verified", 400);
       }
@@ -231,7 +231,7 @@ class JobController extends Controller
 
       $teacherUser = User::where('id', $teacher->id);
       Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
-      
+
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
 
