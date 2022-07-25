@@ -89,6 +89,7 @@ Route::group(['prefix' => 'website'], function () {
    Route::group(['middleware' => 'auth:sanctum'], function () {
       //Route::post('/login', [AuthController::class, 'login']);
    });
+   Route::post('tested', [JobController::class, 'testHtml']);
 
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
@@ -163,3 +164,4 @@ Route::get('all_academy_sizes', function () {
    return AcademySize::all();
 });
 Route::get('activate_job', [JobController::class, 'activateAJob']);
+

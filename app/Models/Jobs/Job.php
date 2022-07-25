@@ -37,10 +37,7 @@ class Job extends Model
     {
         return $this->hasOne(JobLevel::class,'id',"edu_level_id");
     }
-    // public function setting(): HasOne
-    // {
-    //     return $this->hasOne(JobAppSetting::class);
-    // }
+  
     public function subjects(): HasOne
     {
         return $this->hasOne(subjects::class,'id','job_subject_id');
