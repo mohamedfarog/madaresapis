@@ -122,9 +122,7 @@ public function userSkills(Request $request)
                 $skill = Skill::all('id', 'en_skill_name');
                 return $this->onSuccess($skill);
         }
-     
     }
-
     public function AvailableApplicant(Request $request)
     {
         if($request->lang == 1){
@@ -135,6 +133,7 @@ public function userSkills(Request $request)
                 $availabe = Available::all('id', 'en_text');
                 return $this->onSuccess($availabe);
         }
+        
 }
     
     public function testJwt()

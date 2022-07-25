@@ -152,7 +152,6 @@ class JobController extends Controller
          'academy' => $academy
       ]);
    }
-
    public function getAllApplications(Request $request)
    {
       $validator = Validator::make($request->all(), [
@@ -186,7 +185,7 @@ class JobController extends Controller
          return $this->onError($validator->errors()->all());
       }
       $user = User::find(Auth::id());
-      return $user->email;
+ 
       if ($user->is_active != 1 || $user->email_verified_at == NULL) {
          return $this->onError("Account is not verified", 400);
       }
@@ -202,12 +201,13 @@ class JobController extends Controller
       $applyStatus->status = $request->status;
       $applyStatus->save();
       $teacher = Teacher::find($applyStatus->teacher_id);
-      if ($teacher) {
-         $teacherUser = User::find($teacher->user_id);
-
-         Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
+      if (!$teacher) {
+         return $this->onError('No Teacher Found');
       }
+      $teacherUser = User::where('id', $teacher->id);
+      Mail::to($teacherUser->email)->send(new SendStatusUpdate($request->all()));
 
+      
       return $this->onSuccess($applyStatus, 200, "Status updated successfully");
    }
    public function updateStatus(Request $request)
@@ -323,7 +323,6 @@ class JobController extends Controller
       $apply->apply_date = Carbon::now();
       $apply->status = 0;
       $apply->save();
-
       return $this->onSuccess([
          'user' => $user,
          'job' => $jobStatus,

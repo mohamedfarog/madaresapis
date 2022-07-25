@@ -134,7 +134,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('search_teachers', [RegisterController::class, 'search_teachers']);
    Route::get('teacher_info/{id}', [RegisterController::class, 'teacher_info']);
 
-   Route::get('testAnalytics', [AnalyticsController::class, 'getApplicationStats']);
+   Route::get('get_application_count', [AnalyticsController::class, 'getApplicationStats']);
 
    Route::post('years_of_teaching', [AcademyController::class, 'academyYearsOfTeaching']);
    Route::post('academy_size', [AcademyController::class, 'academySize']);
