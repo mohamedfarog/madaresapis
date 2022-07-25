@@ -49,6 +49,8 @@ class JobController extends Controller
          'language' => 'nullable|numeric',
          'desc' => 'required',
          'job_vacancy' => 'required',
+         'edu_level_id' => 'required',
+         'min_exp_id' => 'required',
          'close_date' => 'required|date',
          'post_date' => 'required|date',
 
