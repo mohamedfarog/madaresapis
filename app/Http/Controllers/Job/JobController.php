@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Job;
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
@@ -148,7 +146,6 @@ class JobController extends Controller
          'country' => 'required',
          'state' => 'required',
       ]);
-
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
       }
@@ -221,6 +218,7 @@ class JobController extends Controller
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
+      //req = teacher status
       $applyStatus = JobActApply::where('id', $request->id)->where('academy_id', Auth::id())->first();
       if (!$applyStatus) {
          return $this->onError(["No Application Found"]);
@@ -281,12 +279,10 @@ class JobController extends Controller
             return $this->onError('Not allowed action');
             break;
          }
-
-            $data = ['status'=> $request->status, 'id'=>$request->id];
-         
-            $teacherUser = User::where('id', $teacher->id);
-            Mail::to($teacherUser->email)->send(new SendStatusUpdate($data));
-            return $this->onSuccess($applyStatus, 200, "Status updated successfully");
+         $data = ['status'=> $request->status, 'id'=>$request->id];
+         $teacherUser = User::where('id', $teacher->id);
+         Mail::to($teacherUser->email)->send(new SendStatusUpdate($data));
+         return $this->onSuccess($applyStatus, 200, "Status updated successfully");
          }
 
 

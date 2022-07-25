@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use App\Http\Controllers\Controller;
@@ -39,8 +37,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RegisterController extends Controller
 {
-
-
     public function reSendVerificationSendEmail(Request $request)
     {
         $request->validate([
@@ -210,7 +206,7 @@ class RegisterController extends Controller
             }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
-            //Genders table has been deleted
+          
             if (isset($request->gender_id)) {
 
                 $teacher->gender_id = $request->gender_id;
@@ -322,7 +318,6 @@ class RegisterController extends Controller
             }
             TeacherFiles::insert($TeacherFiles);
         }
-
         $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->first();
         $userType->verify_email_token = NULL;
         $userType->verify_email_token_created_at = NULL;
@@ -335,6 +330,7 @@ class RegisterController extends Controller
             'message' => 'Successfully Registered!'
         ]);
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -29,30 +29,33 @@ class JobActApply extends Model
     }
     public function getJobStatusAttribute()
     {
-
+        
         switch ($this->status) {
             case 0:
-                return 'Pending';
+                return 'Applied';
                 break;
             case 1:
-                return 'Viewed';
+                return 'Pending';
                 break;
             case 2:
-                return 'Shortlisted';
+                return 'Viewed';
                 break;
             case 3:
-                return 'Rejected';
+                return 'Shortlisted';
                 break;
             case 4:
-                return 'Contacted';
+                return 'Rejected';
                 break;
             case 5:
-                return 'Interviewed';
+                return 'Contacted';
                 break;
             case 6:
-                return 'On Hold';
+                return 'Interviewed';
                 break;
             case 7:
+                return 'On Hold';
+                break;
+            case 8:
                 return 'Accepted';
                 break;
             default:
