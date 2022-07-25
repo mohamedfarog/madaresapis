@@ -13,6 +13,7 @@ class CreateYearOfTeachingsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('year_of_teachings');
         Schema::create('year_of_teachings', function (Blueprint $table) {
             $table->id();
             $table->text('title_en');
@@ -29,5 +30,5 @@ class CreateYearOfTeachingsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('year_of_teachings');
-     }
+    }
 }
