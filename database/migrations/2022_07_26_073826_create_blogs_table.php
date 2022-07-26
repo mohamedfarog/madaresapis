@@ -18,6 +18,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('body');
             $table->foreignId('academy_id');
+            $table->boolean('like_unlike')->default(0);
             $table->timestamps();
         });
     }

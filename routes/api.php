@@ -156,21 +156,21 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('delete_job', [JobController::class, 'deleteJob']);
    Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
-   // ---------------------- APPLICATION------------------------------------------
+
+// ---------------------- APPLICATION------------------------------------------
 
 
 //--------------------------Blogs----------------------------------------------
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
-   Route::post('get_blogs', [BlogsController::class, 'getBlogs']);
+   Route::get('get_blogs', [BlogsController::class, 'getBlogs']);
+   Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
+   Route::delete('delete_blogs', [BlogsController::class, 'updateBlogs']);
 
-   
+
+
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });
-
-
-
-
 
 // ----------------------PUBLIC API------------------------------------------
 Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
