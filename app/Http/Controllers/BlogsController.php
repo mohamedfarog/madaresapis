@@ -35,9 +35,10 @@ class BlogsController extends Controller
     }
 
     public function updateBlogs(Request $request){
-        $userId = Auth::id();
-        $academyId = Academy::where('user_id', $userId)->first()->id;
-        $blog =  Blogs::where('academy_id', $academyId )->first();
+        $blog =  Blogs::where('academy_id', $request->id )->first();
+        if(!$blog ){
+            return $this->onError('Blog does not exist');
+        }
         if (isset($request->title)){
             $blog->title = $request->title;
             
