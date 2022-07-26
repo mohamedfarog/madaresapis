@@ -24,6 +24,11 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
+    
+    public function delete_teacher_file(Request $request){
+        //
+    }
+
        
    
     
