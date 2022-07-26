@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -60,7 +61,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
 // Route::get('/', function () {
-//return response()->json('Madars-Backend'); 
+//return response()->json('Madars-Backend');
 //})->name('login');
 Route::group(['prefix' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
@@ -172,6 +173,9 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
 
 
+   //--------------------------Message-----------------------------------
+    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
+    Route::get('getMessages', [MessageController::class, 'getMessages']);
 
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
