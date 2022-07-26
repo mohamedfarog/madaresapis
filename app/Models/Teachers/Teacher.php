@@ -25,9 +25,7 @@ class Teacher extends Model
      protected $fillable = ['user_id', 'first_name' , 'last_name', 'willing_to_travel',
      'date_of_birth' , 'avatar' , 'academic_major' , 'bio', 'gender_id', 'job_level_id', 'availability_id', 'contact_number'];
     protected $guarded = ['id'];
-
     protected $hidden = ['created_id', 'updated_at'];
-
     public function getAvatarAttribute($value){
         return "http://api.madaresweb.mvp-apps.ae".$value;
     }   
@@ -79,7 +77,6 @@ class Teacher extends Model
     }
     
     public function getExperienceAttribute(){
-
         $start_day = TeacherExperience::where('teacher_id',$this->id)->first()->start_day;
         $end_day = TeacherExperience::where('teacher_id',$this->id)->first()->end_day;
         $exp = TeacherExperience::whereBetween('end_day', [$start_day, $end_day])->count();

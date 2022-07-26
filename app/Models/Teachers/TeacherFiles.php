@@ -13,7 +13,6 @@ class TeacherFiles extends Model
     protected $guarded = ['id'];
     protected $hidden = ['created_at', 'updated_at'];
 
-    
     public function getFileUrlAttribute($value){
         return "http://api.madaresweb.mvp-apps.ae".$value;
     }  

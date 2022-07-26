@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Models\Teachers;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class TeacherResume extends Model
 {
     use HasFactory;
