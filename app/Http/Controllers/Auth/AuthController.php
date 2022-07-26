@@ -399,7 +399,8 @@ class AuthController extends Controller
     public function my_info(Request $request)
     {
         $data = [];
-        $user = User::find(Auth::id())->setAppends(['followdata']);
+        $user = User::find(Auth::id());
+//        ->setAppends(['followdata']);
         //Teacher
         if ($user->user_type == '256') {
             $data['teacherData'] = Teacher::where('user_id', $user->id)->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity'])->first();
