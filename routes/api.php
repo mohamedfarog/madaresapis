@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -18,8 +19,7 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HelpController;
-use App\Http\Controllers\BlogsController
-;
+use App\Http\Controllers\BlogsController;
 
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\Website\YearsOfTeachingController;
@@ -61,7 +61,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
    return $request->user();
 });
 // Route::get('/', function () {
-//return response()->json('Madars-Backend'); 
+//return response()->json('Madars-Backend');
 //})->name('login');
 Route::group(['prefix' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
@@ -133,6 +133,7 @@ Route::get('/updates', function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
+   Route::post('follow_user', [AuthController::class, 'followUser']);
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
@@ -157,15 +158,28 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
 
-// ---------------------- APPLICATION------------------------------------------
+   // ---------------------- APPLICATION------------------------------------------
 
 
-//--------------------------Blogs----------------------------------------------
+
+   // ---------------------- USER FOLLOWS------------------------------------------
+
+
+
+   //--------------------------Blogs----------------------------------------------
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
    Route::get('get_blogs', [BlogsController::class, 'getBlogs']);
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
 
+<<<<<<< HEAD
+=======
+
+   //--------------------------Message-----------------------------------
+    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
+    Route::get('getMessages', [MessageController::class, 'getMessages']);
+
+>>>>>>> a5b70c332facce03102afc2d5051f2a3e1b179d0
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });

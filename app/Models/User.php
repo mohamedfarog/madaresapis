@@ -59,6 +59,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -93,5 +94,14 @@ class User extends Authenticatable implements JWTSubject
     public function academies(): HasMany
     {
         return $this->hasMany(Academy::class, 'user_id', 'id');
+    }
+    public function getFollowedataAttribute()
+    {
+        $followers = FollowData::where('following', $this->id)->get()->pluck('id');
+        $following = FollowData::where('followers', $this->id)->get()->pluck('id');
+        $data['followers'] = User::whereIn('id', $followers)->get();
+        $data['following'] = User::whereIn('id', $following)->get();
+
+        return $data;
     }
 }
