@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset=“UTF-8">
     <meta name=“viewport” content=“width=device-width,initial-scale=1">
@@ -24,15 +23,12 @@
             text-align: center;
             font-family: ‘Poppins’;
         }
-
-
         table {
             min-height: 500px;
             background-size: cover;
             background-image: url('https://cdn.baynounahsc.ae/storage/cdn/F0nIydXCxlgP1Ae2kIsDbPKdOhUUyqZRYC4svjcD.png');
 
         }
-
         .body_inner {
             position: relative;
             margin: 50px auto;
@@ -49,7 +45,6 @@
             align-items: center;
             justify-content: center; */
         }
-
         /* .body_inner {
             margin: 50px;
             background-color: #fff;
@@ -72,12 +67,10 @@
             padding: 10px;
             z-index: 99;
         }
-
         .body_inner h1 {
             margin: 0px;
             padding-top: 20px;
         }
-
         .greenBC {
             background-color: #104B08;
             position: absolute;
@@ -89,7 +82,6 @@
         }
     </style>
 </head>
-
 <body>
     <table width="100%" border="0" cellspacing="0" cellpadding="20">
         <tr>
@@ -101,7 +93,6 @@
                 </div>
             </td>
         </tr>
-
     </table>
 </body>
 </html>
