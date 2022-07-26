@@ -173,14 +173,11 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
 
-<<<<<<< HEAD
-=======
 
    //--------------------------Message-----------------------------------
-    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
-    Route::get('getMessages', [MessageController::class, 'getMessages']);
+   Route::post('sendMessage', [MessageController::class, 'sendMessage']);
+   Route::get('getMessages', [MessageController::class, 'getMessages']);
 
->>>>>>> a5b70c332facce03102afc2d5051f2a3e1b179d0
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });
