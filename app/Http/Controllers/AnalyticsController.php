@@ -17,8 +17,7 @@ class AnalyticsController extends Controller
     { 
         $userId = Auth::id();
         $userType = User::findOrFail($userId);
-        // $academyId = Academy::where('user_id', $userId)->first()->id;
-        $academyId = 18;
+        $academyId = Academy::where('user_id', $userId)->first()->id;
         $dailyStats = [];
         $weeklyStats = [];
         $monthlyStats = [];

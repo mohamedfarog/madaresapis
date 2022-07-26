@@ -163,6 +163,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
    Route::post('get_blogs', [BlogsController::class, 'getBlogs']);
 
+   
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });
