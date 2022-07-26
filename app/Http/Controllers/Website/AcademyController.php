@@ -69,7 +69,11 @@ public function academySize(Request $request){
 
         }
         else{
-                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'))
+                return $this->onSuccess(YearOfTeaching::all('id', 'title_en'));
         }
 }
+public function createBlogs(Request $request){
+        
 }
+}
+

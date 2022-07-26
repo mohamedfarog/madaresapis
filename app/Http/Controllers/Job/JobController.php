@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
 use function PHPUnit\Framework\returnSelf;
 
 class JobController extends Controller
@@ -28,32 +27,6 @@ class JobController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-
-   public function testHtml(Request $request)
-   {
-
-      switch ($request->status) {
-         case 1:
-            if ($request->status == 1) {
-               $request->status = 'Received';
-               break;
-            }
-         case 2:
-            if ($request->status == 2) {
-               $request->status = 'Viewed';
-               break;
-            }
-         case 3:
-            if ($request->status == 3) {
-               $request->status = 'Contacted';
-            }
-      }
-      $myEmail = 'dg12@gmail.com';
-      $data = ['status' => $request->status];
-      Mail::to($myEmail)->send(new SendStatusUpdate($request->all()));
-      return view('emails.notifications', $data);
-   }
-
 
    public function getJobsInfo()
    {

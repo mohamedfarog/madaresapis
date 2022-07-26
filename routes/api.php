@@ -18,11 +18,15 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HelpController;
+use App\Http\Controllers\BlogsController
+;
+
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\Website\YearsOfTeachingController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\AcademySize;
 use App\Models\Gender;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -154,9 +158,18 @@ Route::group(['middleware' => 'auth:api'], function () {
 
    // ---------------------- APPLICATION------------------------------------------
 
+
+//--------------------------Blogs----------------------------------------------
+   Route::post('add_blogs', [BlogsController::class, 'createBlog']);
+   Route::post('get_blogs', [BlogsController::class, 'getBlogs']);
+
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
 });
+
+
+
+
 
 // ----------------------PUBLIC API------------------------------------------
 Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
