@@ -18,6 +18,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Teachers\Teacher;
 use App\Models\Academies\Academy;
+use App\Models\FollowData;
 use App\Models\Locations;
 
 class AuthController extends Controller
@@ -398,7 +399,7 @@ class AuthController extends Controller
     public function my_info(Request $request)
     {
         $data = [];
-        $user = User::find(Auth::id());
+        $user = User::find(Auth::id())->setAppends(['followdata']);
         //Teacher
         if ($user->user_type == '256') {
             $data['teacherData'] = Teacher::where('user_id', $user->id)->with(['teacherLocations', 'teacherSkills', 'resumes', 'experiences', 'teacherFiles', 'education', 'teacherAvailabity'])->first();
@@ -411,5 +412,26 @@ class AuthController extends Controller
 
         $data['user'] = $user;
         return $this->onSuccess($data);
+    }
+    public function followUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+        $userId = Auth::id();
+        //Check if the user already follows the person
+        $userFollows = FollowData::where('following', $request->user_id)->first();
+        if ($userFollows) {
+            return $this->onError('You already follow this user');
+        }
+        $newFollow = new FollowData();
+        $newFollow->followers = $userId;
+        $newFollow->following = $request->user_id;
+        $newFollow->save();
+        return $this->onSuccess($newFollow);
     }
 }

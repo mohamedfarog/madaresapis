@@ -18,8 +18,7 @@ use App\Http\Controllers\Website\SchoolsController;
 use App\Http\Controllers\Job\JobController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HelpController;
-use App\Http\Controllers\BlogsController
-;
+use App\Http\Controllers\BlogsController;
 
 use App\Http\Controllers\Website\AcademyController;
 use App\Http\Controllers\Website\YearsOfTeachingController;
@@ -133,6 +132,7 @@ Route::get('/updates', function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
+   Route::post('follow_user', [AuthController::class, 'followUser']);
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
@@ -157,10 +157,15 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
 
-// ---------------------- APPLICATION------------------------------------------
+   // ---------------------- APPLICATION------------------------------------------
 
 
-//--------------------------Blogs----------------------------------------------
+
+   // ---------------------- USER FOLLOWS------------------------------------------
+
+
+
+   //--------------------------Blogs----------------------------------------------
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
    Route::get('get_blogs', [BlogsController::class, 'getBlogs']);
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
