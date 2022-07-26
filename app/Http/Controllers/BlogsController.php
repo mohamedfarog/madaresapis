@@ -58,10 +58,13 @@ class BlogsController extends Controller
     public function getBlogs(){
         return $this->onSuccess(Blogs::all());
     }
+
     public function deletetBlogs(Request $request){
-        $userId = Auth::id();
-        $academyId = Academy::where('user_id', $userId)->first()->id;
-        $blog =  Blogs::where('id', $academyId )->first();
+ 
+        $blog =  Blogs::where('id', $request->id )->first();
+        if (!$blog){
+            return $this->onError('Blog does not exist');
+        }
         $blog->delete();
         return $this->onSuccess('Blog has been deleted');
      
