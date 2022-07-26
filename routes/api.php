@@ -133,6 +133,7 @@ Route::get('/updates', function () {
 Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
    Route::post('follow_user', [AuthController::class, 'followUser']);
+   Route::post('unfollow_user', [AuthController::class, 'unfollowUser']);
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);

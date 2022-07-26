@@ -434,4 +434,25 @@ class AuthController extends Controller
         $newFollow->save();
         return $this->onSuccess($newFollow);
     }
+    public function unfollowUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+        $userId = Auth::id();
+        //Check if the user already follows the person
+        $userFollows = FollowData::where('following', $request->user_id)->first();
+        if ($userFollows) {
+            $newFollow = new FollowData();
+
+            $newFollow->delete();
+            return $this->onSuccess($newFollow);
+        } else {
+            return $this->onError('You dont follow this user');
+        }
+    }
 }
