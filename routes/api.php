@@ -187,4 +187,6 @@ Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
 Route::get('all_academy_sizes', function () {
    return AcademySize::all();
 });
+
+//Updates
 Route::get('activate_job', [JobController::class, 'activateAJob']);
