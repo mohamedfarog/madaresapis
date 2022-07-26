@@ -134,6 +134,7 @@ Route::get('/updates', function () {
 Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------USER------------------------------------------
    Route::post('follow_user', [AuthController::class, 'followUser']);
+   Route::post('unfollow_user', [AuthController::class, 'unfollowUser']);
    Route::post('update_my_info', [AuthController::class, 'updateMyInfo']);
    Route::post('userType', [RegisterController::class, 'UpdateUserType']);
    Route::get('my_info', [AuthController::class, 'my_info']);
@@ -174,8 +175,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
    //--------------------------Message-----------------------------------
-    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
-    Route::get('getMessages', [MessageController::class, 'getMessages']);
+   Route::post('sendMessage', [MessageController::class, 'sendMessage']);
+   Route::get('getMessages', [MessageController::class, 'getMessages']);
 
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
@@ -186,4 +187,6 @@ Route::get('get_available_jobs', [JobController::class, 'get_available_jobs']);
 Route::get('all_academy_sizes', function () {
    return AcademySize::all();
 });
+
+//Updates
 Route::get('activate_job', [JobController::class, 'activateAJob']);
