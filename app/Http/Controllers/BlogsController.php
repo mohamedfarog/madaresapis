@@ -13,7 +13,6 @@ class BlogsController extends Controller
 {
     
     public function createBlog(Request $request){
-
         $userId = Auth::id();
         $academyId = Academy::where('user_id', $userId)->first()->id;
         $validator = Validator::make($request->all(), [
@@ -21,10 +20,10 @@ class BlogsController extends Controller
             'body' => 'required|string',
             'like_unlike' => 'required|boolean'
         ]);
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 400);
         }
+        
         $blog = new Blogs();
         $blog->academy_id = $academyId;
         $blog->title = $request->title;

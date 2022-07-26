@@ -66,7 +66,6 @@ public function academyYearsOfTeaching(Request $request){
 public function academySize(Request $request){
         if($request->lang == 1){
                 return $this->onSuccess(YearOfTeaching::all('id', 'title_ar'));
-
         }
         else{
                 return $this->onSuccess(YearOfTeaching::all('id', 'title_en'));
