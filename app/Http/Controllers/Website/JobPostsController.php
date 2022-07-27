@@ -19,8 +19,5 @@ class JobPostsController extends Controller
 
             $jobPost = JobPost::all('id', 'academy_id', 'job_type_id', 'location_id', 'created_date', 'job_desc', 'is_active')->append('AcademiesInfo');
             return $this->onSuccess($jobPost);
-  
-     
-
-     }
+       }
 }
