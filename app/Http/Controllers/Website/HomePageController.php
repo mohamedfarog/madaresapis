@@ -109,6 +109,9 @@ public function homePageBanner(Request $request)
                 return $this->onSuccess($banner);
         }
 }
+public function gteAllJobs(){
+        return $this->onSuccess(Job::all());
+}
 public function userSkills(Request $request)
 {
         if($request->lang == 1){

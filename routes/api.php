@@ -97,6 +97,8 @@ Route::group(['prefix' => 'website'], function () {
 
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
+   Route::get('allJobs', [HomePageController::class, 'gteAllJobs']);
+
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
    Route::post('about', [AboutController::class, 'aboutData']);
    Route::post('joblevel', [HomePageController::class, 'returnJobLevel']);
@@ -150,13 +152,13 @@ Route::group(['middleware' => 'auth:api'], function () {
    // ----------------------JOB------------------------------------------
    Route::post('create_new_job', [JobController::class, 'addJob']);
 
-   Route::get('get_all_jobs', [JobController::class, 'get_my_jobs']);
+   Route::get('get_my_jobs', [JobController::class, 'get_my_jobs']);
    Route::get('search_for_job', [JobController::class, 'searchJobPost']);
    Route::post('updateStatus', [JobController::class, 'updateStatus']);
 
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
    Route::post('delete_job', [JobController::class, 'deleteJob']);
-   Route::get('search_for_jobs', [JobController::class, 'searchForJobs']);
+   Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
 
 
    // ---------------------- APPLICATION------------------------------------------
@@ -174,7 +176,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
    Route::post('delete_teacher_file', [TeachersController::class, 'deleteTeacherFile']);
-   Route::post('update_teacher_file', [TeachersController::class, 'updateTeacherFile']);
+   Route::post('update_teacher_file', [TeachersController::class, 'deleteTeacherFile']);
 
 
 
