@@ -181,6 +181,8 @@ Route::group(['middleware' => 'auth:api'], function () {
    //--------------------------Message-----------------------------------
    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
    Route::get('getMessages', [MessageController::class, 'getMessages']);
+   Route::delete('deleteMessage', [MessageController::class, 'deleteMessage']);
+
 
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);

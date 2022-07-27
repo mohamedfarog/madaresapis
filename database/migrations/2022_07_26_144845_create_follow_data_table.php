@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSubjectToMessagesTable extends Migration
+class CreateFollowDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddSubjectToMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::table('messages', function (Blueprint $table) {
-
+        Schema::dropIfExists('follow_data');
+        Schema::create('follow_data', function (Blueprint $table) {
+            $table->id();
+            $table->integer("following");
+            $table->integer("followers");
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddSubjectToMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('messages', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('follow_data');
     }
 }

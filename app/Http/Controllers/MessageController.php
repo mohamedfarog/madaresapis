@@ -61,12 +61,39 @@ class MessageController extends Controller
             return $this->onError("Account is not verified", 400);
         }
 
-        $messages = Message::select('from', 'to', 'subject', 'content', 'sending_date')
+        $messages = Message::select('id', 'from', 'to', 'subject', 'content', 'sending_date')
             ->where('from',$user->id)->orwhere('to', $user->id)
             ->paginate()->toArray();
 
         return $this->onSuccess($messages);
     }
 
+    public function deleteMessage(Request $request){
+
+        //validate the request
+        $validator = Validator::make($request->all(),
+            [
+                'id' => 'required|Integer'
+            ]);
+
+        if($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+
+
+        $user = User::find(Auth::id());
+
+        if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+            return $this->onError("Account is not verified", 400);
+        }
+
+        $message =  Message::where('id', $request->id )->first();
+        if ($message == null){
+            return $this->onError('Message is not exist');
+        }
+        $message->delete();
+        return $this->onSuccess('Message has been deleted');
+
+    }
 
 }
