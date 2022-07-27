@@ -126,6 +126,7 @@ class JobController extends Controller
       if ($user->is_active != 1 || $user->email_verified_at == NULL) {
          return $this->onError("Account is not verified", 400);
       }
+
       $academy = Academy::where('user_id', Auth::id())->first();
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
@@ -362,7 +363,8 @@ class JobController extends Controller
       if ($jobStatus->status != 1) {
          return $this->onError(["This Job is currently not active"]);
       }
-      $apply = JobActApply::where('teacher_id', $user->id)->where('job_id', $jobStatus->id)->first();
+      $teacher = Teacher::where("user_id", $user->id)->first();
+      $apply = JobActApply::where('teacher_id',$teacher->id)->where('job_id', $jobStatus->id)->first();
       if ($apply) {
          return $this->onError(["You already have applied for this job"]);
       }

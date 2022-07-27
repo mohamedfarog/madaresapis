@@ -25,11 +25,13 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
-    public function updateAvatar()
+    public function updateAvatar(Request $request)
     {
         $teachId =  auth::id();
+        $teacherFile = TeacherFiles::where('teacher_id', $request->teacher_id)->where('id', $request->file_id)->first();
 
-        $teacherAvatar = Teacher::
+
+        // $teacherAvatar = Teacher::
         // $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         // return $this->onSuccess($teacher);
     }
