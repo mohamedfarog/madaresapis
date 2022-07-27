@@ -25,6 +25,14 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
+    public function updateAvatar()
+    {
+        $teachId =  auth::id();
+
+        $teacherAvatar = Teacher::
+        // $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
+        // return $this->onSuccess($teacher);
+    }
 
     public function deleteTeacherFile(Request $request){
         // $userId = Auth::id();

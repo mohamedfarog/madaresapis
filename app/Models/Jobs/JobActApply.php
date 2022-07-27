@@ -27,6 +27,7 @@ class JobActApply extends Model
     {
         return $this->belongsTo(Teacher::class, "teacher_id", 'id');
     }
+    
     public function getJobStatusAttribute()
     {    
         switch ($this->status) {

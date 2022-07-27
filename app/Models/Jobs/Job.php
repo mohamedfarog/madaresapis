@@ -19,7 +19,6 @@ class Job extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $hidden = [ 'updated_at', 'deleted_at'];
-    protected $appends=['job_status'];
 
     public function academy(): BelongsTo
     {
