@@ -391,7 +391,7 @@ class JobController extends Controller
    }
    public function deleteJob(Request $request)
    {
-      // return auth::id();
+    
       $validator = Validator::make($request->all(), [
          'id' => 'required',
       ], [], [
@@ -401,7 +401,6 @@ class JobController extends Controller
          return $this->onError($validator->errors()->all());
       }
       $academy = Academy::where('user_id', Auth::id())->first();
-      return  $academy;
       if (!$academy) {
          return $this->onError(["No Academy Found"]);
       }
@@ -409,8 +408,9 @@ class JobController extends Controller
       if (!$deleteJob) {
          return $this->onError(["No Job Found"]);
       }
+
       $deleteJob->deleted_at = Carbon::now();
-      $deleteJob->delete();
+      $deleteJob->save();
       return $this->onSuccess($deleteJob, 200, "Job deleted successfully");
    }
    public function activateAJob(Request $request)
