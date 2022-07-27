@@ -97,7 +97,7 @@ Route::group(['prefix' => 'website'], function () {
 
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
-   Route::get('allJobs', [HomePageController::class, 'gteAllJobs']);
+   Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
 
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
    Route::post('about', [AboutController::class, 'aboutData']);
@@ -107,7 +107,7 @@ Route::group(['prefix' => 'website'], function () {
    Route::get('HpBannar', [HomePageController::class, 'homePageBanner']);
    Route::get('teacher', [TeachersController::class, 'teacherData']);
    Route::get('acadmy', [AcademyController::class, 'academyData']);
-   Route::get('jobs', [JobController::class, 'getJobsInfo']);
+   Route::get('jobs', [HomePageController::class, 'gteAllJobs']);
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('skills', [HomePageController::class, 'userSkills']);
    Route::post('testyy', [HomePageController::class, 'testingHtttpRequest']);
