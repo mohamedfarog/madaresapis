@@ -56,7 +56,6 @@ class HomePageController extends Controller
                 return $this->onSuccess($articleInfo);
         }
 }
-
 public function getJobType(Request $request){
         if($request->lang == '1'){
                return $this->onSuccess($jobsType = JobsType::all('id', 'type_ar_name')); 
