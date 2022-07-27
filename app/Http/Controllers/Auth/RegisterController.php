@@ -73,6 +73,19 @@ class RegisterController extends Controller
         $user->save();
         return $user;
     }
+
+    public function updateAcademy(Request $request)
+    {
+
+        $academy = Academy::where('user_id', auth::id())->first();
+          if ($file = $request->avatar) {
+                $icon = $this->uploadFile($file, 'avatars');
+                $academy->avatar = $icon;
+            }
+            $academy->save();
+            return $this->onSuccess($academy);
+        }
+
     public function testVerifyEmail(Request $request)
     {
         $this->sendVerificationEmail($request->email, 1);
@@ -126,6 +139,7 @@ class RegisterController extends Controller
                 $location->street = $request->street;
             }
             $location->save();
+
             $academy = new Academy();
             $academy->user_id = $userId;
             if (isset($request->name)) {
