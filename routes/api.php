@@ -177,10 +177,14 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
 
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
+   
    Route::post('delete_teacher_file', [TeachersController::class, 'deleteTeacherFile']);
    Route::post('update_teacher_file', [TeachersController::class, 'updateTeacherFile']);
    Route::get('get_teacher_files', [TeachersController::class, 'getAllFilesForThisTeacher']);
 
+   Route::post('delete_academy_files', [AcademyController::class, 'deleteAcademyFile']);
+   Route::post('update_academy_files', [AcademyController::class, 'updateAcademyFile']);
+   Route::get('get_academy_files', [AcademyController::class, 'getAcademyFile']);
 
 
    Route::post('update_academy_avatar', [RegisterController::class, 'updateAcademyAvatar']);

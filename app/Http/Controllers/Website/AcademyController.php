@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Models\Academies\Academy;
+use App\Models\Academies\AcademyFile;
+use Illuminate\Support\Facades\Auth;
 use App\Models\YearOfTeaching;
 use App\Models\AcademySize;
 use Illuminate\Http\Request;
@@ -18,6 +20,36 @@ class AcademyController extends Controller
     public function academyData(){
         $academy = Academy::all('id', 'name', 'avatar')->append(['Totaljobs'])->toArray();
         return $this->onSuccess($academy);
+}
+
+
+public function deleteAcademyFile(Request $request){
+        return $this->onSuccess('hhhhh');
+        $userId = Auth::id();
+        $academyFile = AcademyFile::where('academy_id',  $userId)->where('id', $request->file_id)->first();
+        if(!$academyFile){
+            return $this->onError('Teacher File does not exist');
+        }
+        $academyFile->delete();
+        return $this->onSuccess('Academy ile is deleted');
+    } 
+    
+    public function getAcademyFile(){
+        $teacherId =  auth::id();
+        return $this->onSuccess(AcademyFile::where('academy_id', $teacherId)->get());
+    }
+    public function updateAcademyFile(Request $request){
+        $userId = Auth::id();
+        $academyFile = AcademyFile::where('academy_id',  $userId)->where('id', $request->file_id)->first();
+        if(!$academyFile){
+            return $this->onError('Academy File does not exist');
+        }
+       
+        if(isset($request->file_url)){
+            $academyFile->file_url = $request->file_url;
+        }
+        $academyFile->save();
+        return $this->onSuccess($academyFile);
 }
 
 public function getAcademyHeadercount(){
