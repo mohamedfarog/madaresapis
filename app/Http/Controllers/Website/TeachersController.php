@@ -25,20 +25,11 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
-    public function updateAvatar(Request $request)
-    {
-        $teachId =  auth::id();
-        $teacherFile = TeacherFiles::where('teacher_id', $request->teacher_id)->where('id', $request->file_id)->first();
 
-
-        // $teacherAvatar = Teacher::
-        // $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
-        // return $this->onSuccess($teacher);
-    }
 
     public function deleteTeacherFile(Request $request){
-        // $userId = Auth::id();
-        $teacherFile = TeacherFiles::where('teacher_id', $request->teacher_id)->where('id', $request->file_id)->first();
+        $userId = Auth::id();
+        $teacherFile = TeacherFiles::where('teacher_id',  $userId)->where('id', $request->file_id)->first();
         if(!$teacherFile){
             return $this->onError('Teacher File does not exist');
         }
@@ -53,7 +44,8 @@ class TeachersController extends Controller
 
     public function updateTeacherFile(Request $request){
 
-        $teacherFile = TeacherFiles::where('teacher_id', $request->teacher_id)->where('id', $request->file_id)->first();
+        $userId = Auth::id();
+        $teacherFile = TeacherFiles::where('teacher_id',  $userId)->where('id', $request->file_id)->first();
         if(!$teacherFile){
             return $this->onError('Teacher File does not exist');
         }
