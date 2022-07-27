@@ -13,9 +13,11 @@ class CreateSalaryRatesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('salary_rates');
         Schema::create('salary_rates', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
+            $table->string("ar_title");
+            $table->string("en_title");
             $table->timestamps();
         });
     }

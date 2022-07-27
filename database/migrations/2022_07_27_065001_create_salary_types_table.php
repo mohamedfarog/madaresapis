@@ -13,9 +13,11 @@ class CreateSalaryTypesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('salary_types');
         Schema::create('salary_types', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
+            $table->string("ar_title");
+            $table->string("en_title");
             $table->timestamps();
         });
     }

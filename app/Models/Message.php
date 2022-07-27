@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Message extends Model
 {
     use HasFactory;
-    protected $fillable = ['to', 'from', 'subject', 'content', 'sending_date'];
+    protected $fillable = ['to', 'from', 'subject', 'content', 'sending_date', 'seen', 'seen_date'];
 
 }

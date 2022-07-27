@@ -20,9 +20,9 @@ class CreateMessagesTable extends Migration
             $table->integer("from");
             $table->string("content");
             $table->string("subject");
-            $table->string("sending_date");
-            $table->boolean("seen");
-            $table->date("seen_date");
+            $table->timestamp("sending_date");
+            $table->boolean("seen")->default(0);
+            $table->timestamp("seen_date")->nullable();
             $table->timestamps();
         });
     }

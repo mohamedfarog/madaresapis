@@ -13,9 +13,11 @@ class CreateJobMinimumExperiencesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('job_minimum_experiences');
         Schema::create('job_minimum_experiences', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
+            $table->string("ar_title");
+            $table->string("en_title");
             $table->timestamps();
         });
     }
