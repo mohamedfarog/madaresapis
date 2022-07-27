@@ -312,7 +312,7 @@ class RegisterController extends Controller
             foreach ($request->teacher_files as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
                 array_push($TeacherFiles, [
-                    "file_url" =>  $teacher_files,
+                    "file_url" =>  $tFile,
                     "teacher_id" =>  $userId
                 ]);
                 
