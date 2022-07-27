@@ -33,10 +33,10 @@ class TeachersController extends Controller
             return $this->onError('Teacher File does not exist');
         }
         $teacherFile->delete();
-        return $this->onSuccess('Teacher file is deleted');
+        return $this->onSuccess('Teacher ile is deleted');
     } 
     public function updateTeacherFile(Request $request){
-        // $userId = Auth::id();
+        //$userId = Auth::id();
         $teacherFile = TeacherFiles::where('teacher_id', $request->id)->first();
         if(!$teacherFile){
             return $this->onError('Teacher File does not exist');
