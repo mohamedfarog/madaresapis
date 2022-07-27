@@ -34,7 +34,7 @@ class JobController extends Controller
    {
       $userId = Auth::id();
       if ($userId) {
-         $userId = Teacher::where('user_id', $userId)->first();
+         $userId = Teacher::where('user_id', $userId)->first()->id;
       }
       $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on', 'job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
