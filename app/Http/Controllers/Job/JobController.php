@@ -377,7 +377,7 @@ class JobController extends Controller
          return $this->onError(["You already have applied for this job"]);
       }
       $apply = new JobActApply();
-      $apply->teacher_id = $user->id;
+      $apply->teacher_id = $teacher->id;
       $apply->job_id = $jobStatus->id;
       $apply->academy_id = $jobStatus->academy_id;
       $apply->apply_date = Carbon::now();
