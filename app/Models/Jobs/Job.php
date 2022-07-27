@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Models\Jobs;
+use App\Models\Gender;
+use App\Models\SalaryRate;
+use App\Models\SalaryType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +30,7 @@ class Job extends Model
     }
     public function gender(): HasOne
     {
-        return $this->hasOne(Gender::class);
+        return $this->hasOne(Gender::class, 'id', 'gender');
     }
     public function type(): HasOne
     {
@@ -37,7 +40,7 @@ class Job extends Model
     {
         return $this->hasOne(JobLevel::class,'id',"edu_level_id");
     }
-  
+
     public function subjects(): HasOne
     {
         return $this->hasOne(subjects::class,'id','job_subject_id');
@@ -66,6 +69,21 @@ class Job extends Model
     public function hiredApplicants(): HasMany
     {
         return $this->HasMany(JobActApply::class)->where('status',4);
+    }
+
+    public function jobMinimumExperience(): HasOne
+    {
+        return $this->hasOne(JobMinimumExperience::class, 'id', 'min_exp_id')->select('id', 'title');
+    }
+
+    public function jobSalaryType(): HasOne
+    {
+        return $this->hasOne(SalaryType::class, 'id', 'min_exp_id')->select('id', 'title');
+    }
+
+    public function jobSalaryRate(): HasOne
+    {
+        return $this->hasOne(SalaryRate::class, 'id', 'salary_rate_id')->select('id', 'title');
     }
 
     public function getAcademiesInfoAttribute()
@@ -97,9 +115,9 @@ class Job extends Model
                 default:
                      return 'Awaiting';
                      break;
-            
 
-            
+
+
         }
     }
 }
