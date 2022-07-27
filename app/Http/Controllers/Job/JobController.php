@@ -162,7 +162,8 @@ class JobController extends Controller
          return $this->onError(["No Academy Found"]);
       }
       $whereDeleted =  Job::whereNotNull('deleted_at')->where('academy_id', $academy->id)->get()->pluck('id');
-      $jobApply = JobActApply::where('academy_id', $academy->id)->whereNotIn($whereDeleted)->with(['jobs', 'teacher']);
+      $jobApply = JobActApply::where('academy_id', $academy->id)->whereNotIn('academy_id', $whereDeleted)->with(['jobs', 'teacher']);
+      // $jobApply = JobActApply::where('academy_id', $academy->id)->with(['jobs', 'teacher']);
       if (isset($request->status)) {
          $jobApply = $jobApply->where('status', $request->status);
       }
