@@ -308,14 +308,14 @@ class RegisterController extends Controller
         $available->save();
 
         $TeacherFiles = [];
-        if (is_array($request->certficates) || is_object($request->TeacherFiles)) {
-            foreach ($request->certficates as $tFile) {
+        if (is_array($request->teacher_files) || is_object($request->teacher_files)) {
+            foreach ($request->teacher_files as $tFile) {
                 $teacherfiles = $this->uploadFile($tFile, 'teacherFiles');
                 array_push($TeacherFiles, [
-                    "file_url" =>  $teacherfiles,
+                    "file_url" =>  $teacher_files,
                     "teacher_id" =>  $userId
                 ]);
-                //Dgeeel
+                
 
             }
             TeacherFiles::insert($TeacherFiles);
