@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Job;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Academies\Academy;
@@ -31,6 +33,9 @@ class JobController extends Controller
    public function getJobsInfo()
    {
       $userId = Auth::id();
+      if ($userId) {
+         $userId = Teacher::where('user_id', $userId)->first();
+      }
       $job = Job::select(['jobs.*', 'job_act_apply.created_at as applied_on', 'job_act_apply.status as applied_status'])->leftJoin('job_act_apply', function ($join) use ($userId) {
          $join->on('jobs.id', 'job_act_apply.job_id')->where('job_act_apply.teacher_id', $userId);
       })->where('jobs.status', 1)->whereNull('deleted_at')->get()->load('academy', 'level', 'type', 'subjects');
@@ -153,7 +158,7 @@ class JobController extends Controller
    public function getAllApplications(Request $request)
    {
       $validator = Validator::make($request->all(), [
-         'status' => ['nullable', Rule::in([0, 1, 2, 3, 4,5,6,7,8]),],
+         'status' => ['nullable', Rule::in([0, 1, 2, 3, 4, 5, 6, 7, 8]),],
       ]);
       if ($validator->fails()) {
          return $this->onError($validator->errors()->all());
@@ -204,61 +209,61 @@ class JobController extends Controller
       if (!$teacher) {
          return $this->onError('No Teacher Found');
       }
-      switch($request->status){
+      switch ($request->status) {
          case 0:
-            if($request->status == 0){
+            if ($request->status == 0) {
                $request->status = 'applied';
                break;
             }
-            case 1:
-            if($request->status == 1){
+         case 1:
+            if ($request->status == 1) {
                $request->status = 'pending';
                break;
             }
-            case 2:
-            if($request->status == 2){
+         case 2:
+            if ($request->status == 2) {
                $request->status = 'viewed';
                break;
             }
-            case 3: 
-            if($request->status == 3){
-               $request->status = 'shortlisted';            
+         case 3:
+            if ($request->status == 3) {
+               $request->status = 'shortlisted';
                break;
             }
-            case 4:
-            if($request->status == 4){
+         case 4:
+            if ($request->status == 4) {
                $request->status = 'rejected';
                break;
-            } 
-            case 5:
-            if($request->status == 5){
+            }
+         case 5:
+            if ($request->status == 5) {
                $request->status = 'contacted';
                break;
             }
-            case 6:
-            if($request->status == 6){
+         case 6:
+            if ($request->status == 6) {
                $request->status = 'interviewed';
                break;
             }
-            case 7:
-            if ($request->status == 7){
+         case 7:
+            if ($request->status == 7) {
                $request->status = 'on_holed';
                break;
             }
-            case 8:
-            if($request->status == 8){
+         case 8:
+            if ($request->status == 8) {
                $request->status = 'accepted';
                break;
             }
-            default:
+         default:
             return $this->onError('Not allowed action');
             break;
-         }
-         $data = ['status'=> $request->status, 'id'=>$request->id];
-         $teacherUser = User::where('id', $teacher->id);
-         Mail::to($teacherUser->email)->send(new SendStatusUpdate($data));
-         return $this->onSuccess($applyStatus, 200, "Status updated successfully, email is sent to the applicant");
-         }
+      }
+      $data = ['status' => $request->status, 'id' => $request->id];
+      $teacherUser = User::where('id', $teacher->id);
+      Mail::to($teacherUser->email)->send(new SendStatusUpdate($data));
+      return $this->onSuccess($applyStatus, 200, "Status updated successfully, email is sent to the applicant");
+   }
 
 
    public function updateStatus(Request $request)
@@ -364,7 +369,7 @@ class JobController extends Controller
          return $this->onError(["This Job is currently not active"]);
       }
       $teacher = Teacher::where("user_id", $user->id)->first();
-      $apply = JobActApply::where('teacher_id',$teacher->id)->where('job_id', $jobStatus->id)->first();
+      $apply = JobActApply::where('teacher_id', $teacher->id)->where('job_id', $jobStatus->id)->first();
       if ($apply) {
          return $this->onError(["You already have applied for this job"]);
       }
@@ -407,5 +412,4 @@ class JobController extends Controller
    {
       return Job::where('id', $request->id)->update(['status' => 1]);
    }
-
 }
