@@ -306,6 +306,7 @@ class RegisterController extends Controller
         $available = new Availability();
         $available->teacher_id = $userId;
         $available->save();
+
         $TeacherFiles = [];
         if (is_array($request->certficates) || is_object($request->TeacherFiles)) {
             foreach ($request->certficates as $tFile) {
@@ -313,8 +314,9 @@ class RegisterController extends Controller
                 array_push($TeacherFiles, [
                     "file_url" =>  $teacherfiles,
                     "teacher_id" =>  $userId
-
                 ]);
+                //Dgeeel
+
             }
             TeacherFiles::insert($TeacherFiles);
         }

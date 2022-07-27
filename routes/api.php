@@ -171,7 +171,11 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
    Route::get('get_blogs', [BlogsController::class, 'getBlogs']);
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
+   
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
+   Route::post('delete_teacher_file', [TeachersController::class, 'deleteTeacherFile']);
+
+
 
 
    //--------------------------Message-----------------------------------

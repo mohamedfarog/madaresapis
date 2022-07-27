@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
-
+use App\Models\Teachers\TeacherFiles;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Teachers\Teacher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,12 +25,19 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
-    
-    public function delete_teacher_file(Request $request){
-        //
-    }
+    public function deleteTeacherFile(Request $request){
+        // $userId = Auth::id();
+        $teacherFile = TeacherFiles::where('teacher_id', $request->id);
+        if(!$teacherFile){
+            return $this->onError('Teacher File does not exist');
+        }
+        $teacherFile->delete();
+        return $this->onSuccess('Teacher File is deleted');
+        
 
-       
+    
+
+}   
    
     
 }
