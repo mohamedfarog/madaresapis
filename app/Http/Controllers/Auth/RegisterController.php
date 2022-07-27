@@ -85,9 +85,8 @@ class RegisterController extends Controller
             return $this->onSuccess($teacher);
         }
 
-    public function updateAcademy(Request $request)
+    public function updateAcademyAvatar(Request $request)
     {
-
         $academy = Academy::where('user_id', auth::id())->first();
           if ($file = $request->avatar) {
                 $icon = $this->uploadFile($file, 'avatars');

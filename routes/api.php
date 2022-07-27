@@ -182,7 +182,8 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('get_teacher_files', [TeachersController::class, 'getAllFilesForThisTeacher']);
 
 
-   Route::post('update_academy_avatar', [RegisterController::class, 'updateAcademy']);
+
+   Route::post('update_academy_avatar', [RegisterController::class, 'updateAcademyAvatar']);
    Route::post('update_teacher_avatar', [RegisterController::class, 'updateTeacherAvatar']);
 
 
