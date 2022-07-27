@@ -73,6 +73,17 @@ class RegisterController extends Controller
         $user->save();
         return $user;
     }
+    public function updateTeacherAvatar(Request $request)
+    {
+
+        $teacher = Teacher::where('user_id', auth::id())->first();
+          if ($file = $request->avatar) {
+                $icon = $this->uploadFile($file, 'avatars');
+                $teacher->avatar = $icon;
+            }
+            $teacher->save();
+            return $this->onSuccess($teacher);
+        }
 
     public function updateAcademy(Request $request)
     {

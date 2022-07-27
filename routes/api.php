@@ -171,7 +171,6 @@ Route::group(['middleware' => 'auth:api'], function () {
    // ---------------------- USER FOLLOWS------------------------------------------
 
 
-
    //--------------------------Blogs----------------------------------------------
    Route::post('add_blogs', [BlogsController::class, 'createBlog']);
    Route::get('get_blogs', [BlogsController::class, 'getBlogs']);
@@ -183,7 +182,9 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::get('get_teacher_files', [TeachersController::class, 'getAllFilesForThisTeacher']);
 
 
-   Route::post('update_academy', [RegisterController::class, 'updateAcademy']);
+   Route::post('update_academy_avatar', [RegisterController::class, 'updateAcademy']);
+   Route::post('update_teacher_avatar', [RegisterController::class, 'updateTeacherAvatar']);
+
 
 
 
