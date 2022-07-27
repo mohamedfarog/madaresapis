@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\JobMinimumExperienceController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SalaryRateController;
+use App\Http\Controllers\SalaryTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
@@ -188,6 +191,12 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
    Route::get('getMessages', [MessageController::class, 'getMessages']);
    Route::delete('deleteMessage', [MessageController::class, 'deleteMessage']);
+   Route::post('seenMessage', [MessageController::class, 'seenMessage']);
+   //---------------------------------------------------------------------
+
+
+
+
 
    Route::post('update_application_status', [JobController::class, 'update_applicationStatus']);
    Route::get('get_applications ', [JobController::class, 'getAllApplications']);
@@ -201,3 +210,22 @@ Route::get('all_academy_sizes', function () {
 
 //Updates
 Route::get('activate_job', [JobController::class, 'activateAJob']);
+
+
+//-------------------------Job Minimum Experience---------------------
+Route::group(['prefix' => 'jobMinimumExperience'], function () {
+    Route::post('index', [JobMinimumExperienceController::class, 'index']);
+});
+//--------------------------------------------------------------------
+
+//-------------------------Salary Rate--------------------------------
+Route::group(['prefix' => 'salaryRate'], function () {
+    Route::post('index', [SalaryRateController::class, 'index']);
+});
+//--------------------------------------------------------------------
+
+//-------------------------Salary Type--------------------------------
+Route::group(['prefix' => 'salaryType'], function () {
+    Route::post('index', [SalaryTypeController::class, 'index']);
+});
+//--------------------------------------------------------------------

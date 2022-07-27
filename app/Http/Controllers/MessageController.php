@@ -68,6 +68,37 @@ class MessageController extends Controller
         return $this->onSuccess($messages);
     }
 
+    public function seenMessage(Request $request){
+        //validate the request
+        $validator = Validator::make($request->all(),
+            [
+                'id' => 'required|Integer'
+            ]);
+
+        if($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+
+        //get the user
+        $userFrom = User::find(Auth::id());
+        if ($userFrom->is_active != 1 || $userFrom->email_verified_at == NULL) {
+            return $this->onError("Account is not verified", 400);
+        }
+
+        $message = Message::find($request['id']);
+        if($message == null){
+            return $this->onError("Message not found");
+        }
+
+        $message->seen = 1;
+        $message->seen_date = Carbon::now()->timezone('Asia/Riyadh');
+        $message->save();
+
+        return $this->onSuccess("Message seen");
+
+    }
+
+
     public function deleteMessage(Request $request){
 
         //validate the request
