@@ -214,18 +214,18 @@ Route::get('activate_job', [JobController::class, 'activateAJob']);
 
 //-------------------------Job Minimum Experience---------------------
 Route::group(['prefix' => 'jobMinimumExperience'], function () {
-    Route::post('index', [JobMinimumExperienceController::class, 'index']);
+    Route::post('/', [JobMinimumExperienceController::class, 'index']);
 });
 //--------------------------------------------------------------------
 
 //-------------------------Salary Rate--------------------------------
 Route::group(['prefix' => 'salaryRate'], function () {
-    Route::post('index', [SalaryRateController::class, 'index']);
+    Route::post('/', [SalaryRateController::class, 'index']);
 });
 //--------------------------------------------------------------------
 
 //-------------------------Salary Type--------------------------------
 Route::group(['prefix' => 'salaryType'], function () {
-    Route::post('index', [SalaryTypeController::class, 'index']);
+    Route::post('/', [SalaryTypeController::class, 'index']);
 });
 //--------------------------------------------------------------------
