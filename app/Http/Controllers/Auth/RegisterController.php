@@ -215,7 +215,7 @@ class RegisterController extends Controller
                 'education.*.edu_title' => 'required|string',
                 'experience' => 'required|array',
                 'experience.*.start_day' => 'required|date|before:tomorrow',
-                'experience.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
+                'experience.*.end_day' => 'required|date|after_or_equal:experience.*.start_day',
                 'experience.*.exp_title' => 'required|string',
                 'experience.*.place_of_assurance' => 'required|string',
             ], [], [
@@ -230,7 +230,7 @@ class RegisterController extends Controller
             }
             $teacher = new Teacher();
             $teacher->user_id = $userId;
-          
+
             if (isset($request->gender_id)) {
 
                 $teacher->gender_id = $request->gender_id;
@@ -326,7 +326,7 @@ class RegisterController extends Controller
                 $edu->save();
             }
         }
-        //TODO:: check 
+        //TODO:: check
         $available = new Availability();
         $available->teacher_id = $userId;
         $available->save();
@@ -339,7 +339,7 @@ class RegisterController extends Controller
                     "file_url" =>  $tFile,
                     "teacher_id" =>  $userId
                 ]);
-                
+
 
             }
             TeacherFiles::insert($TeacherFiles);

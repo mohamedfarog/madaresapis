@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SalaryType extends Model
 {
     use HasFactory;
+    protected $fillable = ['ar_title', 'en_title'];
 }
