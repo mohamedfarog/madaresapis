@@ -55,7 +55,7 @@ public function deleteAcademyFile(Request $request){
                $academyFile->file_url = $academy_file;
         }
         $academyFile->save();
-        return $this->onSuccess($academy_file);
+        return $this->onSuccess($academyFile);
 }
 
 public function getAcademyHeadercount(){
