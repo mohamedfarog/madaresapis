@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\YearOfTeaching;
 use App\Models\AcademySize;
 use Illuminate\Http\Request;
+use App\Traits\fileUpload;
+use File;
 
 class AcademyController extends Controller
 {
@@ -22,9 +24,10 @@ class AcademyController extends Controller
         return $this->onSuccess($academy);
 }
 
+use fileUpload;
 
 public function deleteAcademyFile(Request $request){
-        return $this->onSuccess('hhhhh');
+     
         $userId = Auth::id();
         $academyFile = AcademyFile::where('academy_id',  $userId)->where('id', $request->file_id)->first();
         if(!$academyFile){
@@ -44,9 +47,9 @@ public function deleteAcademyFile(Request $request){
         if(!$academyFile){
             return $this->onError('Academy File does not exist');
         }
-       
-        if(isset($request->file_url)){
-            $academyFile->file_url = $request->file_url;
+        if($file = $request->file_url){
+               $academy_file = $this->uploadFile($file, 'file_url');
+               $academyFile->file_url = $request->file_url;
         }
         $academyFile->save();
         return $this->onSuccess($academyFile);

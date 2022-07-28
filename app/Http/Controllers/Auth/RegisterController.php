@@ -213,17 +213,17 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'education' => 'required|array',
                 'education.*.edu_title' => 'required|string',
-                'experience' => 'required|array',
-                'experience.*.start_day' => 'required|date|before:tomorrow',
-                'experience.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
-                'experience.*.exp_title' => 'required|string',
-                'experience.*.place_of_assurance' => 'required|string',
+                // 'experience' => 'required|array',
+                // 'experience.*.start_day' => 'required|date|before:tomorrow',
+                // 'experience.*.end_day' => 'required|date|after_or_equal:experiance.*.start_day',
+                // 'experience.*.exp_title' => 'required|string',
+                // 'experience.*.place_of_assurance' => 'required|string',
             ], [], [
-                "education.*.edu_title" => "certification name",
-                "experience.*.start_day" => "work started date",
-                "experience.*.end_day" => "work finished date",
-                "experience.*.exp_title" => "experience position",
-                "experience.*.place_of_assurance" => "academy name",
+               // "education.*.edu_title" => "certification name",
+                //"experience.*.start_day" => "work started date",
+               // "experience.*.end_day" => "work finished date",
+               // "experience.*.exp_title" => "experience position",
+               // "experience.*.place_of_assurance" => "academy name",
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
