@@ -51,7 +51,7 @@ public function deleteAcademyFile(Request $request){
         //     $academy_file = $this->uploadFile($file, 'public/storage/academyFiles');
         //     $academyFile->file_url = $request->file_url;
                $academy_file = time() . '_' . $request->file_url->getClientOriginalName();
-               $academy_file = $request->file_url->update('public/uploads/resumes');
+               $academy_file = $request->file_url->store('public/uploads/resumes');
         //        unlink('public/files/'.$update->filename);
 
                $academyFile->file_url = $academy_file;
