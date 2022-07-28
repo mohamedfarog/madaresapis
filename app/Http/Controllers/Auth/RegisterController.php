@@ -268,6 +268,8 @@ class RegisterController extends Controller
                 $icon = $this->uploadFile($file, 'avatars');
                 $teacher->avatar = $icon;
             }
+            //insert teacher subject
+            $teacher->subject_id = $request['subject_id'];
             $teacher->save();
         }
         $location = new Locations();
@@ -336,8 +338,7 @@ class RegisterController extends Controller
         }
         //insert teacher job levels
         $teacher->teacherLevels()->sync($request['teacherLevels']);
-        //insert teacher subject
-        $teacher->subject_id = $request['subject_id'];
+
 
         //TODO:: check
         $available = new Availability();
