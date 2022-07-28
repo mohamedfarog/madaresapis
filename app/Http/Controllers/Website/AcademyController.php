@@ -48,7 +48,7 @@ public function deleteAcademyFile(Request $request){
             return $this->onError('Academy File does not exist');
         }
         if($file = $request->file_url){
-               $academy_file = $this->uploadFile($file, 'academyFiles');
+               $academy_file = $this->uploadFile($file, 'public/storage/academyFiles');
                $academyFile->file_url = $request->file_url;
         }
         $academyFile->save();
