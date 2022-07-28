@@ -243,3 +243,4 @@ Route::get('all_academy_sizes', function () {
 Route::get('activate_job', [JobController::class, 'activateAJob']);
 
 
+

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Teachers;
+use App\Models\TeacherLevel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,12 +24,12 @@ class Teacher extends Model
     use HasFactory;
 
      protected $fillable = ['user_id', 'first_name' , 'last_name', 'willing_to_travel',
-     'date_of_birth' , 'avatar' , 'academic_major' , 'bio', 'gender_id', 'job_level_id', 'availability_id', 'contact_number'];
+     'date_of_birth' , 'avatar' , 'academic_major' , 'bio', 'gender_id', 'job_level_id', 'availability_id', 'contact_number', 'subject_id'];
     protected $guarded = ['id'];
     protected $hidden = ['created_id', 'updated_at'];
     public function getAvatarAttribute($value){
         return "http://api.madaresweb.mvp-apps.ae".$value;
-    }   
+    }
     public function teacherLocations(): HasOne
     {
         return $this->HasOne(Locations::class, 'teacher_id', 'user_id');
@@ -37,7 +38,7 @@ class Teacher extends Model
     {
         return $this->hasOne(TeacherResume::class,'teacher_id', 'user_id');
     }
-    
+
     public function teacherSkills(): HasMany
     {
         return $this->HasMany(Skills::class,'teacher_id', 'user_id');
@@ -48,12 +49,12 @@ class Teacher extends Model
     }
     public function experiences(): HasMany
     {
-   
+
         return $this->hasMany(TeacherExperience::class,'teacher_id', 'user_id');
     }
     public function education(): HasMany
     {
-   
+
         return $this->hasMany(TeacherEducation::class,'teacher_id', 'user_id');
     }
     public function user(): BelongsTo
@@ -64,22 +65,29 @@ class Teacher extends Model
     {
         return $this->hasMany(TeacherFiles::class, 'teacher_id', 'user_id');
     }
-    
+
 
     public function gender(): HasOne
     {
         return $this->hasOne(Gender::class);
     }
-  
+
     public function level(): HasOne
     {
         return $this->hasOne(JobLevel::class);
     }
-    
+
     public function getExperienceAttribute(){
         $start_day = TeacherExperience::where('teacher_id',$this->id)->first()->start_day;
         $end_day = TeacherExperience::where('teacher_id',$this->id)->first()->end_day;
         $exp = TeacherExperience::whereBetween('end_day', [$start_day, $end_day])->count();
         return $exp;
     }
+
+
+    public function teacherLevels()
+    {
+        return $this->belongsToMany(TeacherLevel::class, 'teacher_levels', 'teacher_id', 'level_id');
+    }
+
 }

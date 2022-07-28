@@ -213,17 +213,22 @@ class RegisterController extends Controller
                 'bio' => 'required',
                 'education' => 'required|array',
                 'education.*.edu_title' => 'required|string',
-                // 'experience' => 'required|array',
-                // 'experience.*.start_day' => 'required|date|before:tomorrow',
-                // 'experience.*.end_day' => 'required|date|after_or_equal:experience.*.start_day',
-                // 'experience.*.exp_title' => 'required|string',
-                // 'experience.*.place_of_assurance' => 'required|string',
+                'education.*.place_of_assuarance' => 'required|string',
+                'education.*.certfUrl' => 'string',
+                 'fresh_graduate' => 'required|boolean',
+                 'experience' => 'required_if:fresh_graduate,==,false'. '|array',
+                 'experience.*.start_day' => 'required_if:fresh_graduate,==,false'. '|date|before:tomorrow',
+                 'experience.*.end_day' => 'required_if:fresh_graduate,==,false'. '|date|after_or_equal:experience.*.start_day',
+                 'experience.*.exp_title' => 'required_if:fresh_graduate,==,false'. '|string',
+                 'experience.*.place_of_assurance' => 'required_if:fresh_graduate,==,false'. '|string',
+                 'teacherLevels' => 'required|array',
+                 'subject_id' => 'required',
             ], [], [
-               // "education.*.edu_title" => "certification name",
-                //"experience.*.start_day" => "work started date",
-               // "experience.*.end_day" => "work finished date",
-               // "experience.*.exp_title" => "experience position",
-               // "experience.*.place_of_assurance" => "academy name",
+                "education.*.edu_title" => "certification name",
+                "experience.*.start_day" => "work started date",
+                "experience.*.end_day" => "work finished date",
+                "experience.*.exp_title" => "experience position",
+                "experience.*.place_of_assurance" => "academy name",
             ]);
             if ($validator->fails()) {
                 return $this->onError($validator->errors()->all());
@@ -304,7 +309,7 @@ class RegisterController extends Controller
         }
         $teachDoc->save();
 
-        if (is_array($request->experience) || is_object($request->experience)) {
+        if ((is_array($request->experience) || is_object($request->experience)) && !empty($request->experience)) {
 
             foreach ($request->experience as $texp) {
                 $exp = new TeacherExperience();
@@ -323,9 +328,17 @@ class RegisterController extends Controller
                 $edu->title = $tedu['edu_title'];
                 $edu->start_date = $tedu['start_date'];
                 $edu->end_date = $tedu['end_date'];
+                $edu->degree = $tedu['degree'];
+                $edu->place_of_issurance = $tedu['place_of_assuarance'];
+                $edu->online_cert_url = $tedu['certfUrl'];
                 $edu->save();
             }
         }
+        //insert teacher job levels
+        $teacher->teacherLevels()->sync($request['teacherLevels']);
+        //insert teacher subject
+        $teacher->subject_id = $request['subject_id'];
+
         //TODO:: check
         $available = new Availability();
         $available->teacher_id = $userId;
@@ -344,6 +357,10 @@ class RegisterController extends Controller
             }
             TeacherFiles::insert($TeacherFiles);
         }
+
+
+
+
         $teacherData = Teacher::with(['resumes', 'teacherLocations', 'teacherSkills', 'teacherAvailabity', 'experiences', 'teacherFiles', 'education'])->where('user_id', $userId)->first();
         $userType->verify_email_token = NULL;
         $userType->verify_email_token_created_at = NULL;
