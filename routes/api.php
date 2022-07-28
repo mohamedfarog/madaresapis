@@ -31,6 +31,7 @@ use App\Models\AcademySize;
 use App\Models\Gender;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

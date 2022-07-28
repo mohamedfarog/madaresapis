@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Teachers\Teacher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Traits\fileUpload;
+use File;
 
 
 class TeachersController extends Controller
@@ -25,6 +27,7 @@ class TeachersController extends Controller
         $teacher = Teacher::all('id', 'first_name', 'avatar', 'academic_major')->append(['Experience'])->toArray();
         return $this->onSuccess($teacher);
     }
+    use fileUpload;
 
 
     public function deleteTeacherFile(Request $request){
@@ -43,24 +46,21 @@ class TeachersController extends Controller
     }
 
     public function updateTeacherFile(Request $request){
-
         $userId = Auth::id();
         $teacherFile = TeacherFiles::where('teacher_id',  $userId)->where('id', $request->file_id)->first();
         if(!$teacherFile){
             return $this->onError('Teacher File does not exist');
         }
-        if(isset($request->file_name)){
-            $teacherFile->file_name = $request->file_name;
-            
-        }
-        if(isset($request->file_url)){
-            $teacherFile->file_url = $request->file_url;
+        // if ($teacherFile->file_url){
+        // return $teacherFile->file_url;
+         ///file can be replaced here/ delete the old and keep the new
+        // }
+        if($file = $request->file_url){
+            $teacher_file = time() . '_' . $request->file_url->getClientOriginalName();
+            $teacher_file = $this->uploadFile($file,'teacherFiles');
+            $teacherFile->file_url = $teacher_file;
         }
         $teacherFile->save();
         return $this->onSuccess($teacherFile);
-      
     }
-
-
-    
 }

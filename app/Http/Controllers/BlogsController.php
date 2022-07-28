@@ -23,7 +23,6 @@ class BlogsController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 400);
         }
-        
         $blog = new Blogs();
         $blog->academy_id = $academyId;
         $blog->title = $request->title;

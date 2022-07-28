@@ -45,13 +45,11 @@ public function deleteAcademyFile(Request $request){
         $userId = Auth::id();
         $academyFile = AcademyFile::where('academy_id',  $userId)->where('id', $request->file_id)->first();
         if(!$academyFile){
-            return $this->onError('Academy File does not exist');
+            return $this->onError('Academy file does not exist');
         }
         if($file = $request->file_url){
-
                $academy_file = time() . '_' . $request->file_url->getClientOriginalName();
-               $academy_file = $this->uploadFile($file, 'academyFiles');
-               //$academy_file = $request->file_url->store('academyFiles'); 
+               $academy_file = $this->uploadFile($file,'academyFiles');
                $academyFile->file_url = $academy_file;
         }
         $academyFile->save();
