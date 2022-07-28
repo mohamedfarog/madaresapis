@@ -193,7 +193,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 
-
    //--------------------------Message-----------------------------------
    Route::post('sendMessage', [MessageController::class, 'sendMessage']);
    Route::get('getMessages', [MessageController::class, 'getMessages']);
@@ -201,7 +200,32 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('seenMessage', [MessageController::class, 'seenMessage']);
    //---------------------------------------------------------------------
 
+    //-----------------------------Job Minimum Experience-----------------------------------
+    Route::group(['prefix' => 'jobMinimumExperience'], function () {
+        Route::post('/', [JobMinimumExperienceController::class, 'index']);
+        Route::post('/store', [JobMinimumExperienceController::class, 'store']);
+        Route::put('/update', [JobMinimumExperienceController::class, 'update']);
+        Route::delete('/destroy', [JobMinimumExperienceController::class, 'destroy']);
+    });
+    //--------------------------------------------------------------------------------------
 
+    //---------------------------------Salary Rate------------------------------------------
+    Route::group(['prefix' => 'salaryRate'], function () {
+        Route::post('/', [SalaryRateController::class, 'index']);
+        Route::post('/store', [SalaryRateController::class, 'store']);
+        Route::put('/update', [SalaryRateController::class, 'update']);
+        Route::delete('/destroy', [SalaryRateController::class, 'destroy']);
+    });
+    //--------------------------------------------------------------------------------------
+
+    //------------------------------------Salary Type---------------------------------------
+    Route::group(['prefix' => 'salaryType'], function () {
+        Route::post('/', [SalaryTypeController::class, 'index']);
+        Route::post('/store', [SalaryTypeController::class, 'store']);
+        Route::put('/update', [SalaryTypeController::class, 'update']);
+        Route::delete('/destroy', [SalaryTypeController::class, 'destroy']);
+    });
+    //--------------------------------------------------------------------------------------
 
 
 
@@ -234,5 +258,6 @@ Route::group(['prefix' => 'salaryRate'], function () {
 //-------------------------Salary Type--------------------------------
 Route::group(['prefix' => 'salaryType'], function () {
     Route::post('/', [SalaryTypeController::class, 'index']);
+    Route::post('/store', [SalaryTypeController::class, 'store'])->middleware('auth:api');
 });
 //--------------------------------------------------------------------

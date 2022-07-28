@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\SalaryType;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SalaryTypeController extends Controller
@@ -47,11 +49,34 @@ class SalaryTypeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+
+        //validate the request
+        $validator = Validator::make($request->all(),
+            [
+                'ar_title' => 'required|String',
+                'en_title' => 'required|String',
+            ]);
+
+        if($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+
+        //check the user
+        $user = User::find(Auth::id());
+        if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+            return $this->onError("Account is not verified", 400);
+        }
+
+        $salaryType = SalaryType::create([
+            'ar_title' => $request['ar_title'],
+            'en_title' => $request['en_title'],
+        ]);
+
+        return $this->onSuccess('Salary Type added.');
     }
 
     /**
@@ -81,21 +106,71 @@ class SalaryTypeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //validate the request
+        $validator = Validator::make($request->all(),
+            [
+                'id' => 'required',
+                'ar_title' => 'required|String',
+                'en_title' => 'required|String',
+            ]);
+
+        if($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+
+        //check the user
+        $user = User::find(Auth::id());
+        if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+            return $this->onError("Account is not verified", 400);
+        }
+
+        $salaryType = SalaryType::find($request['id']);
+        if(!$salaryType){
+            return $this->onSuccess('Salary Type with id: ' . $request['id'] . ' not found');
+        }
+
+        $salaryType->ar_title = $request['ar_title'];
+        $salaryType->en_title = $request['en_title'];
+        $salaryType->save();
+
+        return $this->onSuccess('Salary Type updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        //validate the request
+        $validator = Validator::make($request->all(),
+            [
+                'id' => 'required'
+            ]);
+
+        if($validator->fails()) {
+            return $this->onError($validator->errors()->all());
+        }
+
+        //check the user
+        $user = User::find(Auth::id());
+        if ($user->is_active != 1 || $user->email_verified_at == NULL) {
+            return $this->onError("Account is not verified", 400);
+        }
+
+        $salaryType = SalaryType::find($request['id']);
+        if(!$salaryType){
+            return $this->onSuccess('Salary Type with id: ' . $request['id'] . ' not found');
+        }
+
+        $salaryType->delete();
+
+        return $this->onSuccess('Salary Type deleted.');
     }
 }

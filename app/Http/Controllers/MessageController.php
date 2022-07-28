@@ -80,8 +80,8 @@ class MessageController extends Controller
         }
 
         //get the user
-        $userFrom = User::find(Auth::id());
-        if ($userFrom->is_active != 1 || $userFrom->email_verified_at == NULL) {
+        $user = User::find(Auth::id());
+        if ($user->is_active != 1 || $user->email_verified_at == NULL) {
             return $this->onError("Account is not verified", 400);
         }
 
