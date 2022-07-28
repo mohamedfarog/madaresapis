@@ -215,7 +215,7 @@ class RegisterController extends Controller
                 'education.*.edu_title' => 'required|string',
                 'education.*.place_of_assuarance' => 'required|string',
                 'education.*.certfUrl' => 'string',
-                 'fresh_graduate' => 'required|boolean',
+                 'fresh_graduate' => 'required|String',
                  'experience' => 'required_if:fresh_graduate,==,false'. '|array',
                  'experience.*.start_day' => 'required_if:fresh_graduate,==,false'. '|date|before:tomorrow',
                  'experience.*.end_day' => 'required_if:fresh_graduate,==,false'. '|date|after_or_equal:experience.*.start_day',
