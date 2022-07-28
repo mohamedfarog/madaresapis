@@ -113,8 +113,6 @@ public function homePageBanner(Request $request)
 //        $jobs = Job::with('academy', 'level', 'type', 'subjects', 'gender', 'jobMinimumExperience', 'salaryRate')
         $jobs = Job::with('academy', 'level', 'type', 'subjects', 'jobMinimumExperience', 'salaryRate')
             ->where('status', 1)->whereNull('deleted_at')->get();
-//        $jobs=Job::all();
-        dd($jobs);
         return $this->onSuccess($jobs);
     }
 
