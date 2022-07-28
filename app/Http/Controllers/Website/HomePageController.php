@@ -40,16 +40,16 @@ class HomePageController extends Controller
     public function getHomeBanner(): JsonResponse
     {
         $banner = HomeBanner::all();return $this->onSuccess($banner);
-   
+
     }
-  
+
 
     public function getArticaleInfo(Request $request): JsonResponse
     {
         if($request->lang == 1){
                 $articleInfo = Articles::all('id', 'ar_title', 'ar_owner_name', 'published_date', 'ar_body');
                 return $this->onSuccess($articleInfo);
-        
+
         }
         else{
                 $articleInfo = Articles::all('id', 'title', 'owner_name', 'published_date', 'body');
@@ -58,18 +58,18 @@ class HomePageController extends Controller
 }
 public function getJobType(Request $request){
         if($request->lang == '1'){
-               return $this->onSuccess($jobsType = JobsType::all('id', 'type_ar_name')); 
+               return $this->onSuccess($jobsType = JobsType::all('id', 'type_ar_name'));
         }
         else{
              return $this->onSuccess($jobsType = JobsType::all('id', 'type_en_name'));
 }
 }
-    
+
     public function getSubjectsTitle(): JsonResponse
     {
         $title = subjects::all('id', 'title', 'icon')->append('count')->toArray();
         return $this->onSuccess($title);
-      
+
     }
 
     public function returnJobLevel(Request $request): JsonResponse
@@ -82,7 +82,7 @@ public function getJobType(Request $request){
                 $jobLevel = JobLevel::all('id', 'title', 'avater');
                 return $this->onSuccess($jobLevel);
         }
-} 
+}
 
   public function getFaqInfo()
   {
@@ -108,9 +108,14 @@ public function homePageBanner(Request $request)
                 return $this->onSuccess($banner);
         }
 }
-public function gteAllJobs(){
-        return $this->onSuccess(Job::all());
-}
+
+    public function gteAllJobs(){
+//        $jobs = Job::with('academy', 'level', 'type', 'subjects', 'gender', 'jobMinimumExperience', 'salaryRate')
+        $jobs = Job::with('academy', 'level', 'type', 'subjects', 'jobMinimumExperience', 'salaryRate')
+            ->where('status', 1)->whereNull('deleted_at')->get();
+        return $this->onSuccess($jobs);
+    }
+
 public function userSkills(Request $request)
 {
         if($request->lang == 1){
@@ -118,12 +123,12 @@ public function userSkills(Request $request)
                 return $this->onSuccess($skill);
 
         }
-     
+
         else{
                 $skill = Skill::all('id', 'en_skill_name');
                 return $this->onSuccess($skill);
         }
-    }
+}
     public function AvailableApplicant(Request $request)
     {
         if($request->lang == 1){
@@ -134,9 +139,9 @@ public function userSkills(Request $request)
                 $availabe = Available::all('id', 'en_text');
                 return $this->onSuccess($availabe);
         }
-        
+
 }
-    
+
     public function testJwt()
     {
         return $this->user;
@@ -151,7 +156,7 @@ public function userSkills(Request $request)
         $test->save();
         return $test;
         return  $this->onSuccess($request);
-        
+
     }
 }
 

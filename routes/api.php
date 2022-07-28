@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
    Route::post('apply_for_job', [JobController::class, 'applyForJob']);
    Route::post('delete_job', [JobController::class, 'deleteJob']);
-   Route::get('search_for_jobs', [JobController::class, 'getJobsInfo']);
+   Route::get('teacherApplications', [JobController::class, 'teacherApplications']);
 
 
    // ---------------------- APPLICATION------------------------------------------
@@ -178,7 +178,7 @@ Route::group(['middleware' => 'auth:api'], function () {
    Route::post('update_blogs', [BlogsController::class, 'updateBlogs']);
 
    Route::post('delete_blogs', [BlogsController::class, 'deletetBlogs']);
-   
+
    Route::post('delete_teacher_file', [TeachersController::class, 'deleteTeacherFile']);
    Route::post('update_teacher_file', [TeachersController::class, 'updateTeacherFile']);
    Route::get('get_teacher_files', [TeachersController::class, 'getAllFilesForThisTeacher']);
@@ -244,21 +244,3 @@ Route::get('all_academy_sizes', function () {
 Route::get('activate_job', [JobController::class, 'activateAJob']);
 
 
-//-------------------------Job Minimum Experience---------------------
-Route::group(['prefix' => 'jobMinimumExperience'], function () {
-    Route::post('/', [JobMinimumExperienceController::class, 'index']);
-});
-//--------------------------------------------------------------------
-
-//-------------------------Salary Rate--------------------------------
-Route::group(['prefix' => 'salaryRate'], function () {
-    Route::post('/', [SalaryRateController::class, 'index']);
-});
-//--------------------------------------------------------------------
-
-//-------------------------Salary Type--------------------------------
-Route::group(['prefix' => 'salaryType'], function () {
-    Route::post('/', [SalaryTypeController::class, 'index']);
-    Route::post('/store', [SalaryTypeController::class, 'store'])->middleware('auth:api');
-});
-//--------------------------------------------------------------------
