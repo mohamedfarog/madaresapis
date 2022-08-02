@@ -67,7 +67,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('/', function () {
 //return response()->json('Madars-Backend');
 //})->name('login');
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['
+' => 'auth'], function () {
    //Route::post('logout', [AuthController::class,'logout']);
    Route::post('refresh',  [AuthController::class, 'refresh']);
    Route::post('me',  [AuthController::class, 'me']);
@@ -101,7 +102,7 @@ Route::group(['prefix' => 'website'], function () {
 
    Route::get('FAQ', [HomePageController::class, 'getFaqInfo']);
    Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
-   Route::get('hpSubject', [HomePageController::class, 'getSubjectsTitle']);
+
 
    Route::post('articlesInfo', [HomePageController::class, 'getArticaleInfo']);
    Route::post('about', [AboutController::class, 'aboutData']);
